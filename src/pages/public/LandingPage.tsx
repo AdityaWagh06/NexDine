@@ -124,67 +124,65 @@ const LandingPage: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none z-0 bg-grid-pattern opacity-60" />
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-amber-500/10 via-orange-400/5 to-transparent blur-[140px] rounded-full pointer-events-none z-0 animate-pulse-glow" />
 
-      {/* Top Header Navbar — Soothing Warm Ivory Glass Header */}
-      <nav className="border-b border-stone-200/80 sticky top-0 bg-[#FAF8F5]/90 backdrop-blur-2xl z-50 shadow-sm transition-all duration-300">
+      {/* Top Header Navbar — Premium Glassmorphism Navbar */}
+      <nav className="border-b border-white/20 sticky top-0 bg-stone-950/40 backdrop-blur-2xl z-50 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-300">
         <div className="container-custom">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Brand Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 rounded-xl bg-white p-1.5 border border-stone-200 flex items-center justify-center shadow-md shadow-stone-900/5 group-hover:scale-105 transition-transform overflow-hidden">
-                <img src={BRAND_CONFIG.logoUrl} alt={BRAND_CONFIG.appName} className="w-full h-full object-contain" />
+              <div className="w-10 h-10 rounded-xl bg-amber-400 p-1.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden border border-white/30">
+                <img src={BRAND_CONFIG.logoUrl} alt={BRAND_CONFIG.appName} className="w-full h-full object-contain brightness-0 filter" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black tracking-tight text-stone-900 flex items-center gap-1.5">
+                <span className="text-xl font-black tracking-tight text-white flex items-center gap-1.5 drop-shadow-sm">
                   {BRAND_CONFIG.appName}
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse inline-block" />
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block" />
                 </span>
-                <span className="text-[10px] font-extrabold text-amber-700 tracking-wider uppercase -mt-1 hidden sm:block">
+                <span className="text-[10px] font-extrabold text-amber-300 tracking-wider uppercase -mt-1 hidden sm:block">
                   Smart Restaurant Operations
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center space-x-7">
+            {/* Desktop Navigation Links — Glass Pills */}
+            <div className="hidden md:flex items-center space-x-2 bg-white/10 p-1.5 rounded-full border border-white/20 backdrop-blur-xl shadow-inner">
+              <a
+                href="#how-it-works"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
+              >
+                How it works
+              </a>
               <a
                 href="#features"
-                className="text-sm font-bold text-stone-700 hover:text-amber-700 transition-colors"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
               >
-                {LANDING_PAGE_CONTENT.navigation.features}
+                Features
               </a>
               <a
                 href="#pricing"
-                className="text-sm font-bold text-stone-700 hover:text-amber-700 transition-colors"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
               >
-                {LANDING_PAGE_CONTENT.navigation.pricing}
-              </a>
-              <a
-                href="#how-it-works"
-                className="text-sm font-bold text-stone-700 hover:text-amber-700 transition-colors"
-              >
-                {LANDING_PAGE_CONTENT.navigation.howItWorks}
+                Dashboard
               </a>
               <Link
                 to="/login"
-                className="text-sm font-bold text-stone-700 hover:text-stone-900 transition-colors"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
               >
-                {LANDING_PAGE_CONTENT.navigation.signIn}
+                Sign in
               </Link>
               <Link to="/register">
-                <Button
-                  size="md"
-                  variant="primary"
-                  className="bg-stone-900 hover:bg-stone-800 text-white font-extrabold shadow-md hover:scale-105 transition-all rounded-xl px-5"
+                <button
+                  className="bg-white hover:bg-stone-100 text-stone-950 font-extrabold shadow-lg hover:scale-105 transition-all rounded-full px-5 py-2 text-xs border border-white/60"
                 >
-                  {LANDING_PAGE_CONTENT.navigation.startTrial}
-                </Button>
+                  Get started
+                </button>
               </Link>
             </div>
 
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-stone-700 hover:text-stone-900 hover:bg-stone-200/60 transition-colors"
+              className="md:hidden p-2 rounded-xl text-stone-200 hover:text-white hover:bg-white/10 transition-colors"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
             </button>
@@ -192,143 +190,120 @@ const LandingPage: React.FC = () => {
 
           {/* Mobile Dropdown Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 px-3 space-y-2 border-t border-stone-200 bg-[#FAF8F5]/98 backdrop-blur-2xl rounded-b-2xl shadow-xl text-stone-800">
+            <div className="md:hidden py-4 px-3 space-y-2 border-t border-white/20 bg-stone-950/80 backdrop-blur-2xl rounded-b-2xl shadow-2xl text-white">
               <a
-                href="#features"
-                className="block px-3 py-2.5 text-sm font-bold text-stone-700 hover:text-amber-700 hover:bg-stone-200/50 rounded-xl"
+                href="#how-it-works"
+                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {LANDING_PAGE_CONTENT.navigation.features}
+                How it works
+              </a>
+              <a
+                href="#features"
+                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Features
               </a>
               <a
                 href="#pricing"
-                className="block px-3 py-2.5 text-sm font-bold text-stone-700 hover:text-amber-700 hover:bg-stone-200/50 rounded-xl"
+                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {LANDING_PAGE_CONTENT.navigation.pricing}
-              </a>
-              <a
-                href="#how-it-works"
-                className="block px-3 py-2.5 text-sm font-bold text-stone-700 hover:text-amber-700 hover:bg-stone-200/50 rounded-xl"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {LANDING_PAGE_CONTENT.navigation.howItWorks}
+                Dashboard
               </a>
               <Link
                 to="/login"
-                className="block px-3 py-2.5 text-sm font-bold text-stone-700 hover:text-stone-900 hover:bg-stone-200/50 rounded-xl"
+                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                {LANDING_PAGE_CONTENT.navigation.signIn}
+                Sign in
               </Link>
               <Link
                 to="/register"
                 className="block pt-2"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <Button fullWidth variant="primary" className="bg-stone-900 text-white font-bold">
-                  {LANDING_PAGE_CONTENT.navigation.startTrial}
-                </Button>
+                <button className="w-full bg-white text-stone-900 font-bold py-3 rounded-full shadow-lg">
+                  Get started
+                </button>
               </Link>
             </div>
           )}
         </div>
       </nav>
 
-      {/* Hero Section — Warm Soothing Atmosphere Backdrop & Elegant Visual Layout */}
-      <section className="relative py-20 md:py-32 overflow-hidden border-b border-stone-200/80 min-h-[85vh] flex items-center justify-center z-10">
-        {/* Warm Restaurant Background Image Layer with Cream Overlays */}
+      {/* Hero Section — Classic Dark Monochrome Luxury Building Architecture */}
+      <section className="relative py-24 md:py-36 overflow-hidden min-h-[92vh] flex items-center justify-center z-10 bg-stone-950">
+        {/* Classic Monochrome Dark Luxury Restaurant Building Background */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=80"
-            alt="Warm Soothing Restaurant Ambiance"
-            className="w-full h-full object-cover object-center filter opacity-20 saturate-[1.1]"
+            src="/classic_dark_bg.jpg"
+            alt="Classic Luxury Monochrome Restaurant Architecture"
+            className="w-full h-full object-cover object-center scale-100 filter brightness-90 contrast-110"
           />
-          {/* Layered Soothing Cream Gradients */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FAF8F5]/90 via-[#FAF8F5]/85 to-[#FAF8F5]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-[#FAF8F5]" />
+          {/* Subtle Dark Vignette & Gradient Overlays for High Contrast & Readable Text */}
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-950/50 to-stone-950/95" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-black/60 pointer-events-none" />
         </div>
 
-        {/* Hero Content */}
-        <div className="container-custom relative z-10 max-w-5xl mx-auto text-center space-y-8 px-4">
-          {/* Soothing Warm Badge */}
-          <div className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-amber-300 text-amber-900 text-xs font-extrabold shadow-sm animate-float">
-            <Flame className="w-4 h-4 text-amber-600 animate-pulse" />
-            <span>Built Specifically for Modern Restaurant Outlets</span>
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-            <span className="text-stone-700 font-bold">Zero Commission</span>
+        {/* Hero Content — Sitting Directly on Background */}
+        <div className="container-custom relative z-10 max-w-4xl mx-auto text-center space-y-8 px-4">
+          {/* Glassmorphic Pill Badge */}
+          <div className="inline-flex items-center space-x-2.5 px-4.5 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/25 text-white text-xs font-semibold shadow-2xl">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="tracking-wider uppercase text-[11px] text-stone-200 font-extrabold">QR ORDERING · BUILT FOR REAL SERVICE</span>
           </div>
 
           {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-stone-900 tracking-tight leading-[1.12] max-w-4xl mx-auto">
-            Turn Dining Tables Into Instant{" "}
-            <span className="bg-gradient-to-r from-amber-700 via-orange-600 to-amber-800 bg-clip-text text-transparent underline decoration-amber-400/60 decoration-wavy">
-              Digital Ordering Hubs
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-3xl mx-auto drop-shadow-lg">
+            Every table,<br />
+            one scan{" "}
+            <span className="text-amber-400 relative inline-block">
+              away.
+              <svg className="absolute -bottom-2 left-0 w-full h-3 text-amber-400/90" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="4">
+                <path d="M 0 12 Q 50 2 100 12" />
+              </svg>
             </span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-base sm:text-xl text-stone-600 max-w-3xl mx-auto font-medium leading-relaxed">
-            Guests scan table QRs, explore your visual menu, and order directly to your kitchen in <span className="font-bold text-amber-800">0.2 seconds</span>. No app download. Zero misplaced paper orders.
+          <p className="text-base sm:text-xl text-stone-300 max-w-2xl mx-auto font-normal leading-relaxed drop-shadow-md">
+            NextDine replaces paper menus and manual order-taking with a QR ordering experience your guests love — and a live dashboard your staff can actually run during a Friday rush.
           </p>
 
           {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Link to="/register" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="primary"
-                icon={<ArrowRight className="w-5 h-5" />}
-                fullWidth
-                className="bg-stone-900 hover:bg-stone-800 text-white px-9 py-4 rounded-2xl font-extrabold text-base shadow-lg hover:scale-[1.02] transition-all border border-stone-800"
+              <button
+                className="w-full sm:w-auto bg-[#EAB308] hover:bg-amber-400 text-stone-950 font-extrabold text-base px-8 py-4 rounded-full shadow-2xl shadow-amber-500/25 hover:scale-105 transition-all flex items-center justify-center space-x-2 border border-amber-300/60"
               >
-                Register Outlet Free (14-Day Trial)
-              </Button>
+                <span>Start free — no card needed</span>
+                <ArrowRight className="w-5 h-5 ml-1" />
+              </button>
             </Link>
 
             <a href="#interactive-demo" className="w-full sm:w-auto">
-              <Button
-                size="lg"
-                variant="outline"
-                fullWidth
-                className="bg-white hover:bg-stone-100 border-stone-300 text-stone-800 backdrop-blur-xl px-8 py-4 rounded-2xl font-bold text-base transition-all shadow-sm"
+              <button
+                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/30 text-white backdrop-blur-xl font-bold text-base px-8 py-4 rounded-full transition-all shadow-xl"
               >
-                <Sparkles className="w-5 h-5 text-amber-600 mr-2" />
-                Try Interactive Live Playground
-              </Button>
+                See how it works
+              </button>
             </a>
           </div>
 
-          {/* Real-time Floating Proof Cards */}
-          <div className="pt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
-            <div className="bg-white/90 backdrop-blur-xl border border-stone-200/90 rounded-2xl p-4 flex items-center space-x-3 text-left shadow-sm hover:border-amber-400 transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-300 text-amber-800 flex items-center justify-center flex-shrink-0 font-bold">
-                <Clock className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-black text-stone-900">35% Faster Turnaround</p>
-                <p className="text-[11px] text-stone-500 font-medium">Orders reach kitchen instantly</p>
-              </div>
+          {/* Trust proof line below buttons */}
+          <div className="pt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-300 font-semibold drop-shadow-sm">
+            <div className="flex items-center space-x-1">
+              <span className="text-amber-400 font-bold tracking-wider">★★★★★</span>
+              <span>Loved by restaurant teams</span>
             </div>
-
-            <div className="bg-white/90 backdrop-blur-xl border border-stone-200/90 rounded-2xl p-4 flex items-center space-x-3 text-left shadow-sm hover:border-emerald-400 transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-300 text-emerald-800 flex items-center justify-center flex-shrink-0 font-bold">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-black text-stone-900">100% Accuracy</p>
-                <p className="text-[11px] text-stone-500 font-medium">Zero waiter slip handwriting errors</p>
-              </div>
-            </div>
-
-            <div className="bg-white/90 backdrop-blur-xl border border-stone-200/90 rounded-2xl p-4 flex items-center space-x-3 text-left shadow-sm hover:border-stone-400 transition-colors">
-              <div className="w-10 h-10 rounded-xl bg-stone-100 border border-stone-300 text-stone-800 flex items-center justify-center flex-shrink-0 font-bold">
-                <DollarSign className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-black text-stone-900">Flat $49 / Month</p>
-                <p className="text-[11px] text-stone-500 font-medium">Zero transaction percentages</p>
-              </div>
+            <span className="hidden sm:inline text-stone-500">•</span>
+            <div>Set up your menu in an afternoon</div>
+            <span className="hidden sm:inline text-stone-500">•</span>
+            <div className="flex items-center space-x-1">
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Works on any phone</span>
             </div>
           </div>
         </div>
