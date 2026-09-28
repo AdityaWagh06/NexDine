@@ -2,21 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   ShoppingCart,
-  Plus,
-  Minus,
-  X,
   Search,
   CheckCircle2,
   Package,
-  Utensils,
   ChevronRight,
-  LayoutGrid,
-  List,
-  SlidersHorizontal,
-  Heart,
 } from "lucide-react";
 import {
-  Card,
   Button,
   Input,
   Modal,
@@ -31,9 +22,10 @@ import {
   createOrder,
 } from "../../services/restaurantService";
 import type { MenuItem } from "../../config/supabase";
-import { formatCurrency, isValidPhone } from "../../utils/helpers";
+import { isValidPhone } from "../../utils/helpers";
 import { supabase } from "../../config/supabase";
-import { SAMPLE_MENU_ITEMS, SampleDish } from "../../utils/mockData";
+import { SAMPLE_MENU_ITEMS } from "../../utils/mockData";
+import type { SampleDish } from "../../utils/mockData";
 import { getFoodImage } from "../../utils/foodImages";
 
 interface CartItem extends MenuItem {
@@ -57,7 +49,6 @@ const CustomerMenu: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("All");
   const [showCartDrawer, setShowCartDrawer] = useState(false);
-  const [showCartModal, setShowCartModal] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [showItemModal, setShowItemModal] = useState(false);
@@ -69,7 +60,6 @@ const CustomerMenu: React.FC = () => {
     if (slug) {
       loadRestaurant();
     } else {
-      // Use rich mock data if no slug
       setMenuItems(SAMPLE_MENU_ITEMS as any);
     }
   }, [slug]);
@@ -120,7 +110,7 @@ const CustomerMenu: React.FC = () => {
 
   const activeItems = menuItems.length > 0 ? menuItems : (SAMPLE_MENU_ITEMS as any);
 
-  const categories = [
+  const rawCategories: string[] = [
     "All",
     "Indian",
     "Chinese",
@@ -128,8 +118,10 @@ const CustomerMenu: React.FC = () => {
     "Breakfast",
     "Beverages",
     "Desserts",
-    ...new Set(activeItems.map((item: any) => item.category).filter(Boolean)),
-  ].filter((v, i, a) => a.indexOf(v) === i);
+    ...activeItems.map((item: any) => item.category).filter(Boolean),
+  ];
+
+  const categories: string[] = Array.from(new Set<string>(rawCategories));
 
   const filteredItems = activeItems.filter((item: any) => {
     const matchesSearch = item.name
@@ -188,23 +180,8 @@ const CustomerMenu: React.FC = () => {
     setCart(newCart);
   };
 
-  const updateQuantityByIndex = (index: number, delta: number) => {
-    const newCart = [...cart];
-    newCart[index].quantity += delta;
-    if (newCart[index].quantity <= 0) {
-      newCart.splice(index, 1);
-    }
-    setCart(newCart);
-  };
-
   const removeFromCart = (id: string) => {
     setCart(cart.filter((ci) => ci.id !== id));
-  };
-
-  const removeFromCartByIndex = (index: number) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
   };
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -594,7 +571,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
         selectedSize: ci.selectedSize,
         selectedAddons: ci.selectedAddons,
       })),
-      total: total * 1.1, // with tax
+      total: total * 1.1,
       status: "pending",
       payment_status: "pending",
       notes,
