@@ -171,7 +171,7 @@ export const LANDING_PAGE_CONTENT = {
       "Live Kitchen Display System (KDS)",
       "Instant Menu & Price Availability Toggles",
       "Daily Sales & GST Analytics Reports",
-      "Dedicated WhatsApp & Phone Support",
+      
     ],
   },
 
