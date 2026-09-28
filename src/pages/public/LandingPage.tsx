@@ -326,10 +326,94 @@ const LandingPage: React.FC = () => {
                 <DollarSign className="w-5 h-5" />
               </div>
               <div>
-                <p className="text-xs font-black text-stone-900">Flat ₹999 / Month</p>
+                <p className="text-xs font-black text-stone-900">Flat $49 / Month</p>
                 <p className="text-[11px] text-stone-500 font-medium">Zero transaction percentages</p>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURED DISH SHOWCASE SECTION (Ref: Screenshots 1, 2, & 3) */}
+      <section className="py-20 bg-white border-b border-stone-200 relative">
+        <div className="container-custom">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-red-600 bg-red-50 px-3.5 py-1 rounded-full border border-red-100">
+              Gourmet Experience
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-stone-900 tracking-tight">
+              Best Catering & Dining Showcase
+            </h2>
+            <p className="text-sm text-stone-500">
+              Discover high-resolution visual menus with instant QR ordering, category filters, and dish customizations.
+            </p>
+          </div>
+
+          {/* Sample Dish Showcase Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+            {[
+              {
+                id: 'hero-1',
+                name: 'Huron Honey-Apple Chicken',
+                price: 18.99,
+                category: 'Chinese',
+                description: 'Crispy fried chicken wings glazed with Huron apple honey reduction.',
+                image_url: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=800&q=80',
+                prep_time: '18',
+                rating: 4.9,
+              },
+              {
+                id: 'hero-2',
+                name: 'Cheeseburger & Fries Combo',
+                price: 12.99,
+                category: 'Snacks',
+                description: 'Double beef burger with melted cheese, lettuce, and crispy fries.',
+                image_url: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80',
+                prep_time: '10',
+                rating: 4.8,
+              },
+              {
+                id: 'hero-3',
+                name: 'Fluffy Golden Pancakes',
+                price: 2.00,
+                category: 'Breakfast',
+                description: 'Fluffy pancakes served fresh every morning with organic syrup.',
+                image_url: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80',
+                prep_time: '10',
+                rating: 4.9,
+              },
+              {
+                id: 'hero-4',
+                name: 'Central Gyros Deluxe',
+                price: 14.99,
+                category: 'Snacks',
+                description: 'Authentic warm pita wrap with seasoned meat and tzatziki sauce.',
+                image_url: 'https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=800&q=80',
+                prep_time: '12',
+                rating: 4.8,
+              }
+            ].map((dish) => (
+              <div key={dish.id} className="bg-[#FAF8F5] rounded-3xl p-4 border border-stone-200/80 hover:shadow-lg transition-all duration-300 group">
+                <div className="relative h-44 mb-3 rounded-2xl overflow-hidden bg-white p-2 flex items-center justify-center">
+                  <img
+                    src={dish.image_url}
+                    alt={dish.name}
+                    className="h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-3 right-3 bg-red-600 text-white font-extrabold text-xs px-2.5 py-1 rounded-full shadow-xs">
+                    ${dish.price.toFixed(2)}
+                  </span>
+                </div>
+                <h3 className="font-bold text-stone-900 text-sm mb-1 line-clamp-1">{dish.name}</h3>
+                <p className="text-stone-500 text-xs line-clamp-2 leading-relaxed mb-3">{dish.description}</p>
+                <div className="flex items-center justify-between pt-2 border-t border-stone-200/60 text-xs">
+                  <span className="text-stone-400 font-semibold">⏱ {dish.prep_time} min</span>
+                  <Link to="/customer/menu" className="text-red-600 font-extrabold hover:underline">
+                    Order Now →
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
