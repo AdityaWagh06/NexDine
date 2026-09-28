@@ -7,3 +7,6 @@ export { Modal } from "./Modal";
 export { Badge } from "./Badge";
 export { Loading } from "./Loading";
 export { Alert } from "./Alert";
+export { CategoryPillBar } from "./CategoryPillBar";
+export { DishCard } from "./DishCard";
+export { OrderDrawer } from "./OrderDrawer";

@@ -178,12 +178,21 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+    <div className="min-h-screen bg-[#FAF8F5] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Food Photography Atmospheric Background */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <img
+          src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=80"
+          alt="Gourmet Food Setup"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
         {/* Back to Home */}
         <Link
           to="/"
-          className="inline-flex items-center text-xs font-semibold text-slate-500 hover:text-indigo-600 mb-6 transition-colors"
+          className="inline-flex items-center text-xs font-bold text-stone-500 hover:text-red-600 mb-6 transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-1.5" />
           Back to NextDine Home
@@ -191,14 +200,14 @@ const LoginPage: React.FC = () => {
 
         {/* Brand Badge & Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-white p-2.5 border border-slate-200 shadow-md mb-4">
-            <img src="/logo.png" alt="NextDine Logo" className="w-full h-full object-contain" />
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-stone-900 p-3 shadow-lg mb-4 text-amber-400 font-black text-2xl">
+            ND
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-3xl font-extrabold text-stone-900 tracking-tight">
             Welcome to NextDine
           </h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Sign in to access your restaurant manager dashboard
+          <p className="mt-1 text-xs text-stone-500 font-medium">
+            Sign in to access your restaurant manager & digital ordering portal
           </p>
         </div>
 

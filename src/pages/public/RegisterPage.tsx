@@ -185,27 +185,36 @@ const RegisterPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-[#FAF8F5] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Food Pattern */}
+      <div className="absolute inset-0 z-0 opacity-10">
+        <img
+          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80"
+          alt="Restaurant Ambiance"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      <div className="max-w-2xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-8">
           <Link
             to="/"
-            className="inline-flex items-center text-xs font-semibold text-slate-500 hover:text-indigo-600 mb-6 transition-colors"
+            className="inline-flex items-center text-xs font-bold text-stone-500 hover:text-red-600 mb-6 transition-colors"
           >
             <ArrowLeft className="w-4 h-4 mr-1.5" />
             Back to NextDine Home
           </Link>
-          <div className="flex items-center space-x-3 mb-2">
-            <div className="w-14 h-14 rounded-2xl bg-white p-2 border border-slate-200 flex items-center justify-center shadow-md">
-              <img src="/logo.png" alt="NextDine Logo" className="w-full h-full object-contain" />
+          <div className="flex items-center space-x-4 mb-2">
+            <div className="w-14 h-14 rounded-2xl bg-stone-900 text-amber-400 font-black text-2xl flex items-center justify-center shadow-lg">
+              ND
             </div>
             <div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Register Your Restaurant
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-stone-900 tracking-tight">
+                Register Your Restaurant Outlet
               </h1>
-              <p className="text-xs sm:text-sm text-slate-500">
-                Join NextDine and launch your smart QR ordering portal
+              <p className="text-xs sm:text-sm text-stone-500 font-medium">
+                Join NextDine and launch your smart visual QR ordering portal in minutes
               </p>
             </div>
           </div>

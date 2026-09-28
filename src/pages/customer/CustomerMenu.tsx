@@ -2,30 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   ShoppingCart,
-  Plus,
-  Minus,
-  X,
   Search,
   CheckCircle2,
   Package,
-  Utensils,
   ChevronRight,
 } from "lucide-react";
 import {
-  Card,
   Button,
   Input,
   Modal,
   Loading,
   Alert,
+  CategoryPillBar,
+  DishCard,
+  OrderDrawer,
 } from "../../components/ui";
 import {
   subscribeToMenuItems,
   createOrder,
 } from "../../services/restaurantService";
 import type { MenuItem } from "../../config/supabase";
-import { formatCurrency, isValidPhone } from "../../utils/helpers";
+import { isValidPhone } from "../../utils/helpers";
 import { supabase } from "../../config/supabase";
+import { SAMPLE_MENU_ITEMS } from "../../utils/mockData";
+import type { SampleDish } from "../../utils/mockData";
+import { getFoodImage } from "../../utils/foodImages";
 
 interface CartItem extends MenuItem {
   quantity: number;
@@ -36,26 +37,41 @@ interface CartItem extends MenuItem {
 
 const CustomerMenu: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const [restaurant, setRestaurant] = useState<any>(null);
+  const [restaurant, setRestaurant] = useState<any>({
+    id: "demo-restaurant",
+    name: "THE SPICYCAB",
+    restaurant_type: "Gourmet & Digital Dining",
+    logo_url: "",
+  });
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<string>("all");
-  const [showCart, setShowCart] = useState(false);
+  const [categoryFilter, setCategoryFilter] = useState<string>("All");
+  const [showCartDrawer, setShowCartDrawer] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [showItemModal, setShowItemModal] = useState(false);
+  const [viewVariant, setViewVariant] = useState<'modern' | 'compact' | 'pos'>('modern');
+  const [diningOption, setDiningOption] = useState<'Dine In' | 'Take Out' | 'Delivery'>('Take Out');
 
   // Load restaurant and menu
   useEffect(() => {
-    loadRestaurant();
+    if (slug) {
+      loadRestaurant();
+    } else {
+      setMenuItems(SAMPLE_MENU_ITEMS as any);
+    }
   }, [slug]);
 
   useEffect(() => {
-    if (restaurant?.id) {
+    if (slug && restaurant?.id && restaurant.id !== "demo-restaurant") {
       const subscription = subscribeToMenuItems(restaurant.id, (data) => {
-        setMenuItems(data);
+        if (data && data.length > 0) {
+          setMenuItems(data);
+        } else {
+          setMenuItems(SAMPLE_MENU_ITEMS as any);
+        }
         setLoading(false);
       });
 
@@ -63,10 +79,11 @@ const CustomerMenu: React.FC = () => {
         subscription.unsubscribe();
       };
     }
-  }, [restaurant]);
+  }, [restaurant, slug]);
 
   const loadRestaurant = async () => {
     if (!slug) return;
+    setLoading(true);
 
     const { data, error } = await supabase
       .from("restaurants")
@@ -76,34 +93,53 @@ const CustomerMenu: React.FC = () => {
       .single();
 
     if (error || !data) {
-      console.error("Restaurant not found");
+      console.warn("Restaurant not found on DB, falling back to demo state.");
+      setRestaurant({
+        id: "demo-restaurant",
+        name: "THE SPICYCAB",
+        restaurant_type: "Modern Gourmet Kitchen",
+      });
+      setMenuItems(SAMPLE_MENU_ITEMS as any);
       setLoading(false);
       return;
     }
 
     setRestaurant(data);
+    setLoading(false);
   };
 
-  const categories = [
-    "all",
-    ...new Set(menuItems.map((item) => item.category).filter(Boolean)),
+  const activeItems = menuItems.length > 0 ? menuItems : (SAMPLE_MENU_ITEMS as any);
+
+  const rawCategories: string[] = [
+    "All",
+    "Indian",
+    "Chinese",
+    "Snacks",
+    "Breakfast",
+    "Beverages",
+    "Desserts",
+    ...activeItems.map((item: any) => item.category).filter(Boolean),
   ];
 
-  const filteredItems = menuItems.filter((item) => {
+  const categories: string[] = Array.from(new Set<string>(rawCategories));
+
+  const filteredItems = activeItems.filter((item: any) => {
     const matchesSearch = item.name
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
     const matchesCategory =
-      categoryFilter === "all" || item.category === categoryFilter;
-    return matchesSearch && matchesCategory && item.is_available;
+      categoryFilter.toLowerCase() === "all" ||
+      (item.category && item.category.toLowerCase() === categoryFilter.toLowerCase());
+    const isAvail = item.is_available !== false;
+    return matchesSearch && matchesCategory && isAvail;
   });
 
   const addToCart = (
-    item: MenuItem,
+    item: MenuItem | SampleDish,
     selectedSize?: any,
     selectedAddons: any[] = []
   ) => {
-    const basePrice = selectedSize ? selectedSize.price : item.base_price;
+    const basePrice = selectedSize ? selectedSize.price : ((item as any).price || (item as any).base_price || 0);
     const addonsTotal = selectedAddons.reduce(
       (sum, addon) => sum + addon.price,
       0
@@ -111,7 +147,8 @@ const CustomerMenu: React.FC = () => {
     const itemTotal = basePrice + addonsTotal;
 
     const cartItem: CartItem = {
-      ...item,
+      ...(item as MenuItem),
+      base_price: basePrice,
       quantity: 1,
       selectedSize,
       selectedAddons,
@@ -136,24 +173,21 @@ const CustomerMenu: React.FC = () => {
     setShowItemModal(false);
   };
 
-  const updateQuantity = (index: number, delta: number) => {
-    const newCart = [...cart];
-    newCart[index].quantity += delta;
-    if (newCart[index].quantity <= 0) {
-      newCart.splice(index, 1);
-    }
+  const updateQuantity = (id: string, newQty: number) => {
+    const newCart = cart
+      .map((ci) => (ci.id === id ? { ...ci, quantity: newQty } : ci))
+      .filter((ci) => ci.quantity > 0);
     setCart(newCart);
   };
 
-  const removeFromCart = (index: number) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
+  const removeFromCart = (id: string) => {
+    setCart(cart.filter((ci) => ci.id !== id));
   };
 
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const cartSubtotal = cart.reduce((sum, item) => sum + (item.itemTotal || item.base_price || (item as any).price || 0) * item.quantity, 0);
 
-  const handleItemClick = (item: MenuItem) => {
+  const handleItemClick = (item: any) => {
     if (item.sizes && item.sizes.length > 0) {
       setSelectedItem(item);
       setShowItemModal(true);
@@ -163,255 +197,196 @@ const CustomerMenu: React.FC = () => {
   };
 
   if (loading) {
-    return <Loading text="Loading restaurant menu..." />;
+    return <Loading text="Loading delicious menu..." />;
   }
-
-  if (!restaurant) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <Card className="text-center p-8 max-w-md w-full border-slate-200/80 shadow-xl">
-          <Package className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-          <h2 className="text-xl font-extrabold text-slate-900 mb-2">
-            Restaurant Unavailable
-          </h2>
-          <p className="text-xs text-slate-500 leading-relaxed">
-            The restaurant menu you are looking for does not exist or has been temporarily deactivated by the manager.
-          </p>
-        </Card>
-      </div>
-    );
-  }
-
-  const getItemQuantity = (itemId: string) => {
-    return cart.reduce((sum, cartItem) => {
-      if (cartItem.id === itemId) {
-        return sum + cartItem.quantity;
-      }
-      return sum;
-    }, 0);
-  };
-
-  const handleAddSimple = (item: MenuItem) => {
-    addToCart(item);
-  };
-
-  const handleRemoveItem = (itemId: string) => {
-    const index = cart.findIndex((ci) => ci.id === itemId);
-    if (index >= 0) {
-      updateQuantity(index, -1);
-    }
-  };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-28">
-      {/* Header */}
-      <header className="bg-white border-b border-slate-200/80 sticky top-0 z-40 shadow-xs">
-        <div className="max-w-screen-md mx-auto px-4 py-3.5">
-          <div className="flex items-center justify-between mb-3">
+    <div className="min-h-screen bg-[#FAF8F5] text-stone-900 pb-28 font-sans">
+      {/* Header (Ref: Screenshot 1 "THE SPICYCAB") */}
+      <header className="bg-white/90 backdrop-blur-md border-b border-stone-200/80 sticky top-0 z-40 shadow-xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5">
+          <div className="flex items-center justify-between">
+            {/* Left Brand info */}
             <div className="flex items-center space-x-3">
-              {restaurant.logo_url ? (
-                <img
-                  src={restaurant.logo_url}
-                  alt={restaurant.name}
-                  className="w-11 h-11 rounded-2xl object-cover border border-slate-200"
-                />
-              ) : (
-                <div className="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
-                  <Utensils className="w-5 h-5" />
-                </div>
-              )}
+              <div className="w-10 h-10 rounded-2xl bg-stone-900 text-amber-400 font-extrabold text-lg flex items-center justify-center shadow-md">
+                <span>ND</span>
+              </div>
               <div>
-                <h1 className="font-extrabold text-base sm:text-lg text-slate-900 leading-tight">
-                  {restaurant.name}
+                <h1 className="font-extrabold text-base sm:text-xl text-stone-900 tracking-wider uppercase">
+                  {restaurant.name || "THE SPICYCAB"}
                 </h1>
-                <p className="text-[11px] font-medium text-slate-500">
-                  {restaurant.restaurant_type || "Digital QR Ordering"}
+                <p className="text-[11px] font-semibold text-stone-400 flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  Live Digital Ordering
                 </p>
               </div>
             </div>
 
-            {/* NextDine Brand Pill */}
-            <div className="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-indigo-50 border border-indigo-100 text-[10px] font-bold text-indigo-700">
-              <span>NextDine</span>
+            {/* View Mode & Cart Drawer Button */}
+            <div className="flex items-center gap-2">
+              <div className="hidden sm:flex items-center bg-stone-100 p-1 rounded-xl border border-stone-200/60">
+                <button
+                  onClick={() => setViewVariant('modern')}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    viewVariant === 'modern' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                  title="Modern Cards (Screenshot 1)"
+                >
+                  Cards
+                </button>
+                <button
+                  onClick={() => setViewVariant('compact')}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    viewVariant === 'compact' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                  title="Circle Photos (Screenshot 2)"
+                >
+                  Circle
+                </button>
+                <button
+                  onClick={() => setViewVariant('pos')}
+                  className={`px-3 py-1 rounded-lg text-xs font-semibold transition-all ${
+                    viewVariant === 'pos' ? 'bg-white text-stone-900 shadow-xs' : 'text-stone-500 hover:text-stone-800'
+                  }`}
+                  title="POS Grid (Screenshot 4)"
+                >
+                  Grid
+                </button>
+              </div>
+
+              {/* Order Cart Drawer Button (Screenshot 4) */}
+              <button
+                onClick={() => setShowCartDrawer(true)}
+                className="relative px-4 py-2.5 rounded-full bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold text-xs flex items-center gap-2 shadow-md shadow-red-600/20 transition-all cursor-pointer"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span className="hidden sm:inline">My Order</span>
+                {cartCount > 0 && (
+                  <span className="bg-white text-red-600 text-[11px] font-black w-5 h-5 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
 
           {/* Search Box */}
-          <div className="relative">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+          <div className="mt-3 relative">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
             <input
               type="text"
-              placeholder="Search dishes by name..."
+              placeholder="Search Indian, Chinese, Burgers, Pancakes, Fries..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-slate-100/70 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 bg-stone-100/80 border border-stone-200 rounded-2xl text-xs sm:text-sm text-stone-900 placeholder:text-stone-400 focus:outline-none focus:bg-white focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all"
             />
           </div>
         </div>
       </header>
 
-      {/* Category Tabs */}
-      <div className="bg-white border-b border-slate-200/80 sticky top-[109px] z-30 shadow-2xs">
-        <div className="max-w-screen-md mx-auto px-4">
-          <div className="flex gap-2 overflow-x-auto py-2.5 no-scrollbar">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setCategoryFilter(category || "all")}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
-                  categoryFilter === category
-                    ? "bg-indigo-600 text-white shadow-sm shadow-indigo-500/20"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200/70"
-                }`}
-              >
-                {category === "all" ? "All Categories" : category}
-              </button>
-            ))}
-          </div>
+      {/* Category Pills Bar (Ref: Screenshots 1 & 2) */}
+      <div className="bg-white/60 backdrop-blur-xs border-b border-stone-200/70 sticky top-[118px] z-30 py-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <CategoryPillBar
+            categories={categories}
+            activeCategory={categoryFilter}
+            onSelectCategory={(cat) => setCategoryFilter(cat)}
+            variant="pill"
+            activeColor="red"
+          />
         </div>
       </div>
 
-      {/* Menu Grid */}
-      <main className="max-w-screen-md mx-auto px-4 py-5">
+      {/* Popular Menu / Content Section */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-stone-900 tracking-tight">
+            {categoryFilter === 'All' ? 'Popular Menu' : `${categoryFilter} Dishes`}
+          </h2>
+          <span className="text-xs font-semibold text-stone-400">
+            {filteredItems.length} items available
+          </span>
+        </div>
+
         {filteredItems.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl border border-slate-200/80 p-8 shadow-xs">
-            <Package className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-            <p className="text-sm font-bold text-slate-800">No dishes found</p>
-            <p className="text-xs text-slate-500 mt-1">
-              Try adjusting your search query or category filter.
-            </p>
+          <div className="text-center py-20 bg-white rounded-3xl border border-stone-200 p-8 shadow-xs">
+            <Package className="w-12 h-12 text-stone-300 mx-auto mb-2" />
+            <p className="text-base font-bold text-stone-800">No matching dishes found</p>
+            <p className="text-xs text-stone-400 mt-1">Try switching categories or clearing search.</p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {filteredItems.map((item) => {
-              const quantity = getItemQuantity(item.id);
-              const hasVariations =
-                (item.sizes && item.sizes.length > 0) ||
-                (item.addons && item.addons.length > 0);
-
-              return (
-                <div
-                  key={item.id}
-                  className="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-md transition-all duration-200 flex flex-col justify-between"
-                >
-                  <div>
-                    {/* Image */}
-                    <div className="relative h-40 bg-slate-100 overflow-hidden">
-                      {item.image_url ? (
-                        <img
-                          src={item.image_url}
-                          alt={item.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-300">
-                          <Package className="w-10 h-10" />
-                        </div>
-                      )}
-
-                      {!item.is_available && (
-                        <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center">
-                          <span className="bg-slate-900 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full border border-slate-700">
-                            Out of Stock
-                          </span>
-                        </div>
-                      )}
-
-                      {hasVariations && (
-                        <span className="absolute top-2 right-2 bg-white/90 backdrop-blur-md text-slate-700 text-[10px] font-bold px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
-                          Customizable
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-4">
-                      <div className="flex items-start justify-between gap-2 mb-1">
-                        <h3 className="font-extrabold text-sm text-slate-900 line-clamp-2 leading-tight">
-                          {item.name}
-                        </h3>
-                      </div>
-                      {item.description && (
-                        <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed mb-3">
-                          {item.description}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Price & Add Action Footer */}
-                  <div className="px-4 pb-4 flex items-end justify-between pt-1">
-                    <div>
-                      <span className="text-[10px] font-semibold text-slate-400 block uppercase tracking-wider">
-                        Price
-                      </span>
-                      <p className="font-black text-slate-900 text-base">
-                        {item.sizes && item.sizes.length > 0
-                          ? formatCurrency(
-                              Math.min(...item.sizes.map((s) => s.price))
-                            )
-                          : formatCurrency(item.base_price)}
-                      </p>
-                    </div>
-
-                    {item.is_available && (
-                      <div>
-                        {quantity === 0 ? (
-                          <button
-                            onClick={() =>
-                              hasVariations
-                                ? handleItemClick(item)
-                                : handleAddSimple(item)
-                            }
-                            className="px-4 py-2 border-2 border-indigo-600 text-indigo-600 hover:bg-indigo-600 hover:text-white font-bold text-xs rounded-xl transition-all shadow-xs active:scale-95 flex items-center space-x-1"
-                          >
-                            <Plus className="w-3.5 h-3.5" />
-                            <span>ADD</span>
-                          </button>
-                        ) : (
-                          <div className="flex items-center bg-indigo-600 text-white rounded-xl shadow-xs">
-                            <button
-                              onClick={() => handleRemoveItem(item.id)}
-                              className="px-2.5 py-1.5 hover:bg-indigo-700 rounded-l-xl transition-colors"
-                            >
-                              <Minus className="w-3.5 h-3.5" />
-                            </button>
-                            <span className="px-2.5 font-bold text-xs">
-                              {quantity}
-                            </span>
-                            <button
-                              onClick={() =>
-                                hasVariations
-                                  ? handleItemClick(item)
-                                  : handleAddSimple(item)
-                              }
-                              className="px-2.5 py-1.5 hover:bg-indigo-700 rounded-r-xl transition-colors"
-                            >
-                              <Plus className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+          <div
+            className={`grid gap-4 sm:gap-6 ${
+              viewVariant === 'pos'
+                ? 'grid-cols-2 sm:grid-cols-4 md:grid-cols-6'
+                : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+            }`}
+          >
+            {filteredItems.map((item: any) => (
+              <DishCard
+                key={item.id}
+                dish={{
+                  ...item,
+                  price: item.price || item.base_price || 0,
+                  image_url: item.image_url || getFoodImage(item.name, item.category),
+                }}
+                variant={viewVariant}
+                onAddToCart={(d) => handleItemClick(d)}
+                currencySymbol="$"
+              />
+            ))}
           </div>
         )}
       </main>
 
-      {/* Cart Modal */}
-      <CartModal
-        isOpen={showCart}
-        cart={cart}
-        onClose={() => setShowCart(false)}
+      {/* Floating Bottom Cart Bar for Mobile */}
+      {cartCount > 0 && (
+        <div className="fixed bottom-4 left-4 right-4 max-w-md mx-auto z-40 sm:hidden">
+          <button
+            onClick={() => setShowCartDrawer(true)}
+            className="w-full bg-stone-900 text-white p-3.5 rounded-2xl shadow-2xl flex items-center justify-between border border-stone-700 transition-all active:scale-[0.99]"
+          >
+            <div className="flex items-center space-x-3">
+              <div className="bg-red-600 text-white font-extrabold text-xs w-7 h-7 rounded-xl flex items-center justify-center shadow-xs">
+                {cartCount}
+              </div>
+              <div className="text-left">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-stone-400 block -mb-0.5">Order Total</span>
+                <span className="font-extrabold text-base text-amber-400">
+                  ${cartSubtotal.toFixed(2)}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-1 text-xs font-bold text-stone-200 bg-white/10 px-3 py-1.5 rounded-xl">
+              <span>View Order</span>
+              <ChevronRight className="w-4 h-4" />
+            </div>
+          </button>
+        </div>
+      )}
+
+      {/* Slide-Over POS Order Drawer (Ref: Screenshot 4) */}
+      <OrderDrawer
+        isOpen={showCartDrawer}
+        onClose={() => setShowCartDrawer(false)}
+        items={cart.map((c) => ({
+          id: c.id,
+          name: c.name,
+          price: c.itemTotal || c.base_price || (c as any).price || 0,
+          quantity: c.quantity,
+          category: c.category,
+          image_url: c.image_url,
+        }))}
         onUpdateQuantity={updateQuantity}
-        onRemove={removeFromCart}
+        onRemoveItem={removeFromCart}
+        diningOption={diningOption}
+        onChangeDiningOption={setDiningOption}
         onCheckout={() => {
-          setShowCart(false);
+          setShowCartDrawer(false);
           setShowCheckout(true);
         }}
+        currencySymbol="$"
       />
 
       {/* Item Customization Modal */}
@@ -433,140 +408,7 @@ const CustomerMenu: React.FC = () => {
           setShowCheckout(false);
         }}
       />
-
-      {/* Bottom Floating Order Cart Bar */}
-      {cartCount > 0 && (
-        <div className="fixed bottom-4 left-4 right-4 max-w-screen-md mx-auto z-40">
-          <button
-            onClick={() => setShowCart(true)}
-            className="w-full bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white p-3.5 rounded-2xl shadow-2xl flex items-center justify-between border border-indigo-500/30 transition-all active:scale-[0.99]"
-          >
-            <div className="flex items-center space-x-3">
-              <div className="bg-white text-indigo-700 font-extrabold text-xs w-7 h-7 rounded-xl flex items-center justify-center shadow-xs">
-                {cartCount}
-              </div>
-              <div className="text-left">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-indigo-200 block -mb-0.5">Total</span>
-                <span className="font-black text-base sm:text-lg">
-                  {formatCurrency(
-                    cart.reduce(
-                      (sum, item) => sum + item.itemTotal * item.quantity,
-                      0
-                    )
-                  )}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center space-x-1.5 text-xs sm:text-sm font-bold bg-white/10 px-3.5 py-1.5 rounded-xl border border-white/10">
-              <span>View Cart</span>
-              <ChevronRight className="w-4 h-4" />
-            </div>
-          </button>
-        </div>
-      )}
     </div>
-  );
-};
-
-// Cart Modal Component
-interface CartModalProps {
-  isOpen: boolean;
-  cart: CartItem[];
-  onClose: () => void;
-  onUpdateQuantity: (index: number, delta: number) => void;
-  onRemove: (index: number) => void;
-  onCheckout: () => void;
-}
-
-const CartModal: React.FC<CartModalProps> = ({
-  isOpen,
-  cart,
-  onClose,
-  onUpdateQuantity,
-  onRemove,
-  onCheckout,
-}) => {
-  const total = cart.reduce(
-    (sum, item) => sum + item.itemTotal * item.quantity,
-    0
-  );
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Your Order Cart" size="lg">
-      <div className="space-y-6">
-        {cart.length === 0 ? (
-          <div className="text-center py-10">
-            <ShoppingCart className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <p className="text-sm font-bold text-slate-700">Your cart is empty</p>
-            <p className="text-xs text-slate-400 mt-1">Browse the menu and add items to begin.</p>
-          </div>
-        ) : (
-          <>
-            <div className="space-y-3 max-h-[380px] overflow-y-auto no-scrollbar pr-1">
-              {cart.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-start space-x-3.5 p-3.5 bg-slate-50 rounded-xl border border-slate-200/70"
-                >
-                  <div className="flex-1 text-xs">
-                    <h4 className="font-extrabold text-slate-900 text-sm">{item.name}</h4>
-                    {item.selectedSize && (
-                      <p className="text-slate-500 mt-0.5">
-                        Size: <span className="font-semibold text-slate-700">{item.selectedSize.name}</span>
-                      </p>
-                    )}
-                    {item.selectedAddons.length > 0 && (
-                      <p className="text-slate-500 mt-0.5">
-                        Add-ons: <span className="font-semibold text-slate-700">{item.selectedAddons.map((a) => a.name).join(", ")}</span>
-                      </p>
-                    )}
-                    <p className="text-indigo-600 font-extrabold text-xs mt-1">
-                      {formatCurrency(item.itemTotal)}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center space-x-2 bg-white rounded-lg border border-slate-200 p-1">
-                    <button
-                      onClick={() => onUpdateQuantity(index, -1)}
-                      className="p-1 rounded text-slate-500 hover:bg-slate-100"
-                    >
-                      <Minus className="w-3.5 h-3.5" />
-                    </button>
-                    <span className="w-6 text-center font-bold text-xs text-slate-900">
-                      {item.quantity}
-                    </span>
-                    <button
-                      onClick={() => onUpdateQuantity(index, 1)}
-                      className="p-1 rounded text-slate-500 hover:bg-slate-100"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <button
-                    onClick={() => onRemove(index)}
-                    className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <div className="border-t border-slate-200 pt-4 space-y-3">
-              <div className="flex justify-between text-base font-black text-slate-900">
-                <span>Subtotal</span>
-                <span className="text-indigo-600">{formatCurrency(total)}</span>
-              </div>
-              <Button onClick={onCheckout} fullWidth size="lg" variant="primary">
-                Proceed to Checkout
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
-    </Modal>
   );
 };
 
@@ -603,79 +445,53 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
     }
   };
 
-  const calculateTotal = () => {
-    const basePrice = selectedSize ? selectedSize.price : item.base_price;
-    const addonsTotal = selectedAddons.reduce(
-      (sum, addon) => sum + addon.price,
-      0
-    );
-    return basePrice + addonsTotal;
-  };
+  const basePrice = selectedSize ? selectedSize.price : ((item as any).price || item.base_price || 0);
+  const addonsTotal = selectedAddons.reduce((sum, a) => sum + a.price, 0);
+  const totalPrice = basePrice + addonsTotal;
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={`Customize ${item.name}`} size="md">
-      <div className="space-y-5">
-        {item.image_url && (
-          <img
-            src={item.image_url}
-            alt={item.name}
-            className="w-full h-44 object-cover rounded-xl border border-slate-100"
-          />
-        )}
-
-        {item.description && (
-          <p className="text-xs text-slate-500 leading-relaxed">{item.description}</p>
-        )}
-
-        {/* Sizes Selection */}
+      <div className="space-y-6">
         {item.sizes && item.sizes.length > 0 && (
           <div>
-            <h4 className="font-bold text-xs uppercase tracking-wider text-slate-900 mb-2.5">Select Size / Portion</h4>
-            <div className="space-y-2">
-              {item.sizes.map((size) => {
-                const isSelected = selectedSize?.name === size.name;
-                return (
-                  <button
-                    key={size.name}
-                    onClick={() => setSelectedSize(size)}
-                    className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-xs transition-all ${
-                      isSelected
-                        ? "border-indigo-600 bg-indigo-50/70 text-indigo-950 font-bold ring-1 ring-indigo-600/30"
-                        : "border-slate-200 hover:border-slate-300 text-slate-700"
-                    }`}
-                  >
-                    <span>{size.name}</span>
-                    <span className="font-extrabold text-indigo-600">
-                      {formatCurrency(size.price)}
-                    </span>
-                  </button>
-                );
-              })}
+            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Select Portion Size</h4>
+            <div className="grid grid-cols-2 gap-2">
+              {item.sizes.map((size) => (
+                <button
+                  key={size.name}
+                  onClick={() => setSelectedSize(size)}
+                  className={`p-3 rounded-xl border text-left transition-all ${
+                    selectedSize?.name === size.name
+                      ? "border-red-600 bg-red-50/50 text-red-900 font-semibold shadow-xs"
+                      : "border-stone-200 text-stone-700 hover:bg-stone-50"
+                  }`}
+                >
+                  <p className="text-xs">{size.name}</p>
+                  <p className="text-sm font-bold text-stone-900 mt-0.5">${size.price.toFixed(2)}</p>
+                </button>
+              ))}
             </div>
           </div>
         )}
 
-        {/* Addons Selection */}
         {item.addons && item.addons.length > 0 && (
           <div>
-            <h4 className="font-bold text-xs uppercase tracking-wider text-slate-900 mb-2.5">Extra Add-ons</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-stone-500 mb-2">Select Extra Add-ons</h4>
             <div className="space-y-2">
               {item.addons.map((addon) => {
-                const isSelected = !!selectedAddons.find((a) => a.name === addon.name);
+                const isSelected = selectedAddons.some((a) => a.name === addon.name);
                 return (
                   <button
                     key={addon.name}
                     onClick={() => toggleAddon(addon)}
-                    className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-xs transition-all ${
+                    className={`w-full p-3 rounded-xl border text-left flex items-center justify-between transition-all ${
                       isSelected
-                        ? "border-indigo-600 bg-indigo-50/70 text-indigo-950 font-bold ring-1 ring-indigo-600/30"
-                        : "border-slate-200 hover:border-slate-300 text-slate-700"
+                        ? "border-red-600 bg-red-50/50 text-red-900 font-semibold"
+                        : "border-stone-200 text-stone-700 hover:bg-stone-50"
                     }`}
                   >
-                    <span>{addon.name}</span>
-                    <span className="font-extrabold text-indigo-600">
-                      +{formatCurrency(addon.price)}
-                    </span>
+                    <span className="text-xs">{addon.name}</span>
+                    <span className="text-xs font-bold">+${addon.price.toFixed(2)}</span>
                   </button>
                 );
               })}
@@ -683,16 +499,15 @@ const ItemCustomizationModal: React.FC<ItemCustomizationModalProps> = ({
           </div>
         )}
 
-        <div className="border-t border-slate-200 pt-4">
-          <div className="flex justify-between text-base font-black text-slate-900 mb-4">
-            <span>Item Price</span>
-            <span className="text-indigo-600">{formatCurrency(calculateTotal())}</span>
+        <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
+          <div>
+            <span className="text-[10px] text-stone-400 uppercase font-bold">Total Price</span>
+            <p className="text-lg font-black text-stone-900">${totalPrice.toFixed(2)}</p>
           </div>
           <Button
             onClick={() => onAdd(item, selectedSize, selectedAddons)}
-            fullWidth
-            size="lg"
-            variant="primary"
+            variant="emerald"
+            className="bg-red-600 hover:bg-red-700 text-white font-bold"
           >
             Add to Order
           </Button>
@@ -718,29 +533,20 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
   onClose,
   onSuccess,
 }) => {
-  const tableParam = new URLSearchParams(window.location.search).get("table");
-  const [tableNumber, setTableNumber] = useState(tableParam || "");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
-  const [orderType, setOrderType] = useState<"table" | "takeaway">("table");
+  const [tableNumber, setTableNumber] = useState("");
   const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
+  const [orderComplete, setOrderComplete] = useState(false);
 
-  const subtotal = cart.reduce(
-    (sum, item) => sum + item.itemTotal * item.quantity,
-    0
-  );
-  const tax = subtotal * 0.05; // 5% GST
-  const total = subtotal + tax;
+  const total = cart.reduce((sum, item) => sum + (item.itemTotal || item.base_price || (item as any).price || 0) * item.quantity, 0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-
-    if (!customerName.trim()) {
-      setError("Please enter your name");
+    if (!customerName || !customerPhone) {
+      setError("Please fill in your name and phone number");
       return;
     }
 
@@ -749,199 +555,106 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({
       return;
     }
 
-    if (orderType === "table" && !tableNumber.trim()) {
-      setError("Please enter table number");
-      return;
-    }
-
-    setLoading(true);
+    setSubmitting(true);
+    setError("");
 
     const orderData = {
       restaurant_id: restaurantId,
-      order_type: (orderType === "table" ? "qr" : "counter") as
-        | "qr"
-        | "counter",
-      table_number: orderType === "table" ? tableNumber : undefined,
       customer_name: customerName,
       customer_phone: customerPhone,
-      items: cart.map((item) => ({
-        menu_item_id: item.id,
-        name: item.name,
-        quantity: item.quantity,
-        base_price: item.base_price,
-        selected_size: item.selectedSize,
-        selected_addons: item.selectedAddons,
-        item_total: item.itemTotal,
-        special_instructions: undefined,
+      table_number: tableNumber ? parseInt(tableNumber) : null,
+      items: cart.map((ci) => ({
+        id: ci.id,
+        name: ci.name,
+        quantity: ci.quantity,
+        price: ci.itemTotal || ci.base_price || (ci as any).price || 0,
+        selectedSize: ci.selectedSize,
+        selectedAddons: ci.selectedAddons,
       })),
-      subtotal,
-      tax,
-      total,
-      customer_notes: notes,
+      total: total * 1.1,
+      status: "pending",
+      payment_status: "pending",
+      notes,
     };
 
-    const { error: orderError } = await createOrder(orderData);
-    setLoading(false);
+    const { error: orderErr } = await createOrder(orderData as any);
 
-    if (!orderError) {
-      setSuccess(true);
+    if (orderErr) {
+      setError("Failed to place order. Please try again.");
+      setSubmitting(false);
+    } else {
+      setOrderComplete(true);
+      setSubmitting(false);
       setTimeout(() => {
         onSuccess();
-        resetForm();
+        setOrderComplete(false);
       }, 2500);
-    } else {
-      setError(orderError?.message || "Failed to place order");
     }
   };
 
-  const resetForm = () => {
-    setCustomerName("");
-    setCustomerPhone("");
-    setTableNumber("");
-    setNotes("");
-    setOrderType("table");
-    setSuccess(false);
-  };
-
-  if (success) {
-    return (
-      <Modal isOpen={isOpen} onClose={onClose} title="Order Confirmed!" size="md">
-        <div className="text-center py-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 mb-4">
-            <CheckCircle2 className="w-10 h-10" />
-          </div>
-          <h3 className="text-2xl font-extrabold text-slate-900 mb-2">
-            Order Sent to Kitchen!
-          </h3>
-          <p className="text-xs text-slate-500 mb-6 leading-relaxed max-w-sm mx-auto">
-            Your order has been submitted directly to the kitchen display. Sit back and enjoy your meal!
-          </p>
-          <Button onClick={onClose} fullWidth variant="primary">
-            Done
-          </Button>
-        </div>
-      </Modal>
-    );
-  }
-
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Checkout & Confirm" size="lg">
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {error && <Alert type="error" message={error} />}
+    <Modal isOpen={isOpen} onClose={onClose} title="Complete Order" size="md">
+      {orderComplete ? (
+        <div className="text-center py-8 space-y-3">
+          <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto animate-bounce" />
+          <h3 className="text-xl font-extrabold text-stone-900">Order Placed Successfully!</h3>
+          <p className="text-xs text-stone-500">Your order has been sent to the kitchen. Bon Appétit!</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {error && <Alert type="error" message={error} />}
 
-        {/* Order Type Selection */}
-        <div>
-          <label className="label mb-2">Dining Preference</label>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => setOrderType("table")}
-              className={`p-3.5 rounded-xl border text-xs font-bold transition-all ${
-                orderType === "table"
-                  ? "border-indigo-600 bg-indigo-50/70 text-indigo-700 ring-1 ring-indigo-600/30"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              Dine In (Table Service)
-            </button>
-            <button
-              type="button"
-              onClick={() => setOrderType("takeaway")}
-              className={`p-3.5 rounded-xl border text-xs font-bold transition-all ${
-                orderType === "takeaway"
-                  ? "border-indigo-600 bg-indigo-50/70 text-indigo-700 ring-1 ring-indigo-600/30"
-                  : "border-slate-200 text-slate-600 hover:bg-slate-50"
-              }`}
-            >
-              Takeaway / Counter Pickup
-            </button>
+          <div>
+            <label className="label">Your Name *</label>
+            <Input
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              placeholder="e.g. John Doe"
+              required
+            />
           </div>
-        </div>
 
-        {/* Table Number */}
-        {orderType === "table" && (
-          <Input
-            label="Table Number"
-            value={tableNumber}
-            onChange={(e) => setTableNumber(e.target.value)}
-            placeholder="e.g., Table 5"
-            required
-          />
-        )}
-
-        {/* Customer Info */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          <Input
-            label="Your Name"
-            value={customerName}
-            onChange={(e) => setCustomerName(e.target.value)}
-            placeholder="Enter your name"
-            required
-          />
-
-          <Input
-            label="Phone Number"
-            type="tel"
-            value={customerPhone}
-            onChange={(e) => setCustomerPhone(e.target.value)}
-            placeholder="10-digit mobile number"
-            required
-            helperText="For order updates & confirmation"
-          />
-        </div>
-
-        {/* Special Instructions */}
-        <div>
-          <label className="label mb-1.5">Chef Instructions (Optional)</label>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Less spicy, extra napkins, allergies..."
-            rows={2}
-            className="input min-h-[80px]"
-          />
-        </div>
-
-        {/* Order Summary Breakdown */}
-        <div className="bg-slate-50 rounded-xl p-4 border border-slate-200/70 space-y-2 text-xs">
-          <h4 className="font-bold text-slate-900 uppercase tracking-wider mb-2">Order Items</h4>
-          {cart.map((item, index) => (
-            <div key={index} className="flex justify-between text-slate-600">
-              <span>
-                {item.quantity}x {item.name}
-                {item.selectedSize && ` (${item.selectedSize.name})`}
-              </span>
-              <span className="font-semibold text-slate-900">
-                {formatCurrency(item.itemTotal * item.quantity)}
-              </span>
-            </div>
-          ))}
-          <div className="border-t border-slate-200 pt-2 mt-2 space-y-1">
-            <div className="flex justify-between text-slate-500">
-              <span>Subtotal</span>
-              <span>{formatCurrency(subtotal)}</span>
-            </div>
-            <div className="flex justify-between text-slate-500">
-              <span>Tax (GST 5%)</span>
-              <span>{formatCurrency(tax)}</span>
-            </div>
-            <div className="flex justify-between text-base font-black text-slate-900 pt-1.5 border-t border-slate-200">
-              <span>Total Payable</span>
-              <span className="text-indigo-600">{formatCurrency(total)}</span>
-            </div>
+          <div>
+            <label className="label">Phone Number *</label>
+            <Input
+              value={customerPhone}
+              onChange={(e) => setCustomerPhone(e.target.value)}
+              placeholder="10-digit mobile number"
+              required
+            />
           </div>
-        </div>
 
-        {/* Actions */}
-        <div className="flex gap-3 pt-1">
-          <Button type="button" variant="outline" onClick={onClose} fullWidth>
-            Back
-          </Button>
-          <Button type="submit" variant="primary" loading={loading} fullWidth size="lg">
-            Confirm & Send Order
-          </Button>
-        </div>
-      </form>
+          <div>
+            <label className="label">Table Number (Optional)</label>
+            <Input
+              type="number"
+              value={tableNumber}
+              onChange={(e) => setTableNumber(e.target.value)}
+              placeholder="e.g. 5"
+            />
+          </div>
+
+          <div>
+            <label className="label">Special Instructions</label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="e.g. Less spicy, extra sauce"
+              className="input min-h-[80px]"
+            />
+          </div>
+
+          <div className="pt-4 border-t border-stone-200 flex items-center justify-between">
+            <div>
+              <span className="text-[10px] text-stone-400 uppercase font-bold">Total with Tax</span>
+              <p className="text-xl font-black text-red-600">${(total * 1.1).toFixed(2)}</p>
+            </div>
+            <Button type="submit" disabled={submitting} className="bg-red-600 hover:bg-red-700 text-white font-bold">
+              {submitting ? "Placing..." : "Confirm & Send to Kitchen"}
+            </Button>
+          </div>
+        </form>
+      )}
     </Modal>
   );
 };
