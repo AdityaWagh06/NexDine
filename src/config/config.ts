@@ -6,13 +6,13 @@ const rawUrl = import.meta.env.VITE_SUPABASE_URL || "";
 export const SUPABASE_URL =
   rawUrl && (rawUrl.startsWith("http://") || rawUrl.startsWith("https://"))
     ? rawUrl
-    : "https://demo.supabase.co";
+    : "https://efnjikqnwkesapnxwcjh.supabase.co";
 
 const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
 export const SUPABASE_ANON_KEY =
   rawKey && rawKey !== "YOUR_SUPABASE_ANON_KEY"
     ? rawKey
-    : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYwMDAwMDAwMH0.dummy_key";
+    : "sb_publishable_9nzHWPGcK8wQtXSAjWc05w_xc7gwpm-";
 
 // Application Configuration
 export const APP_CONFIG = {
