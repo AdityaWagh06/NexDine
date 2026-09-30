@@ -121,256 +121,120 @@ const LandingPage: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none z-0 bg-grid-pattern opacity-60" />
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-amber-500/10 via-orange-400/5 to-transparent blur-[140px] rounded-full pointer-events-none z-0 animate-pulse-glow" />
 
-      {/* Top Header Floating Glassmorphic Navbar */}
-      <div className="sticky top-4 z-50 px-4 max-w-6xl mx-auto transition-all duration-300">
-        <nav className="bg-stone-900/60 backdrop-blur-2xl border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.5)] rounded-2xl px-5 sm:px-7 py-3 transition-all">
-          <div className="flex items-center justify-between">
-            {/* Brand Logo */}
-            <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-9 h-9 rounded-xl bg-amber-400 p-1.5 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden border border-white/30">
-                <img src={BRAND_CONFIG.logoUrl} alt={BRAND_CONFIG.appName} className="w-full h-full object-contain brightness-0 filter" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg font-black tracking-tight text-white flex items-center gap-1.5 drop-shadow-sm">
-                  {BRAND_CONFIG.appName}
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block" />
-                </span>
-                <span className="text-[9px] font-extrabold text-amber-300 tracking-wider uppercase -mt-1 hidden sm:block">
-                  Smart Table Ordering
-                </span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation Links — Frosted Glass Pills */}
-            <div className="hidden md:flex items-center space-x-1.5 bg-white/10 p-1 rounded-xl border border-white/15 backdrop-blur-xl">
-              <a
-                href="#how-it-works"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
-              >
-                How it works
-              </a>
-              <a
-                href="#features"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
-              >
-                Features
-              </a>
-              <a
-                href="#pricing"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
-              >
-                Pricing
-              </a>
-              <Link
-                to="/login"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
-              >
-                Sign in
-              </Link>
-            </div>
-
-            {/* Action CTA */}
-            <div className="flex items-center space-x-3">
-              <Link to="/register">
-                <button
-                  className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-extrabold shadow-lg shadow-amber-500/25 hover:scale-105 transition-all rounded-xl px-5 py-2.5 text-xs flex items-center gap-1.5 border border-amber-300/40"
-                >
-                  <span>Start Free</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </Link>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-xl text-stone-200 hover:text-white hover:bg-white/10 transition-colors"
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-              </button>
-            </div>
+      {/* Taverna Style Header Navbar */}
+      <header className="bg-[#374953] text-white border-b border-white/10 sticky top-0 z-50 shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between">
+          {/* Left Navigation Links */}
+          <div className="hidden md:flex items-center space-x-6 text-xs font-semibold uppercase tracking-wider text-stone-200">
+            <a href="#how-it-works" className="hover:text-white transition-colors">Menu</a>
+            <a href="#interactive-demo" className="hover:text-white transition-colors">Interactive Demo</a>
+            <a href="#features" className="hover:text-white transition-colors">Features</a>
           </div>
 
-          {/* Mobile Dropdown Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden pt-4 pb-2 px-1 space-y-2 border-t border-white/15 mt-3 text-white">
-              <a
-                href="#how-it-works"
-                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                How it works
-              </a>
-              <a
-                href="#features"
-                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Features
-              </a>
-              <a
-                href="#pricing"
-                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Pricing
-              </a>
-              <Link
-                to="/login"
-                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                Sign in
-              </Link>
-            </div>
-          )}
-        </nav>
-      </div>
+          {/* Centered Brand Logo (Ref: Taverna Layout) */}
+          <Link to="/" className="flex flex-col items-center justify-center text-center group mx-auto md:mx-0">
+            <span className="text-xl sm:text-2xl font-serif tracking-[0.25em] text-white font-normal uppercase leading-tight group-hover:text-amber-200 transition-colors">
+              NEXTDINE
+            </span>
+            <span className="text-[9px] font-sans tracking-[0.35em] text-stone-300 uppercase -mt-0.5">
+              RESTAURANT
+            </span>
+          </Link>
 
-      {/* Hero Section — Custom Ultra-Modern SaaS Showcase Aesthetic */}
-      <section className="relative -mt-20 pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-[#080D0A] z-10 border-b border-white/10">
-        {/* Ambient Spotlights & Vector Mesh Grid */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[850px] h-[450px] bg-gradient-to-b from-amber-500/15 via-emerald-500/10 to-transparent blur-[140px] rounded-full" />
-          <div className="absolute bottom-0 right-10 w-[500px] h-[300px] bg-emerald-500/10 blur-[130px] rounded-full" />
-          <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] opacity-10 [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+          {/* Right Navigation Links & CTA */}
+          <div className="hidden md:flex items-center space-x-6 text-xs font-semibold uppercase tracking-wider text-stone-200">
+            <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+            <Link to="/login" className="hover:text-white transition-colors">Sign in</Link>
+            <Link to="/register">
+              <button className="bg-amber-400 hover:bg-amber-300 text-stone-950 font-extrabold text-xs px-4 py-2 rounded-full shadow-md transition-all uppercase tracking-wider">
+                Start Free
+              </button>
+            </Link>
+          </div>
+
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-white hover:text-amber-300 transition-colors"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+          </button>
         </div>
 
-        {/* Hero Centered Container */}
-        <div className="container-custom relative z-10 max-w-5xl mx-auto px-4 sm:px-6 text-center space-y-8">
+        {/* Mobile Dropdown */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-[#2D3C44] px-6 py-4 space-y-3 border-t border-white/10 text-xs uppercase font-semibold text-stone-200">
+            <a href="#how-it-works" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Menu</a>
+            <a href="#interactive-demo" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Interactive Demo</a>
+            <a href="#features" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Features</a>
+            <a href="#pricing" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
+            <Link to="/login" className="block hover:text-white" onClick={() => setMobileMenuOpen(false)}>Sign in</Link>
+            <Link to="/register" className="block pt-2">
+              <button className="w-full bg-amber-400 text-stone-950 font-extrabold py-2.5 rounded-full text-xs uppercase tracking-wider">
+                Start Free Trial
+              </button>
+            </Link>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section — Taverna Full-Bleed Restaurant Interior Aesthetic */}
+      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden text-center z-10 bg-stone-950">
+        {/* Full-bleed Luxury Restaurant Photography Background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <img
+            src="/taverna_hero_bg.jpg"
+            alt="Taverna Luxury Restaurant Interior"
+            className="w-full h-full object-cover object-center filter brightness-90 contrast-105 scale-105"
+          />
+          {/* Subtle contrast overlay matching reference screenshot */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1C2830]/60 via-[#141E24]/35 to-[#0F171C]/75" />
+        </div>
+
+        {/* Center Hero Title Container */}
+        <div className="container-custom relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-20 space-y-6">
           
-          {/* Top Pill Badge */}
-          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-2xl border border-white/20 text-amber-300 text-xs font-extrabold shadow-xl hover:bg-white/15 transition-all">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-            <Sparkles className="w-4 h-4 text-amber-400" />
-            <span className="uppercase tracking-wider">NextDine OS 2.0 • Modern Restaurant Platform</span>
+          {/* Main Short Elegant Title (Ref: TAVERNA RESTAURANT) */}
+          <div className="space-y-1">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-serif tracking-[0.2em] text-white font-normal uppercase drop-shadow-2xl leading-none">
+              NEXTDINE
+            </h1>
+            <p className="text-sm sm:text-xl font-sans tracking-[0.4em] text-stone-200 font-extrabold uppercase drop-shadow-md">
+              RESTAURANT PLATFORM
+            </p>
           </div>
 
-          {/* Main Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.08] max-w-4xl mx-auto drop-shadow-2xl">
-            Transform table ordering.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-200 to-emerald-300 drop-shadow-lg">
-              Delight guests, calm your kitchen.
-            </span>
-          </h1>
-
-          {/* Subtitle */}
-          <p className="text-base sm:text-xl text-emerald-100/90 max-w-2xl mx-auto font-medium leading-relaxed drop-shadow-md">
-            Instant table QR code ordering for your guests. Real-time Kitchen Display System (KDS) for your culinary team. Zero app downloads, zero hardware lock-in.
+          {/* Subhead */}
+          <p className="text-sm sm:text-lg text-stone-200 max-w-xl mx-auto font-medium leading-relaxed drop-shadow-md">
+            Smart Table QR Ordering & Real-Time Kitchen Display System
           </p>
 
-          {/* Primary Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-2">
+          {/* Action Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-4">
             <Link to="/register" className="w-full sm:w-auto">
               <button
-                className="w-full sm:w-auto bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-black text-base px-9 py-4 rounded-2xl shadow-[0_12px_40px_rgba(245,158,11,0.35)] hover:scale-[1.02] transition-all flex items-center justify-center space-x-2 border border-amber-300/60"
+                className="w-full sm:w-auto bg-white hover:bg-stone-100 text-stone-950 font-black text-xs uppercase tracking-widest px-8 py-3.5 rounded-full shadow-2xl hover:scale-105 transition-all border border-white"
               >
-                <span>Start Free Trial</span>
-                <ArrowRight className="w-5 h-5 ml-1 text-stone-950" />
+                Start Free Trial
               </button>
             </Link>
 
             <a href="#interactive-demo" className="w-full sm:w-auto">
               <button
-                className="w-full sm:w-auto bg-white/10 hover:bg-white/15 backdrop-blur-2xl border border-white/20 text-white font-bold text-base px-7 py-4 rounded-2xl hover:border-amber-400/40 transition-all flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/40 text-white font-bold text-xs uppercase tracking-widest px-8 py-3.5 rounded-full transition-all"
               >
-                <Zap className="w-4 h-4 text-amber-400 fill-amber-400" />
-                <span>Try Interactive Playground</span>
+                Explore Platform
               </button>
             </a>
           </div>
 
-          {/* Trust Metrics Bar */}
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs text-emerald-200/90 font-semibold border-t border-white/10 max-w-3xl mx-auto">
-            <div className="flex items-center space-x-1.5">
-              <span className="text-amber-300 font-black tracking-wider text-sm">★★★★★</span>
-              <span className="text-white font-bold">4.9/5</span>
-              <span>(450+ Active Outlets)</span>
-            </div>
-            <span className="hidden sm:inline text-emerald-400/30">•</span>
-            <div className="flex items-center space-x-1.5">
-              <Zap className="w-3.5 h-3.5 text-amber-400" />
-              <span>&lt; 0.2s Instant KDS Sync</span>
-            </div>
-            <span className="hidden sm:inline text-emerald-400/30">•</span>
-            <div className="flex items-center space-x-1.5">
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Works on any smartphone</span>
-            </div>
-          </div>
-
-          {/* Custom Interactive HUD Showcase Spotlight */}
-          <div className="pt-8 max-w-4xl mx-auto relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 via-emerald-500/20 to-amber-400/20 rounded-3xl blur-3xl opacity-70 animate-pulse-glow" />
-
-            <div className="relative z-20 bg-stone-950/90 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 sm:p-8 shadow-[0_30px_90px_rgba(0,0,0,0.8)] text-left space-y-6">
-              {/* Header Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-stone-800 pb-4">
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-black">
-                    ND
-                  </div>
-                  <div>
-                    <h3 className="font-extrabold text-base text-white flex items-center gap-2">
-                      Royal Spice Bistro
-                      <span className="text-[10px] font-black text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-500/40">
-                        Live System
-                      </span>
-                    </h3>
-                    <p className="text-xs text-stone-400">Table #4 • Active Order Session</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center space-x-2 text-xs">
-                  <span className="px-3 py-1 rounded-xl bg-stone-900 border border-stone-800 text-stone-300 font-bold">
-                    ⚡ Sync: &lt;0.2s
-                  </span>
-                  <span className="px-3 py-1 rounded-xl bg-emerald-500/20 text-emerald-300 font-extrabold border border-emerald-500/30">
-                    🟢 Connected
-                  </span>
-                </div>
-              </div>
-
-              {/* Grid Live Cards */}
-              <div className="grid md:grid-cols-3 gap-4">
-                {/* Card 1: Guest Scan */}
-                <div className="bg-stone-900/90 rounded-2xl p-4 border border-stone-800 space-y-3 shadow-inner">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-amber-300">1. Guest Scan</span>
-                    <QrCode className="w-4 h-4 text-stone-400" />
-                  </div>
-                  <p className="text-xs text-stone-300">Guest scans table QR code with native phone camera.</p>
-                  <div className="bg-stone-950 p-2.5 rounded-xl text-[11px] text-emerald-300 border border-emerald-500/20 font-mono">
-                    ✓ Menu loaded (0.1s)
-                  </div>
-                </div>
-
-                {/* Card 2: Self Order */}
-                <div className="bg-stone-900/90 rounded-2xl p-4 border border-stone-800 space-y-3 shadow-inner">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-amber-300">2. Self Order</span>
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  </div>
-                  <p className="text-xs text-stone-300">Paneer Butter Masala x2 + Naan x4 added to cart.</p>
-                  <div className="bg-amber-500/10 p-2.5 rounded-xl text-[11px] text-amber-300 border border-amber-500/30 font-bold flex justify-between">
-                    <span>Total: ₹680</span>
-                    <span>Sent →</span>
-                  </div>
-                </div>
-
-                {/* Card 3: Kitchen Sync */}
-                <div className="bg-stone-900/90 rounded-2xl p-4 border border-stone-800 space-y-3 shadow-inner">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold text-amber-300">3. Kitchen Display</span>
-                    <ChefHat className="w-4 h-4 text-amber-400" />
-                  </div>
-                  <p className="text-xs text-stone-300">Ticket pops up instantly on chef's Kitchen Display System.</p>
-                  <div className="bg-emerald-500/20 p-2.5 rounded-xl text-[11px] text-emerald-300 border border-emerald-500/30 font-bold">
-                    🍳 Ticket #104 (Cooking)
-                  </div>
-                </div>
-              </div>
-
-            </div>
+          {/* Trust proof line */}
+          <div className="pt-6 flex items-center justify-center space-x-6 text-xs text-stone-300 font-semibold drop-shadow-sm">
+            <span>★★★★★ Rated 4.9/5</span>
+            <span>•</span>
+            <span>450+ Active Outlets</span>
+            <span>•</span>
+            <span>Works On Any Phone</span>
           </div>
 
         </div>
