@@ -7,13 +7,10 @@ import {
   Menu as MenuIcon,
   X,
   Zap,
-  ShieldCheck,
   ChefHat,
-  Flame,
   Sparkles,
   QrCode,
   Calculator,
-  Clock,
   Smartphone,
   ChevronDown,
   ChevronUp,
@@ -312,106 +309,78 @@ const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Column: Floating 3D iPhone HUD Visual */}
+            {/* Right Column: Sleek High-Tech Live Stream Glass HUD (No Phone Frame) */}
             <div className="lg:col-span-5 relative flex items-center justify-center">
               {/* Glowing Background Spotlight */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/30 via-emerald-500/20 to-amber-300/10 rounded-full blur-3xl opacity-75 animate-pulse-glow" />
+              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/25 via-emerald-500/20 to-amber-300/10 rounded-3xl blur-3xl opacity-80 animate-pulse-glow" />
 
-              {/* Floating Glass Pill Badge Top Right */}
-              <div className="absolute -top-4 -right-2 z-30 bg-stone-900/90 backdrop-blur-2xl border border-emerald-500/40 px-4 py-2 rounded-2xl shadow-2xl flex items-center space-x-2 animate-bounce">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-xs font-black text-white">Live KDS Ticket #104</span>
-                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-2 py-0.5 rounded-md border border-emerald-500/30">0.2s</span>
-              </div>
-
-              {/* Floating Glass Pill Badge Bottom Left */}
-              <div className="absolute -bottom-4 -left-4 z-30 bg-stone-900/90 backdrop-blur-2xl border border-amber-400/40 px-4 py-2 rounded-2xl shadow-2xl flex items-center space-x-3">
-                <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
-                  <Flame className="w-4 h-4" />
-                </div>
-                <div>
-                  <p className="text-[11px] font-extrabold text-white">Table #4 Active</p>
-                  <p className="text-[9px] text-stone-400 font-semibold">4 Items • ₹680 Order</p>
-                </div>
-              </div>
-
-              {/* Central Pro iPhone 16 Pro Mockup */}
-              <div className="w-full max-w-[320px] h-[580px] bg-stone-950 p-3.5 rounded-[48px] shadow-[0_30px_70px_rgba(0,0,0,0.8)] border-[5px] border-stone-800 relative z-20 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500">
-                {/* Dynamic Island */}
-                <div className="w-24 h-5 bg-black rounded-full mx-auto absolute top-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-between px-2 shadow-xs">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-stone-800" />
+              {/* Glassmorphic HUD Dashboard Card */}
+              <div className="w-full bg-stone-950/85 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 sm:p-7 shadow-[0_25px_60px_rgba(0,0,0,0.7)] relative z-20 space-y-5">
+                {/* HUD Header */}
+                <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-9 h-9 rounded-xl bg-amber-400/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
+                      <Zap className="w-5 h-5 fill-amber-300" />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold text-sm text-white flex items-center gap-2">
+                        Royal Spice Bistro
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                      </h4>
+                      <p className="text-[11px] text-stone-400">Live Table QR Stream • Table #4</p>
+                    </div>
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-1 rounded-full">
+                    Active
+                  </span>
                 </div>
 
-                {/* Inner iPhone Screen */}
-                <div className="bg-[#FAF8F5] rounded-[38px] overflow-hidden pt-7 pb-4 px-3.5 text-stone-900 border border-stone-200 h-full flex flex-col justify-between shadow-inner">
-                  {/* Status Bar */}
-                  <div className="flex items-center justify-between px-1 text-[10px] text-stone-500 font-bold mb-2">
-                    <span>9:41</span>
-                    <div className="flex items-center space-x-1">
-                      <span>5G</span>
-                      <div className="w-3.5 h-2 bg-stone-800 rounded-xs" />
+                {/* Real-time Order Stream Card */}
+                <div className="bg-stone-900/90 rounded-2xl p-4 border border-stone-800 space-y-3 shadow-inner">
+                  <div className="flex items-center justify-between text-xs border-b border-stone-800 pb-2">
+                    <span className="font-bold text-amber-300">Ticket #104</span>
+                    <span className="text-[10px] text-stone-400 font-medium">Just now • Self Order</span>
+                  </div>
+
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between items-center bg-stone-950/60 px-3 py-2 rounded-xl border border-stone-800/80">
+                      <span className="font-semibold text-stone-200">Paneer Butter Masala</span>
+                      <span className="text-amber-400 font-extrabold">2 × ₹260</span>
+                    </div>
+                    <div className="flex justify-between items-center bg-stone-950/60 px-3 py-2 rounded-xl border border-stone-800/80">
+                      <span className="font-semibold text-stone-200">Butter Naan</span>
+                      <span className="text-amber-400 font-extrabold">4 × ₹40</span>
                     </div>
                   </div>
 
-                  {/* Hero App Mockup Content */}
-                  <div className="space-y-3 flex-1 flex flex-col justify-between">
-                    <div>
-                      {/* Outlet Header */}
-                      <div className="bg-stone-900 text-white p-3 rounded-2xl shadow-md flex items-center justify-between mb-3">
-                        <div>
-                          <h4 className="font-black text-xs text-amber-300">Royal Spice Bistro</h4>
-                          <p className="text-[9px] text-stone-300">Table #4 • Self Order</p>
-                        </div>
-                        <span className="text-[9px] font-extrabold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30">
-                          Active
-                        </span>
-                      </div>
-
-                      {/* Mock Dish Items */}
-                      <div className="space-y-2">
-                        <div className="bg-white p-2.5 rounded-xl border border-stone-200 shadow-xs flex items-center justify-between">
-                          <div>
-                            <p className="font-extrabold text-xs text-stone-900">Paneer Butter Masala</p>
-                            <p className="text-[10px] text-amber-700 font-bold">₹260 × 2</p>
-                          </div>
-                          <span className="bg-amber-100 text-amber-900 font-black text-[10px] px-2 py-0.5 rounded-lg border border-amber-200">
-                            ₹520
-                          </span>
-                        </div>
-
-                        <div className="bg-white p-2.5 rounded-xl border border-stone-200 shadow-xs flex items-center justify-between">
-                          <div>
-                            <p className="font-extrabold text-xs text-stone-900">Butter Naan</p>
-                            <p className="text-[10px] text-amber-700 font-bold">₹40 × 4</p>
-                          </div>
-                          <span className="bg-amber-100 text-amber-900 font-black text-[10px] px-2 py-0.5 rounded-lg border border-amber-200">
-                            ₹160
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Instant QR Scan Hologram */}
-                      <div className="mt-3 bg-gradient-to-br from-amber-50 to-orange-50 p-2.5 rounded-2xl border border-amber-200/80 text-center space-y-1.5 shadow-xs">
-                        <p className="text-[9px] font-extrabold text-amber-900 uppercase tracking-wider">Scan & Pay Instantly</p>
-                        <div className="w-16 h-16 mx-auto bg-white p-1.5 rounded-xl shadow-xs border border-amber-200 flex items-center justify-center">
-                          <QrCode className="w-full h-full text-stone-900" />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Bottom CTA Button inside Mockup */}
-                    <div>
-                      <div className="bg-emerald-600 text-white p-2.5 rounded-xl flex items-center justify-between text-xs font-black shadow-md">
-                        <span className="flex items-center gap-1">
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Order Sent to Kitchen</span>
-                        </span>
-                        <span>₹680</span>
-                      </div>
-                      <div className="w-28 h-1 bg-stone-400 rounded-full mx-auto mt-2.5" />
-                    </div>
+                  <div className="flex items-center justify-between pt-1 text-xs">
+                    <span className="text-stone-400 font-semibold">Total Order Amount</span>
+                    <span className="font-black text-white text-sm">₹680</span>
                   </div>
+                </div>
+
+                {/* Live Metrics Grid */}
+                <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="bg-emerald-950/40 border border-emerald-500/30 p-3 rounded-2xl flex flex-col justify-between">
+                    <span className="text-[10px] uppercase font-bold text-emerald-300 tracking-wider">Sync Speed</span>
+                    <span className="text-lg font-black text-white mt-1">&lt; 0.2s</span>
+                    <span className="text-[9px] text-emerald-400 font-medium">Instant KDS Broadcast</span>
+                  </div>
+
+                  <div className="bg-amber-950/40 border border-amber-500/30 p-3 rounded-2xl flex flex-col justify-between">
+                    <span className="text-[10px] uppercase font-bold text-amber-300 tracking-wider">Order Accuracy</span>
+                    <span className="text-lg font-black text-white mt-1">100%</span>
+                    <span className="text-[9px] text-amber-400 font-medium">Zero waiter miscommunication</span>
+                  </div>
+                </div>
+
+                {/* Live Action Bar */}
+                <div className="pt-1 flex items-center justify-between text-xs text-stone-400">
+                  <div className="flex items-center space-x-1.5 text-emerald-400 font-bold">
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Connected to Kitchen Display</span>
+                  </div>
+                  <span className="text-[10px] bg-stone-800 px-2 py-1 rounded-lg text-stone-300">Live Engine</span>
                 </div>
               </div>
             </div>
