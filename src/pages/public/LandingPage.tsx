@@ -124,187 +124,298 @@ const LandingPage: React.FC = () => {
       <div className="fixed inset-0 pointer-events-none z-0 bg-grid-pattern opacity-60" />
       <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[450px] bg-gradient-to-b from-amber-500/10 via-orange-400/5 to-transparent blur-[140px] rounded-full pointer-events-none z-0 animate-pulse-glow" />
 
-      {/* Top Header Navbar — Premium Glassmorphism Navbar */}
-      <nav className="border-b border-white/20 sticky top-0 bg-stone-950/40 backdrop-blur-2xl z-50 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)] transition-all duration-300">
-        <div className="container-custom">
-          <div className="flex items-center justify-between h-16 sm:h-20">
+      {/* Top Header Floating Glassmorphic Navbar */}
+      <div className="sticky top-4 z-50 px-4 max-w-6xl mx-auto transition-all duration-300">
+        <nav className="bg-stone-900/60 backdrop-blur-2xl border border-white/20 shadow-[0_16px_40px_rgba(0,0,0,0.5)] rounded-2xl px-5 sm:px-7 py-3 transition-all">
+          <div className="flex items-center justify-between">
             {/* Brand Logo */}
             <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-10 h-10 rounded-xl bg-amber-400 p-1.5 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform overflow-hidden border border-white/30">
+              <div className="w-9 h-9 rounded-xl bg-amber-400 p-1.5 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden border border-white/30">
                 <img src={BRAND_CONFIG.logoUrl} alt={BRAND_CONFIG.appName} className="w-full h-full object-contain brightness-0 filter" />
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black tracking-tight text-white flex items-center gap-1.5 drop-shadow-sm">
+                <span className="text-lg font-black tracking-tight text-white flex items-center gap-1.5 drop-shadow-sm">
                   {BRAND_CONFIG.appName}
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block" />
                 </span>
-                <span className="text-[10px] font-extrabold text-amber-300 tracking-wider uppercase -mt-1 hidden sm:block">
-                  Smart Restaurant Operations
+                <span className="text-[9px] font-extrabold text-amber-300 tracking-wider uppercase -mt-1 hidden sm:block">
+                  Smart Table Ordering
                 </span>
               </div>
             </Link>
 
-            {/* Desktop Navigation Links — Glass Pills */}
-            <div className="hidden md:flex items-center space-x-2 bg-white/10 p-1.5 rounded-full border border-white/20 backdrop-blur-xl shadow-inner">
+            {/* Desktop Navigation Links — Frosted Glass Pills */}
+            <div className="hidden md:flex items-center space-x-1.5 bg-white/10 p-1 rounded-xl border border-white/15 backdrop-blur-xl">
               <a
                 href="#how-it-works"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
               >
                 How it works
               </a>
               <a
                 href="#features"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
               >
                 Features
               </a>
               <a
                 href="#pricing"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
               >
-                Dashboard
+                Pricing
               </a>
               <Link
                 to="/login"
-                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-full transition-all backdrop-blur-md"
+                className="text-xs font-bold text-stone-200 hover:text-white hover:bg-white/15 px-4 py-2 rounded-lg transition-all"
               >
                 Sign in
               </Link>
-              <Link to="/register">
-                <button
-                  className="bg-white hover:bg-stone-100 text-stone-950 font-extrabold shadow-lg hover:scale-105 transition-all rounded-full px-5 py-2 text-xs border border-white/60"
-                >
-                  Get started
-                </button>
-              </Link>
             </div>
 
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl text-stone-200 hover:text-white hover:bg-white/10 transition-colors"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
-            </button>
+            {/* Action CTA */}
+            <div className="flex items-center space-x-3">
+              <Link to="/register">
+                <button
+                  className="bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-extrabold shadow-lg shadow-amber-500/25 hover:scale-105 transition-all rounded-xl px-5 py-2.5 text-xs flex items-center gap-1.5 border border-amber-300/40"
+                >
+                  <span>Start Free</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </Link>
+
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 rounded-xl text-stone-200 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
 
           {/* Mobile Dropdown Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 px-3 space-y-2 border-t border-white/20 bg-stone-950/80 backdrop-blur-2xl rounded-b-2xl shadow-2xl text-white">
+            <div className="md:hidden pt-4 pb-2 px-1 space-y-2 border-t border-white/15 mt-3 text-white">
               <a
                 href="#how-it-works"
-                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
+                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 How it works
               </a>
               <a
                 href="#features"
-                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
+                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Features
               </a>
               <a
                 href="#pricing"
-                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
+                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Dashboard
+                Pricing
               </a>
               <Link
                 to="/login"
-                className="block px-3 py-2.5 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
+                className="block px-3 py-2 text-sm font-semibold text-stone-200 hover:text-white hover:bg-white/10 rounded-xl"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign in
               </Link>
-              <Link
-                to="/register"
-                className="block pt-2"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <button className="w-full bg-white text-stone-900 font-bold py-3 rounded-full shadow-lg">
-                  Get started
-                </button>
-              </Link>
             </div>
           )}
-        </div>
-      </nav>
+        </nav>
+      </div>
 
-      {/* Hero Section — Classic Dark Monochrome Luxury Building Architecture */}
-      <section className="relative py-24 md:py-36 overflow-hidden min-h-[92vh] flex items-center justify-center z-10 bg-stone-950">
-        {/* Classic Monochrome Dark Luxury Restaurant Building Background */}
+      {/* Hero Section — Pro Luxury SaaS Grid Aesthetic */}
+      <section className="relative -mt-20 pt-32 pb-24 md:pt-40 md:pb-36 overflow-hidden min-h-[95vh] flex items-center justify-center z-10 bg-[#07130E]">
+        {/* Luxury Background Image with Dynamic Gradient Overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src="/classic_dark_bg.jpg"
-            alt="Classic Luxury Monochrome Restaurant Architecture"
-            className="w-full h-full object-cover object-center scale-100 filter brightness-90 contrast-110"
+            src="/pro_hero_bg_lux.jpg"
+            alt="Pro Luxury Fine Dining & Tech Atmosphere"
+            className="w-full h-full object-cover object-center scale-105 filter brightness-90 contrast-110"
           />
-          {/* Subtle Dark Vignette & Gradient Overlays for High Contrast & Readable Text */}
-          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-950/50 to-stone-950/95" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-black/60 pointer-events-none" />
+          {/* Multi-layer ambient lighting overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#06120C]/95 via-[#091A12]/85 to-[#050D08]/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#06120C]/90 via-transparent to-[#050D08]/95" />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/15 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute bottom-1/3 right-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-[130px] pointer-events-none" />
         </div>
 
-        {/* Hero Content — Sitting Directly on Background */}
-        <div className="container-custom relative z-10 max-w-4xl mx-auto text-center space-y-8 px-4">
-          {/* Glassmorphic Pill Badge */}
-          <div className="inline-flex items-center space-x-2.5 px-4.5 py-2 rounded-full bg-white/10 backdrop-blur-xl border border-white/25 text-white text-xs font-semibold shadow-2xl">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="tracking-wider uppercase text-[11px] text-stone-200 font-extrabold">QR ORDERING · BUILT FOR REAL SERVICE</span>
-          </div>
+        {/* Hero 2-Column Container */}
+        <div className="container-custom relative z-10 max-w-6xl mx-auto px-6 sm:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left Column: Copy & CTAs */}
+            <div className="lg:col-span-7 text-left space-y-7">
+              {/* Top Glass Badge */}
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-amber-300 text-xs font-extrabold shadow-lg">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                <span className="uppercase tracking-wider">Next-Gen Dining & KDS Platform</span>
+              </div>
 
-          {/* Headline */}
-          <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-white tracking-tight leading-[1.1] max-w-3xl mx-auto drop-shadow-lg">
-            Every table,<br />
-            one scan{" "}
-            <span className="text-amber-400 relative inline-block">
-              away.
-              <svg className="absolute -bottom-2 left-0 w-full h-3 text-amber-400/90" viewBox="0 0 100 20" preserveAspectRatio="none" fill="none" stroke="currentColor" strokeWidth="4">
-                <path d="M 0 12 Q 50 2 100 12" />
-              </svg>
-            </span>
-          </h1>
+              {/* Headline */}
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight leading-[1.06] drop-shadow-2xl">
+                The whole table,<br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-200 to-emerald-300 drop-shadow-lg">
+                  one scan away.
+                </span>
+              </h1>
 
-          {/* Subtitle */}
-          <p className="text-base sm:text-xl text-stone-300 max-w-2xl mx-auto font-normal leading-relaxed drop-shadow-md">
-            NextDine replaces paper menus and manual order-taking with a QR ordering experience your guests love — and a live dashboard your staff can actually run during a Friday rush.
-          </p>
+              {/* Subtitle */}
+              <p className="text-base sm:text-xl text-emerald-100/90 max-w-xl font-medium leading-relaxed drop-shadow-md">
+                A seamless digital menu for your guests. A calmer, real-time connected kitchen workflow for your staff—no hardware lock-in.
+              </p>
 
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Link to="/register" className="w-full sm:w-auto">
-              <button
-                className="w-full sm:w-auto bg-[#EAB308] hover:bg-amber-400 text-stone-950 font-extrabold text-base px-8 py-4 rounded-full shadow-2xl shadow-amber-500/25 hover:scale-105 transition-all flex items-center justify-center space-x-2 border border-amber-300/60"
-              >
-                <span>Start free — no card needed</span>
-                <ArrowRight className="w-5 h-5 ml-1" />
-              </button>
-            </Link>
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center pt-2">
+                <Link to="/register" className="w-full sm:w-auto">
+                  <button
+                    className="w-full sm:w-auto bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 text-stone-950 font-extrabold text-base px-8 py-4 rounded-xl shadow-[0_10px_30px_rgba(245,158,11,0.35)] hover:scale-[1.02] transition-all flex items-center justify-center space-x-2 border border-amber-300/60"
+                  >
+                    <span>Start Free Trial</span>
+                    <ArrowRight className="w-5 h-5 ml-1 text-stone-950" />
+                  </button>
+                </Link>
 
-            <a href="#interactive-demo" className="w-full sm:w-auto">
-              <button
-                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 border border-white/30 text-white backdrop-blur-xl font-bold text-base px-8 py-4 rounded-full transition-all shadow-xl"
-              >
-                See how it works
-              </button>
-            </a>
-          </div>
+                <a href="#interactive-demo" className="w-full sm:w-auto">
+                  <button
+                    className="w-full sm:w-auto bg-white/10 hover:bg-white/15 backdrop-blur-xl border border-white/20 text-white font-bold text-base px-6 py-4 rounded-xl hover:border-amber-400/40 transition-all flex items-center justify-center space-x-2"
+                  >
+                    <Zap className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <span>Try Interactive Playground</span>
+                  </button>
+                </a>
+              </div>
 
-          {/* Trust proof line below buttons */}
-          <div className="pt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-stone-300 font-semibold drop-shadow-sm">
-            <div className="flex items-center space-x-1">
-              <span className="text-amber-400 font-bold tracking-wider">★★★★★</span>
-              <span>Loved by restaurant teams</span>
+              {/* Trust & Proof Stats */}
+              <div className="pt-4 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-emerald-200/90 font-semibold border-t border-white/10">
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-amber-300 font-black tracking-wider text-sm">★★★★★</span>
+                  <span className="text-white font-bold">4.9/5</span>
+                  <span>(450+ Outlets)</span>
+                </div>
+                <span className="hidden sm:inline text-emerald-400/40">•</span>
+                <div className="flex items-center space-x-1.5">
+                  <Zap className="w-3.5 h-3.5 text-amber-400" />
+                  <span>&lt; 0.2s Order Sync</span>
+                </div>
+                <span className="hidden sm:inline text-emerald-400/40">•</span>
+                <div className="flex items-center space-x-1.5">
+                  <Check className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Works on any smartphone</span>
+                </div>
+              </div>
             </div>
-            <span className="hidden sm:inline text-stone-500">•</span>
-            <div>Set up your menu in an afternoon</div>
-            <span className="hidden sm:inline text-stone-500">•</span>
-            <div className="flex items-center space-x-1">
-              <Check className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Works on any phone</span>
+
+            {/* Right Column: Floating 3D iPhone HUD Visual */}
+            <div className="lg:col-span-5 relative flex items-center justify-center">
+              {/* Glowing Background Spotlight */}
+              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-500/30 via-emerald-500/20 to-amber-300/10 rounded-full blur-3xl opacity-75 animate-pulse-glow" />
+
+              {/* Floating Glass Pill Badge Top Right */}
+              <div className="absolute -top-4 -right-2 z-30 bg-stone-900/90 backdrop-blur-2xl border border-emerald-500/40 px-4 py-2 rounded-2xl shadow-2xl flex items-center space-x-2 animate-bounce">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                <span className="text-xs font-black text-white">Live KDS Ticket #104</span>
+                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-2 py-0.5 rounded-md border border-emerald-500/30">0.2s</span>
+              </div>
+
+              {/* Floating Glass Pill Badge Bottom Left */}
+              <div className="absolute -bottom-4 -left-4 z-30 bg-stone-900/90 backdrop-blur-2xl border border-amber-400/40 px-4 py-2 rounded-2xl shadow-2xl flex items-center space-x-3">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300">
+                  <Flame className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-[11px] font-extrabold text-white">Table #4 Active</p>
+                  <p className="text-[9px] text-stone-400 font-semibold">4 Items • ₹680 Order</p>
+                </div>
+              </div>
+
+              {/* Central Pro iPhone 16 Pro Mockup */}
+              <div className="w-full max-w-[320px] h-[580px] bg-stone-950 p-3.5 rounded-[48px] shadow-[0_30px_70px_rgba(0,0,0,0.8)] border-[5px] border-stone-800 relative z-20 flex flex-col justify-between hover:scale-[1.02] transition-transform duration-500">
+                {/* Dynamic Island */}
+                <div className="w-24 h-5 bg-black rounded-full mx-auto absolute top-4 left-1/2 -translate-x-1/2 z-30 flex items-center justify-between px-2 shadow-xs">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-stone-800" />
+                </div>
+
+                {/* Inner iPhone Screen */}
+                <div className="bg-[#FAF8F5] rounded-[38px] overflow-hidden pt-7 pb-4 px-3.5 text-stone-900 border border-stone-200 h-full flex flex-col justify-between shadow-inner">
+                  {/* Status Bar */}
+                  <div className="flex items-center justify-between px-1 text-[10px] text-stone-500 font-bold mb-2">
+                    <span>9:41</span>
+                    <div className="flex items-center space-x-1">
+                      <span>5G</span>
+                      <div className="w-3.5 h-2 bg-stone-800 rounded-xs" />
+                    </div>
+                  </div>
+
+                  {/* Hero App Mockup Content */}
+                  <div className="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      {/* Outlet Header */}
+                      <div className="bg-stone-900 text-white p-3 rounded-2xl shadow-md flex items-center justify-between mb-3">
+                        <div>
+                          <h4 className="font-black text-xs text-amber-300">Royal Spice Bistro</h4>
+                          <p className="text-[9px] text-stone-300">Table #4 • Self Order</p>
+                        </div>
+                        <span className="text-[9px] font-extrabold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30">
+                          Active
+                        </span>
+                      </div>
+
+                      {/* Mock Dish Items */}
+                      <div className="space-y-2">
+                        <div className="bg-white p-2.5 rounded-xl border border-stone-200 shadow-xs flex items-center justify-between">
+                          <div>
+                            <p className="font-extrabold text-xs text-stone-900">Paneer Butter Masala</p>
+                            <p className="text-[10px] text-amber-700 font-bold">₹260 × 2</p>
+                          </div>
+                          <span className="bg-amber-100 text-amber-900 font-black text-[10px] px-2 py-0.5 rounded-lg border border-amber-200">
+                            ₹520
+                          </span>
+                        </div>
+
+                        <div className="bg-white p-2.5 rounded-xl border border-stone-200 shadow-xs flex items-center justify-between">
+                          <div>
+                            <p className="font-extrabold text-xs text-stone-900">Butter Naan</p>
+                            <p className="text-[10px] text-amber-700 font-bold">₹40 × 4</p>
+                          </div>
+                          <span className="bg-amber-100 text-amber-900 font-black text-[10px] px-2 py-0.5 rounded-lg border border-amber-200">
+                            ₹160
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Instant QR Scan Hologram */}
+                      <div className="mt-3 bg-gradient-to-br from-amber-50 to-orange-50 p-2.5 rounded-2xl border border-amber-200/80 text-center space-y-1.5 shadow-xs">
+                        <p className="text-[9px] font-extrabold text-amber-900 uppercase tracking-wider">Scan & Pay Instantly</p>
+                        <div className="w-16 h-16 mx-auto bg-white p-1.5 rounded-xl shadow-xs border border-amber-200 flex items-center justify-center">
+                          <QrCode className="w-full h-full text-stone-900" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bottom CTA Button inside Mockup */}
+                    <div>
+                      <div className="bg-emerald-600 text-white p-2.5 rounded-xl flex items-center justify-between text-xs font-black shadow-md">
+                        <span className="flex items-center gap-1">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>Order Sent to Kitchen</span>
+                        </span>
+                        <span>₹680</span>
+                      </div>
+                      <div className="w-28 h-1 bg-stone-400 rounded-full mx-auto mt-2.5" />
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -409,272 +520,320 @@ const LandingPage: React.FC = () => {
             </p>
           </div>
 
-          {/* 3-Panel Interactive Grid */}
-          <div className="grid lg:grid-cols-12 gap-8 items-start max-w-6xl mx-auto">
+          {/* 3 Continuous Side-by-Side Realistic iPhones Showcase Grid */}
+          <div className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto pt-4">
             
-            {/* Panel 1: Table QR Generator Widget */}
-            <div className="lg:col-span-4 bg-white/95 backdrop-blur-xl border border-stone-200 rounded-3xl p-6 shadow-md space-y-5">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-3">
-                <div className="flex items-center space-x-2">
-                  <QrCode className="w-5 h-5 text-amber-700" />
-                  <span className="font-extrabold text-sm text-stone-900">1. Table QR Creator</span>
-                </div>
-                <span className="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
-                  Live Generator
+            {/* iPhone 1: Table QR Scan & Welcome View */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-3">
+                <span className="text-[11px] uppercase tracking-wider font-extrabold text-amber-800 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">
+                  1. Scan Table QR
                 </span>
               </div>
-
-              {/* Outlet Inputs */}
-              <div className="space-y-3 text-xs">
-                <div>
-                  <label className="block text-stone-600 font-bold mb-1">Outlet / Brand Name</label>
-                  <input
-                    type="text"
-                    value={demoRestaurantName}
-                    onChange={(e) => setDemoRestaurantName(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3 py-2 text-stone-900 font-bold focus:outline-none focus:border-amber-500 transition-colors"
-                  />
+              <div className="w-full max-w-[300px] h-[540px] bg-stone-950 p-3 rounded-[44px] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.3)] border-[4px] border-stone-800 relative flex flex-col justify-between">
+                {/* Dynamic Island */}
+                <div className="w-22 h-4.5 bg-black rounded-full mx-auto absolute top-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center justify-end px-2 shadow-xs">
+                  <div className="w-2 h-2 rounded-full bg-stone-900 border border-stone-800" />
                 </div>
 
-                <div>
-                  <label className="block text-stone-600 font-bold mb-1">Select Dining Table Number</label>
-                  <div className="flex gap-2">
-                    {[2, 4, 8, 12].map((tableNum) => (
-                      <button
-                        key={tableNum}
-                        onClick={() => setSelectedTableNum(tableNum)}
-                        className={`flex-1 py-1.5 rounded-xl font-extrabold text-xs transition-all ${
-                          selectedTableNum === tableNum
-                            ? "bg-amber-600 text-white shadow-md shadow-amber-600/20"
-                            : "bg-stone-100 text-stone-700 border border-stone-300 hover:bg-stone-200"
-                        }`}
-                      >
-                        T-{tableNum}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Generated QR Box */}
-              <div className="bg-stone-50 rounded-2xl p-5 border border-stone-200 text-center space-y-3 flex flex-col items-center">
-                <div className="bg-white p-3 rounded-2xl shadow-md border-4 border-amber-400/40">
-                  {/* Inline Sharp Vector QR Graphics */}
-                  <svg className="w-32 h-32" viewBox="0 0 100 100" fill="none">
-                    <rect width="100" height="100" fill="white" />
-                    {/* Position Outer Boxes */}
-                    <rect x="5" y="5" width="30" height="30" rx="4" fill="#1C1917" />
-                    <rect x="10" y="10" width="20" height="20" rx="2" fill="white" />
-                    <rect x="15" y="15" width="10" height="10" fill="#D97706" />
-
-                    <rect x="65" y="5" width="30" height="30" rx="4" fill="#1C1917" />
-                    <rect x="70" y="10" width="20" height="20" rx="2" fill="white" />
-                    <rect x="75" y="15" width="10" height="10" fill="#D97706" />
-
-                    <rect x="5" y="65" width="30" height="30" rx="4" fill="#1C1917" />
-                    <rect x="10" y="70" width="20" height="20" rx="2" fill="white" />
-                    <rect x="15" y="75" width="10" height="10" fill="#D97706" />
-
-                    {/* Data Pixels pattern */}
-                    <rect x="40" y="10" width="8" height="8" fill="#1C1917" />
-                    <rect x="52" y="10" width="8" height="8" fill="#1C1917" />
-                    <rect x="40" y="25" width="8" height="8" fill="#D97706" />
-                    <rect x="40" y="40" width="8" height="8" fill="#1C1917" />
-                    <rect x="52" y="52" width="8" height="8" fill="#1C1917" />
-                    <rect x="25" y="45" width="8" height="8" fill="#1C1917" />
-                    <rect x="65" y="45" width="8" height="8" fill="#D97706" />
-                    <rect x="75" y="55" width="8" height="8" fill="#1C1917" />
-                    <rect x="45" y="75" width="8" height="8" fill="#1C1917" />
-                    <rect x="60" y="65" width="8" height="8" fill="#1C1917" />
-                    <rect x="75" y="75" width="10" height="10" fill="#D97706" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-stone-900">{demoRestaurantName}</p>
-                  <p className="text-[11px] text-amber-800 font-bold">Table #{selectedTableNum} • Scan & Order</p>
-                </div>
-              </div>
-
-              <div className="bg-white/80 p-3 rounded-xl border border-stone-200 text-[11px] text-stone-600 space-y-1">
-                <div className="flex items-center space-x-1.5 text-stone-800 font-bold">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Bound to Table #{selectedTableNum} context</span>
-                </div>
-                <p>Orders sent from this QR automatically display Table #{selectedTableNum} in the kitchen.</p>
-              </div>
-            </div>
-
-            {/* Panel 2: Customer Phone Ordering Simulator */}
-            <div className="lg:col-span-4 bg-white/95 backdrop-blur-xl border border-stone-200 rounded-3xl p-5 shadow-md relative">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-3 mb-4">
-                <div className="flex items-center space-x-2">
-                  <Smartphone className="w-5 h-5 text-amber-700" />
-                  <span className="font-extrabold text-sm text-stone-900">2. Customer Phone View</span>
-                </div>
-                <span className="text-[10px] font-bold text-stone-700 bg-stone-100 px-2 py-0.5 rounded-md border border-stone-300">
-                  Table #{selectedTableNum}
-                </span>
-              </div>
-
-              {/* Toast Notification */}
-              {orderSentToast && (
-                <div className="absolute top-16 left-4 right-4 bg-emerald-600 text-white p-3 rounded-xl shadow-lg text-xs font-extrabold flex items-center justify-between z-20 animate-bounce">
-                  <div className="flex items-center space-x-2">
-                    <CheckCircle2 className="w-4 h-4" />
-                    <span>Order Streamed to Kitchen!</span>
-                  </div>
-                  <span className="text-[10px] bg-emerald-800 px-2 py-0.5 rounded">0.2s</span>
-                </div>
-              )}
-
-              {/* Customer Menu Interface */}
-              <div className="bg-stone-50 rounded-2xl p-4 border border-stone-200 space-y-3 min-h-[380px] flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center justify-between border-b border-stone-200 pb-2.5 mb-3">
-                    <div>
-                      <h4 className="font-black text-xs text-stone-900 truncate">{demoRestaurantName}</h4>
-                      <p className="text-[10px] text-stone-500">Digital Menu • Table #{selectedTableNum}</p>
+                {/* iPhone Inner Screen */}
+                <div className="bg-[#FAF8F5] rounded-[34px] overflow-hidden pt-6 pb-3 px-3 text-stone-900 border border-stone-200 h-full flex flex-col justify-between shadow-inner">
+                  {/* Status Bar */}
+                  <div className="flex items-center justify-between px-2 text-[10px] text-stone-500 font-bold mb-1">
+                    <span>9:41</span>
+                    <div className="flex items-center space-x-1">
+                      <span>5G</span>
+                      <div className="w-3.5 h-2 bg-stone-800 rounded-xs" />
                     </div>
-                    <Badge variant="neutral">Self Order</Badge>
                   </div>
 
-                  {/* Menu Items List */}
-                  <div className="space-y-2 max-h-[220px] overflow-y-auto no-scrollbar pr-1">
-                    {menuCatalogDemo.map((item) => {
-                      const inCart = cartItems.find((c) => c.id === item.id);
-                      return (
-                        <div
-                          key={item.id}
-                          className="bg-white p-2.5 rounded-xl border border-stone-200 flex items-center justify-between text-xs hover:border-stone-300 transition-colors shadow-xs"
-                        >
-                          <div>
-                            <p className="font-bold text-stone-900 text-xs">{item.name}</p>
-                            <p className="text-amber-800 font-extrabold text-[11px]">₹{item.price}</p>
-                          </div>
-                          {inCart ? (
-                            <div className="flex items-center space-x-2 bg-amber-50 border border-amber-300 px-2 py-1 rounded-lg">
-                              <button
-                                onClick={() => handleRemoveFromCart(item.id)}
-                                className="text-amber-900 font-bold px-1"
-                              >
-                                -
-                              </button>
-                              <span className="text-amber-950 font-black text-xs">{inCart.qty}</span>
-                              <button
-                                onClick={() => handleAddItemToCart(item)}
-                                className="text-amber-900 font-bold px-1"
-                              >
-                                +
-                              </button>
-                            </div>
-                          ) : (
-                            <button
-                              onClick={() => handleAddItemToCart(item)}
-                              className="bg-stone-900 hover:bg-stone-800 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center space-x-1"
-                            >
-                              <Plus className="w-3.5 h-3.5" />
-                              <span>Add</span>
-                            </button>
-                          )}
+                  {/* Content */}
+                  <div className="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="text-center pb-2 border-b border-stone-200">
+                        <h4 className="font-black text-xs text-stone-900">{demoRestaurantName}</h4>
+                        <p className="text-[9px] text-stone-500 font-semibold">Table #{selectedTableNum} • Welcome</p>
+                      </div>
+
+                      {/* Outlet & Table Control */}
+                      <div className="mt-3 space-y-2 text-[10px]">
+                        <div>
+                          <label className="block text-stone-600 font-bold mb-1">Outlet Name</label>
+                          <input
+                            type="text"
+                            value={demoRestaurantName}
+                            onChange={(e) => setDemoRestaurantName(e.target.value)}
+                            className="w-full bg-white border border-stone-300 rounded-lg px-2.5 py-1 text-stone-900 font-bold text-xs"
+                          />
                         </div>
-                      );
-                    })}
-                  </div>
-                </div>
 
-                {/* Bottom Cart Action Button */}
-                <div className="pt-2 border-t border-stone-200">
-                  <button
-                    onClick={handleSendOrderToKitchen}
-                    disabled={cartItems.length === 0}
-                    className="w-full bg-amber-600 hover:bg-amber-700 disabled:opacity-40 text-white p-3 rounded-xl flex items-center justify-between text-xs font-black shadow-md shadow-amber-600/20 transition-all active:scale-95"
-                  >
-                    <span>Send Order to Kitchen</span>
-                    <span>₹{cartTotal} →</span>
-                  </button>
+                        <div>
+                          <label className="block text-stone-600 font-bold mb-1">Selected Table</label>
+                          <div className="grid grid-cols-4 gap-1">
+                            {[2, 4, 8, 12].map((tableNum) => (
+                              <button
+                                key={tableNum}
+                                onClick={() => setSelectedTableNum(tableNum)}
+                                className={`py-1 rounded-lg font-extrabold text-[10px] transition-all ${
+                                  selectedTableNum === tableNum
+                                    ? "bg-amber-600 text-white"
+                                    : "bg-stone-100 text-stone-700 border border-stone-200"
+                                }`}
+                              >
+                                T-{tableNum}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Interactive Hologram QR Card inside iPhone */}
+                      <div className="mt-3 bg-white p-3 rounded-2xl border border-stone-200 text-center shadow-sm space-y-2 flex flex-col items-center">
+                        <div className="p-2 bg-amber-50 rounded-xl border border-amber-200">
+                          <svg className="w-24 h-24" viewBox="0 0 100 100" fill="none">
+                            <rect width="100" height="100" fill="white" />
+                            <rect x="5" y="5" width="30" height="30" rx="4" fill="#1C1917" />
+                            <rect x="10" y="10" width="20" height="20" rx="2" fill="white" />
+                            <rect x="15" y="15" width="10" height="10" fill="#D97706" />
+                            <rect x="65" y="5" width="30" height="30" rx="4" fill="#1C1917" />
+                            <rect x="70" y="10" width="20" height="20" rx="2" fill="white" />
+                            <rect x="75" y="15" width="10" height="10" fill="#D97706" />
+                            <rect x="5" y="65" width="30" height="30" rx="4" fill="#1C1917" />
+                            <rect x="10" y="70" width="20" height="20" rx="2" fill="white" />
+                            <rect x="15" y="75" width="10" height="10" fill="#D97706" />
+                            <rect x="40" y="10" width="8" height="8" fill="#1C1917" />
+                            <rect x="52" y="10" width="8" height="8" fill="#1C1917" />
+                            <rect x="40" y="25" width="8" height="8" fill="#D97706" />
+                            <rect x="40" y="40" width="8" height="8" fill="#1C1917" />
+                            <rect x="52" y="52" width="8" height="8" fill="#1C1917" />
+                            <rect x="25" y="45" width="8" height="8" fill="#1C1917" />
+                            <rect x="65" y="45" width="8" height="8" fill="#D97706" />
+                            <rect x="75" y="55" width="8" height="8" fill="#1C1917" />
+                            <rect x="45" y="75" width="8" height="8" fill="#1C1917" />
+                            <rect x="60" y="65" width="8" height="8" fill="#1C1917" />
+                          </svg>
+                        </div>
+                        <p className="text-[10px] font-extrabold text-amber-900">Scan Table #{selectedTableNum} QR</p>
+                      </div>
+                    </div>
+
+                    {/* Home Indicator */}
+                    <div className="w-24 h-1 bg-stone-400 rounded-full mx-auto mt-2" />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Panel 3: Kitchen Display System (KDS) Stream View */}
-            <div className="lg:col-span-4 bg-white/95 backdrop-blur-xl border border-stone-200 rounded-3xl p-5 shadow-md relative">
-              <div className="flex items-center justify-between border-b border-stone-200 pb-3 mb-4">
-                <div className="flex items-center space-x-2">
-                  <ChefHat className="w-5 h-5 text-emerald-700" />
-                  <span className="font-extrabold text-sm text-stone-900">3. Kitchen Display (KDS)</span>
-                </div>
-                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Live Sync
+            {/* iPhone 2: Interactive Menu & Cart Ordering View (Highlighted Center) */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-3">
+                <span className="text-[11px] uppercase tracking-wider font-extrabold text-amber-800 bg-amber-100 px-3 py-1 rounded-full border border-amber-300">
+                  2. Select & Order Menu
                 </span>
               </div>
+              <div className="w-full max-w-[300px] h-[540px] bg-stone-950 p-3 rounded-[44px] shadow-[0_25px_60px_-10px_rgba(217,119,6,0.3)] border-[4px] border-amber-500/60 relative flex flex-col justify-between">
+                {/* Dynamic Island */}
+                <div className="w-22 h-4.5 bg-black rounded-full mx-auto absolute top-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center justify-end px-2 shadow-xs">
+                  <div className="w-2 h-2 rounded-full bg-stone-900 border border-stone-800" />
+                </div>
 
-              {/* Kitchen Live Order Ticket */}
-              {liveKdsOrder ? (
-                <div className="bg-stone-50 rounded-2xl p-4 border border-stone-200 space-y-4 shadow-sm">
-                  <div className="flex items-center justify-between border-b border-stone-200 pb-2.5">
+                {/* Toast Notification */}
+                {orderSentToast && (
+                  <div className="absolute top-11 left-4 right-4 bg-emerald-600 text-white p-2 rounded-xl shadow-lg text-[10px] font-extrabold flex items-center justify-between z-40 animate-bounce">
+                    <div className="flex items-center space-x-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Order Sent to Kitchen!</span>
+                    </div>
+                    <span className="text-[9px] bg-emerald-800 px-1 py-0.5 rounded">0.2s</span>
+                  </div>
+                )}
+
+                {/* iPhone Inner Screen */}
+                <div className="bg-[#FAF8F5] rounded-[34px] overflow-hidden pt-6 pb-3 px-3 text-stone-900 border border-stone-200 h-full flex flex-col justify-between shadow-inner">
+                  {/* Status Bar */}
+                  <div className="flex items-center justify-between px-2 text-[10px] text-stone-500 font-bold mb-1">
+                    <span>9:41</span>
+                    <div className="flex items-center space-x-1">
+                      <span>5G</span>
+                      <div className="w-3.5 h-2 bg-stone-800 rounded-xs" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-2 flex-1 flex flex-col justify-between">
                     <div>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-black text-sm text-stone-900">{liveKdsOrder.id}</span>
-                        <span className="text-xs font-bold text-amber-900 bg-amber-100 px-2 py-0.5 rounded border border-amber-300">
-                          Table #{liveKdsOrder.table}
+                      <div className="flex items-center justify-between border-b border-stone-200 pb-1.5 mb-2 px-0.5">
+                        <div>
+                          <h4 className="font-black text-xs text-stone-900 truncate">{demoRestaurantName}</h4>
+                          <p className="text-[9px] text-stone-500">Digital Menu • Table #{selectedTableNum}</p>
+                        </div>
+                        <Badge variant="neutral" className="text-[9px] px-1.5 py-0.5">Self Order</Badge>
+                      </div>
+
+                      {/* Menu Catalog */}
+                      <div className="space-y-1.5 max-h-[260px] overflow-y-auto no-scrollbar">
+                        {menuCatalogDemo.map((item) => {
+                          const inCart = cartItems.find((c) => c.id === item.id);
+                          return (
+                            <div
+                              key={item.id}
+                              className="bg-white p-2 rounded-xl border border-stone-200 flex items-center justify-between text-xs shadow-xs"
+                            >
+                              <div>
+                                <p className="font-bold text-stone-900 text-[11px] leading-tight">{item.name}</p>
+                                <p className="text-amber-800 font-extrabold text-[10px]">₹{item.price}</p>
+                              </div>
+                              {inCart ? (
+                                <div className="flex items-center space-x-1 bg-amber-50 border border-amber-300 px-1.5 py-0.5 rounded-lg">
+                                  <button
+                                    onClick={() => handleRemoveFromCart(item.id)}
+                                    className="text-amber-900 font-bold px-1 text-xs"
+                                  >
+                                    -
+                                  </button>
+                                  <span className="text-amber-950 font-black text-xs">{inCart.qty}</span>
+                                  <button
+                                    onClick={() => handleAddItemToCart(item)}
+                                    className="text-amber-900 font-bold px-1 text-xs"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+                              ) : (
+                                <button
+                                  onClick={() => handleAddItemToCart(item)}
+                                  className="bg-stone-900 hover:bg-stone-800 text-white text-[9px] font-bold px-2 py-1 rounded-lg transition-colors flex items-center space-x-0.5"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                  <span>Add</span>
+                                </button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+
+                    {/* Bottom Cart Button & Home Bar */}
+                    <div>
+                      <button
+                        onClick={handleSendOrderToKitchen}
+                        disabled={cartItems.length === 0}
+                        className="w-full bg-amber-600 hover:bg-amber-700 disabled:opacity-40 text-white p-2 rounded-xl flex items-center justify-between text-xs font-black shadow-md shadow-amber-600/20 transition-all active:scale-95"
+                      >
+                        <span>Send Order to Kitchen</span>
+                        <span>₹{cartTotal} →</span>
+                      </button>
+                      <div className="w-24 h-1 bg-stone-400 rounded-full mx-auto mt-2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* iPhone 3: Live Order Status & Kitchen Ticket Stream View */}
+            <div className="flex flex-col items-center">
+              <div className="text-center mb-3">
+                <span className="text-[11px] uppercase tracking-wider font-extrabold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                  3. Live KDS Ticket Sync
+                </span>
+              </div>
+              <div className="w-full max-w-[300px] h-[540px] bg-stone-950 p-3 rounded-[44px] shadow-[0_20px_50px_-10px_rgba(0,0,0,0.3)] border-[4px] border-stone-800 relative flex flex-col justify-between">
+                {/* Dynamic Island */}
+                <div className="w-22 h-4.5 bg-black rounded-full mx-auto absolute top-3.5 left-1/2 -translate-x-1/2 z-30 flex items-center justify-end px-2 shadow-xs">
+                  <div className="w-2 h-2 rounded-full bg-stone-900 border border-stone-800" />
+                </div>
+
+                {/* iPhone Inner Screen */}
+                <div className="bg-[#FAF8F5] rounded-[34px] overflow-hidden pt-6 pb-3 px-3 text-stone-900 border border-stone-200 h-full flex flex-col justify-between shadow-inner">
+                  {/* Status Bar */}
+                  <div className="flex items-center justify-between px-2 text-[10px] text-stone-500 font-bold mb-1">
+                    <span>9:41</span>
+                    <div className="flex items-center space-x-1">
+                      <span>5G</span>
+                      <div className="w-3.5 h-2 bg-stone-800 rounded-xs" />
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="space-y-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div className="flex items-center justify-between border-b border-stone-200 pb-2 mb-2">
+                        <div className="flex items-center space-x-1.5">
+                          <ChefHat className="w-4 h-4 text-emerald-700" />
+                          <span className="font-extrabold text-xs text-stone-900">Kitchen Display</span>
+                        </div>
+                        <span className="text-[9px] font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">
+                          Live Sync
                         </span>
                       </div>
-                      <p className="text-[10px] text-stone-500 mt-0.5">{liveKdsOrder.time} • Dine-In</p>
+
+                      {/* Ticket Details */}
+                      {liveKdsOrder ? (
+                        <div className="bg-white rounded-xl p-3 border border-stone-200 space-y-3 shadow-xs">
+                          <div className="flex items-center justify-between border-b border-stone-100 pb-2">
+                            <div>
+                              <span className="font-black text-xs text-stone-900">{liveKdsOrder.id}</span>
+                              <p className="text-[9px] text-amber-800 font-extrabold">Table #{liveKdsOrder.table}</p>
+                            </div>
+                            <Badge
+                              variant={
+                                liveKdsOrder.status === "pending"
+                                  ? "warning"
+                                  : liveKdsOrder.status === "preparing"
+                                  ? "primary"
+                                  : "success"
+                              }
+                              className="text-[9px] px-1.5 py-0.5"
+                            >
+                              {liveKdsOrder.status.toUpperCase()}
+                            </Badge>
+                          </div>
+
+                          <div className="space-y-1 text-[11px]">
+                            {liveKdsOrder.items.map((item, idx) => (
+                              <div key={idx} className="flex justify-between items-center text-stone-800 font-semibold bg-stone-50 px-2 py-1 rounded">
+                                <span className="truncate">{item.name}</span>
+                                <span className="text-amber-800 font-black ml-1">x{item.qty}</span>
+                              </div>
+                            ))}
+                          </div>
+
+                          <div className="pt-1 flex gap-1.5">
+                            <button
+                              onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "preparing" })}
+                              className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition-all ${
+                                liveKdsOrder.status === "preparing"
+                                  ? "bg-amber-600 text-white"
+                                  : "bg-stone-100 text-stone-700 border border-stone-200"
+                              }`}
+                            >
+                              🍳 Cooking
+                            </button>
+                            <button
+                              onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "ready" })}
+                              className={`flex-1 py-1.5 rounded-lg text-[10px] font-black transition-all ${
+                                liveKdsOrder.status === "ready"
+                                  ? "bg-emerald-600 text-white"
+                                  : "bg-stone-100 text-stone-700 border border-stone-200"
+                              }`}
+                            >
+                              ✅ Serve
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="bg-white rounded-xl p-4 text-center text-stone-500 text-[10px] border border-stone-200">
+                          No active kitchen orders.
+                        </div>
+                      )}
                     </div>
-                    <Badge
-                      variant={
-                        liveKdsOrder.status === "pending"
-                          ? "warning"
-                          : liveKdsOrder.status === "preparing"
-                          ? "primary"
-                          : "success"
-                      }
-                    >
-                      {liveKdsOrder.status.toUpperCase()}
-                    </Badge>
-                  </div>
 
-                  {/* Order Items */}
-                  <div className="space-y-2 text-xs">
-                    <p className="text-[10px] uppercase font-bold text-stone-500 tracking-wider">Ordered Items:</p>
-                    {liveKdsOrder.items.map((item, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-stone-800 font-semibold bg-white px-2.5 py-1.5 rounded-lg border border-stone-200">
-                        <span>{item.name}</span>
-                        <span className="text-amber-800 font-extrabold">x{item.qty}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Kitchen Action Controls */}
-                  <div className="pt-2 flex gap-2">
-                    <button
-                      onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "preparing" })}
-                      className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all ${
-                        liveKdsOrder.status === "preparing"
-                          ? "bg-amber-600 text-white shadow-md shadow-amber-600/20"
-                          : "bg-stone-200 text-stone-700 hover:bg-stone-300"
-                      }`}
-                    >
-                      🍳 Cooking
-                    </button>
-                    <button
-                      onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "ready" })}
-                      className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold transition-all ${
-                        liveKdsOrder.status === "ready"
-                          ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/20"
-                          : "bg-stone-200 text-stone-700 hover:bg-stone-300"
-                      }`}
-                    >
-                      ✅ Serve
-                    </button>
+                    {/* Home Indicator */}
+                    <div className="w-24 h-1 bg-stone-400 rounded-full mx-auto mt-2" />
                   </div>
                 </div>
-              ) : (
-                <div className="bg-stone-50 rounded-2xl p-8 text-center text-stone-500 text-xs border border-stone-200">
-                  No active orders right now. Click "Send Order to Kitchen" on the phone simulator!
-                </div>
-              )}
+              </div>
             </div>
 
           </div>
