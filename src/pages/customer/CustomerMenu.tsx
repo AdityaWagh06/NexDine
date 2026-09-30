@@ -284,8 +284,47 @@ const CustomerMenu: React.FC = () => {
         </div>
       </header>
 
+      {/* Gourmet Hero Banner (Ref: Screenshot 1 "Summer's Last Hurrah") */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-4">
+        <div className="relative rounded-3xl overflow-hidden shadow-xl border border-stone-200/80 bg-stone-900 text-white min-h-[220px] sm:min-h-[260px] flex flex-col justify-end p-6 sm:p-8">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80"
+            alt="Chef Special Gourmet Experience"
+            className="absolute inset-0 w-full h-full object-cover opacity-65 scale-105 filter brightness-90 contrast-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
+
+          {/* Top Floating Starburst Badge */}
+          <div className="absolute top-4 right-4 bg-amber-400 text-stone-950 font-black text-[10px] sm:text-xs px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-1 border border-amber-300 animate-pulse">
+            <span>✨ NEW! LIMITED EDITION</span>
+          </div>
+
+          {/* Banner Content */}
+          <div className="relative z-10 space-y-2 max-w-xl">
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-amber-300 bg-amber-500/20 px-3 py-1 rounded-full border border-amber-400/30">
+              The Chef's Special Collection
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
+              Summer's Gourmet Feast
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-300 font-medium line-clamp-2">
+              Freshly crafted dishes made with organic farm ingredients. Scan, select your servings, and enjoy instant table service.
+            </p>
+            <div className="flex items-center space-x-4 pt-1 text-xs text-amber-200 font-semibold">
+              <span className="flex items-center gap-1">
+                ⏱ Active: <strong className="text-white">15m</strong>
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                ⭐ Rating: <strong className="text-white">4.9/5</strong>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Category Pills Bar (Ref: Screenshots 1 & 2) */}
-      <div className="bg-white/60 backdrop-blur-xs border-b border-stone-200/70 sticky top-[118px] z-30 py-2">
+      <div className="bg-white/90 backdrop-blur-md border-b border-stone-200/70 sticky top-[118px] z-30 py-3 mt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <CategoryPillBar
             categories={categories}
