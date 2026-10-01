@@ -31,43 +31,52 @@ const AdminLogin: React.FC = () => {
     setLoading(true);
 
     try {
-      // Hash password and use RPC function for admin login
-      const passwordHash = await hashPassword(formData.password);
+      const emailClean = formData.email.toLowerCase().trim();
+      const passwordClean = formData.password.trim();
+
+      // Master Demo Credential Checks
+      const isAditya = emailClean === "adityawagh2525@gmail.com" && passwordClean === "adityawagh2225";
+      const isDemo = (emailClean === "demo@nextdine.com" || emailClean === "demo") && (passwordClean === "demopass" || passwordClean === "demo");
+      const isAdmin = emailClean === "admin@foodorder.com" && passwordClean === "admin123";
+
+      if (isAditya || isDemo || isAdmin) {
+        localStorage.setItem(
+          "admin",
+          JSON.stringify({
+            id: "admin_super",
+            email: emailClean || "adityawagh2525@gmail.com",
+            name: "Aditya Wagh (Super Admin)",
+          })
+        );
+        navigate("/admin");
+        return;
+      }
+
+      // Supabase RPC Fallback
+      const passwordHash = await hashPassword(passwordClean);
       const { data: adminData, error: adminError } = await supabase.rpc(
         "admin_login",
         {
-          p_email: formData.email.toLowerCase(),
+          p_email: emailClean,
           p_password_hash: passwordHash,
         }
       );
 
-      if (adminError) {
-        console.error("Admin login RPC error:", adminError);
-        setError("Invalid email or password");
-        setLoading(false);
+      if (!adminError && adminData && adminData.length > 0) {
+        const admin = adminData[0];
+        localStorage.setItem(
+          "admin",
+          JSON.stringify({
+            id: admin.id,
+            email: admin.email,
+            name: admin.name || "System Admin",
+          })
+        );
+        navigate("/admin");
         return;
       }
 
-      if (!adminData || adminData.length === 0) {
-        setError("Invalid email or password");
-        setLoading(false);
-        return;
-      }
-
-      const admin = adminData[0];
-
-      // Login successful - store admin data
-      localStorage.setItem(
-        "admin",
-        JSON.stringify({
-          id: admin.id,
-          email: admin.email,
-          name: admin.name,
-        })
-      );
-
-      // Redirect to admin dashboard
-      navigate("/admin");
+      setError("Invalid email or password");
     } catch (err: any) {
       console.error("Admin login error:", err);
       setError("An error occurred. Please try again.");
@@ -79,6 +88,11 @@ const AdminLogin: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setError("");
+  };
+
+  const handleQuickFill = (email: string, pass: string) => {
+    setFormData({ email, password: pass });
     setError("");
   };
 
@@ -109,6 +123,48 @@ const AdminLogin: React.FC = () => {
 
         {/* Login Card */}
         <Card className="shadow-2xl border-slate-800 bg-slate-800/80 text-white">
+          {/* Quick Auto-Fill Demo Credentials Card */}
+          <div className="mb-6 p-3.5 bg-indigo-950/70 rounded-2xl border border-indigo-500/40 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-extrabold text-indigo-300 flex items-center gap-1">
+                <span>🔑</span> Demo Admin Credentials
+              </span>
+              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-extrabold px-2 py-0.5 rounded-full border border-emerald-500/30">
+                1-Click Ready
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-1.5 pt-1">
+              <button
+                type="button"
+                onClick={() => handleQuickFill("adityawagh2525@gmail.com", "adityawagh2225")}
+                className="w-full text-left bg-indigo-900/60 hover:bg-indigo-900 border border-indigo-500/50 hover:border-indigo-400 p-2 rounded-xl text-xs flex items-center justify-between transition-all group"
+              >
+                <div>
+                  <span className="font-bold text-white block text-[11px]">Aditya Wagh (Primary Admin)</span>
+                  <span className="text-[10px] text-indigo-200 font-mono">adityawagh2525@gmail.com • adityawagh2225</span>
+                </div>
+                <span className="text-[10px] bg-amber-400 text-stone-950 font-black px-2 py-1 rounded-lg group-hover:scale-105 transition-transform">
+                  Auto-Fill ⚡
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleQuickFill("admin@foodorder.com", "admin123")}
+                className="w-full text-left bg-slate-900/60 hover:bg-slate-900 border border-slate-700 hover:border-slate-500 p-2 rounded-xl text-xs flex items-center justify-between transition-all group"
+              >
+                <div>
+                  <span className="font-bold text-slate-200 block text-[11px]">System Admin</span>
+                  <span className="text-[10px] text-slate-400 font-mono">admin@foodorder.com • admin123</span>
+                </div>
+                <span className="text-[10px] bg-slate-700 text-white font-bold px-2 py-1 rounded-lg group-hover:scale-105 transition-transform">
+                  Auto-Fill
+                </span>
+              </button>
+            </div>
+          </div>
+
           {/* Error Alert */}
           {error && <Alert type="error" message={error} className="mb-6" />}
 
@@ -123,7 +179,7 @@ const AdminLogin: React.FC = () => {
                 type="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="admin@nextdine.com"
+                placeholder="adityawagh2525@gmail.com"
                 icon={<Mail className="w-5 h-5 text-slate-400" />}
                 required
                 autoComplete="email"
@@ -149,20 +205,9 @@ const AdminLogin: React.FC = () => {
             </div>
 
             <Button type="submit" loading={loading} fullWidth size="lg" variant="primary" className="mt-2">
-              Sign In to Admin Portal
+              Sign In to Admin Portal →
             </Button>
           </form>
-
-          {/* Info Box */}
-          <div className="mt-6 p-4 bg-slate-900/60 rounded-xl border border-slate-700/60 text-xs">
-            <p className="text-slate-400 font-semibold mb-1 uppercase tracking-wider">
-              Default Credentials:
-            </p>
-            <div className="font-mono text-slate-300 space-y-0.5">
-              <p>Email: admin@foodorder.com (or admin@nextdine.com)</p>
-              <p>Password: admin123</p>
-            </div>
-          </div>
         </Card>
       </div>
     </div>
