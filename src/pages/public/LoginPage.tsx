@@ -228,19 +228,52 @@ const LoginPage: React.FC = () => {
             <Alert type="error" message={error} className="mb-6" />
           )}
 
-          {/* Demo Credentials */}
-          <div className="mb-6 p-4 bg-indigo-50/70 border border-indigo-200/80 rounded-xl">
-            <div className="flex items-center space-x-2 text-indigo-900 font-semibold text-xs uppercase tracking-wider mb-2">
-              <Sparkles className="w-4 h-4 text-indigo-600" />
-              <span>Demo Restaurant Access</span>
+          {/* Demo Credentials & Quick Auto-Fill */}
+          <div className="mb-6 p-4 bg-indigo-50/80 border border-indigo-200 rounded-2xl space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="font-extrabold text-indigo-900 flex items-center gap-1.5 uppercase tracking-wider">
+                <Sparkles className="w-4 h-4 text-indigo-600" />
+                <span>Quick Demo Logins (1-Click)</span>
+              </span>
+              <span className="text-[10px] bg-indigo-600 text-white font-extrabold px-2 py-0.5 rounded-full">
+                Easy Test
+              </span>
             </div>
-            <div className="text-xs text-indigo-950 space-y-1 font-mono">
-              <p>
-                <span className="text-slate-500 font-sans">Email:</span> demorestaurant@gmail.com
-              </p>
-              <p>
-                <span className="text-slate-500 font-sans">Password:</span> ATVSW679
-              </p>
+
+            <div className="flex flex-col gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setFormData({ email: "demorestaurant@gmail.com", password: "ATVSW679" });
+                  setError("");
+                }}
+                className="w-full text-left bg-white hover:bg-indigo-50 border border-indigo-200 p-2.5 rounded-xl text-xs flex items-center justify-between transition-all group shadow-sm"
+              >
+                <div>
+                  <span className="font-bold text-slate-900 block">🏪 Restaurant Owner Demo</span>
+                  <span className="text-[10px] text-slate-500 font-mono">demorestaurant@gmail.com • ATVSW679</span>
+                </div>
+                <span className="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-2 py-1 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  Auto-Fill ⚡
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setFormData({ email: "adityawagh2525@gmail.com", password: "adityawagh2225" });
+                  setError("");
+                }}
+                className="w-full text-left bg-slate-900 hover:bg-slate-800 border border-slate-700 p-2.5 rounded-xl text-xs flex items-center justify-between transition-all group shadow-sm text-white"
+              >
+                <div>
+                  <span className="font-bold text-amber-300 block">👑 Super Admin Portal</span>
+                  <span className="text-[10px] text-slate-300 font-mono">adityawagh2525@gmail.com • adityawagh2225</span>
+                </div>
+                <span className="text-[10px] bg-amber-400 text-slate-950 font-black px-2 py-1 rounded-lg group-hover:scale-105 transition-transform">
+                  Auto-Fill ⚡
+                </span>
+              </button>
             </div>
           </div>
 
