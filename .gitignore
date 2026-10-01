@@ -36,3 +36,4 @@ build/
 *.bak
 .gemini/
 PROGRESS.md
+PASSWORDS.md
