@@ -328,23 +328,33 @@ AS $$
 DECLARE
   v_restaurant_id UUID;
   v_user_id UUID;
+  v_valid_req_id UUID := NULL;
 BEGIN
+  -- Verify p_request_id actually exists in registration_requests to prevent FK error
+  IF p_request_id IS NOT NULL THEN
+    IF EXISTS (SELECT 1 FROM registration_requests WHERE id = p_request_id) THEN
+      v_valid_req_id := p_request_id;
+    END IF;
+  END IF;
+
   INSERT INTO restaurants (
     registration_request_id, name, slug, owner_name, phone, email,
     city, address, subscription_plan, status, is_active
   ) VALUES (
-    p_request_id, p_restaurant_name, p_slug, p_owner_name, p_phone, p_email,
-    p_city, p_address, p_subscription_plan, 'active', TRUE
+    v_valid_req_id, p_restaurant_name, p_slug, p_owner_name, p_phone, p_email,
+    p_city, p_address, COALESCE(p_subscription_plan, 'free_trial'), 'active', TRUE
   )
   RETURNING id INTO v_restaurant_id;
 
   INSERT INTO users (restaurant_id, email, password_hash, temp_password, role)
-  VALUES (v_restaurant_id, p_email, p_password_hash, TRUE, 'owner')
+  VALUES (v_restaurant_id, LOWER(p_email), p_password_hash, TRUE, 'owner')
   RETURNING id INTO v_user_id;
 
-  UPDATE registration_requests
-  SET status = 'verified', contacted_at = NOW(), internal_notes = p_internal_notes
-  WHERE id = p_request_id;
+  IF v_valid_req_id IS NOT NULL THEN
+    UPDATE registration_requests
+    SET status = 'verified', contacted_at = NOW(), internal_notes = p_internal_notes
+    WHERE id = v_valid_req_id;
+  END IF;
 
   RETURN QUERY SELECT v_restaurant_id, v_user_id, TRUE, 'Restaurant created successfully'::TEXT;
 
@@ -413,10 +423,34 @@ ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
 ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
 
--- Public policies (for customer ordering)
-CREATE POLICY "Public can view available menu items" ON menu_items FOR SELECT USING (is_available = TRUE);
-CREATE POLICY "Public can view active restaurants" ON restaurants FOR SELECT USING (is_active = TRUE AND status = 'active');
-CREATE POLICY "Public can create orders" ON orders FOR INSERT WITH CHECK (TRUE);
+-- Public policies (for customer ordering & restaurant registration)
+DROP POLICY IF EXISTS "Public can view available menu items" ON menu_items;
+CREATE POLICY "Public can view available menu items" ON menu_items FOR SELECT USING (TRUE);
+
+DROP POLICY IF EXISTS "Public can view active restaurants" ON restaurants;
+CREATE POLICY "Public can view active restaurants" ON restaurants FOR SELECT USING (TRUE);
+
+DROP POLICY IF EXISTS "Public can view menu categories" ON menu_categories;
+CREATE POLICY "Public can view menu categories" ON menu_categories FOR SELECT USING (TRUE);
+
+-- Explicit table grants for API roles
+GRANT ALL ON TABLE registration_requests TO anon, authenticated, service_role;
+GRANT ALL ON TABLE restaurants TO anon, authenticated, service_role;
+GRANT ALL ON TABLE users TO anon, authenticated, service_role;
+GRANT ALL ON TABLE menu_categories TO anon, authenticated, service_role;
+GRANT ALL ON TABLE menu_items TO anon, authenticated, service_role;
+GRANT ALL ON TABLE orders TO anon, authenticated, service_role;
+GRANT ALL ON TABLE admin_users TO anon, authenticated, service_role;
+GRANT ALL ON TABLE notifications TO anon, authenticated, service_role;
+
+DROP POLICY IF EXISTS "Public can create orders" ON orders;
+CREATE POLICY "Public can create orders" ON orders FOR INSERT TO anon, authenticated WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "Public can submit registration requests" ON registration_requests;
+CREATE POLICY "Public can submit registration requests" ON registration_requests FOR INSERT TO anon, authenticated WITH CHECK (TRUE);
+
+DROP POLICY IF EXISTS "Public can view registration requests" ON registration_requests;
+CREATE POLICY "Public can view registration requests" ON registration_requests FOR SELECT TO anon, authenticated USING (TRUE);
 
 -- Restaurant policies (owners manage their data)
 CREATE POLICY "Restaurant owners can view their restaurant" ON restaurants FOR SELECT USING (auth.uid()::text IN (SELECT id::text FROM users WHERE restaurant_id = restaurants.id));
@@ -442,12 +476,12 @@ ALTER PUBLICATION supabase_realtime ADD TABLE orders;
 -- =====================================================
 -- INSERT DEFAULT ADMIN USER
 -- =====================================================
--- Email: admin@foodorder.com
--- Password: admin123
--- Hash: SHA-256 of "admin123"
+-- Email: adityawagh2525@gmail.com
+-- Password: adityawagh2225
+-- Hash: SHA-256 of "adityawagh2225"
 INSERT INTO admin_users (email, password_hash, name, is_super_admin)
-VALUES ('admin@foodorder.com', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 'System Admin', TRUE)
-ON CONFLICT (email) DO NOTHING;
+VALUES ('adityawagh2525@gmail.com', '3b53644fddfaeb500e06635554480d16453f7bb2e146458e6ae18705a7716768', 'Aditya Wagh', TRUE)
+ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash;
 
 -- =====================================================
 -- VERIFICATION
@@ -461,8 +495,8 @@ BEGIN
   RAISE NOTICE '✓ Real-time replication configured';
   RAISE NOTICE '';
   RAISE NOTICE 'Admin Login:';
-  RAISE NOTICE '  Email: admin@foodorder.com';
-  RAISE NOTICE '  Password: admin123';
+  RAISE NOTICE '  Email: adityawagh2525@gmail.com';
+  RAISE NOTICE '  Password: adityawagh2225';
   RAISE NOTICE '';
   RAISE NOTICE 'Next: Enable real-time in Supabase Dashboard > Database > Replication';
 END $$;
