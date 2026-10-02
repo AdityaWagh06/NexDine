@@ -15,10 +15,6 @@ const RestaurantHome: React.FC = () => {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadStats();
-  }, []);
-
   const loadStats = async () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     if (!user.restaurant_id) return;
@@ -27,6 +23,10 @@ const RestaurantHome: React.FC = () => {
     setStats(data);
     setLoading(false);
   };
+
+  useEffect(() => {
+    loadStats();
+  }, []);
 
   if (loading) {
     return <Loading text="Loading dashboard..." />;
