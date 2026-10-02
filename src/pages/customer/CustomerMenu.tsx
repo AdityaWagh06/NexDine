@@ -55,32 +55,6 @@ const CustomerMenu: React.FC = () => {
   const [viewVariant, setViewVariant] = useState<'modern' | 'compact' | 'pos'>('modern');
   const [diningOption, setDiningOption] = useState<'Dine In' | 'Take Out' | 'Delivery'>('Take Out');
 
-  // Load restaurant and menu
-  useEffect(() => {
-    if (slug) {
-      loadRestaurant();
-    } else {
-      setMenuItems(SAMPLE_MENU_ITEMS as any);
-    }
-  }, [slug]);
-
-  useEffect(() => {
-    if (slug && restaurant?.id && restaurant.id !== "demo-restaurant") {
-      const subscription = subscribeToMenuItems(restaurant.id, (data) => {
-        if (data && data.length > 0) {
-          setMenuItems(data);
-        } else {
-          setMenuItems(SAMPLE_MENU_ITEMS as any);
-        }
-        setLoading(false);
-      });
-
-      return () => {
-        subscription.unsubscribe();
-      };
-    }
-  }, [restaurant, slug]);
-
   const loadRestaurant = async () => {
     if (!slug) return;
     setLoading(true);
@@ -107,6 +81,32 @@ const CustomerMenu: React.FC = () => {
     setRestaurant(data);
     setLoading(false);
   };
+
+  // Load restaurant and menu
+  useEffect(() => {
+    if (slug) {
+      loadRestaurant();
+    } else {
+      setMenuItems(SAMPLE_MENU_ITEMS as any);
+    }
+  }, [slug]);
+
+  useEffect(() => {
+    if (slug && restaurant?.id && restaurant.id !== "demo-restaurant") {
+      const subscription = subscribeToMenuItems(restaurant.id, (data) => {
+        if (data && data.length > 0) {
+          setMenuItems(data);
+        } else {
+          setMenuItems(SAMPLE_MENU_ITEMS as any);
+        }
+        setLoading(false);
+      });
+
+      return () => {
+        subscription.unsubscribe();
+      };
+    }
+  }, [restaurant, slug]);
 
   const activeItems = menuItems.length > 0 ? menuItems : (SAMPLE_MENU_ITEMS as any);
 
