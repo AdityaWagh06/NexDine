@@ -23,16 +23,16 @@ const DashboardHome: React.FC = () => {
     todayRevenue: 0,
   });
 
-  useEffect(() => {
-    loadStats();
-  }, []);
-
   const loadStats = async () => {
     setLoading(true);
     const data = await getPlatformStats();
     setStats(data);
     setLoading(false);
   };
+
+  useEffect(() => {
+    loadStats();
+  }, []);
 
   if (loading) {
     return <Loading text="Loading platform statistics..." />;
