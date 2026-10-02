@@ -17,10 +17,12 @@
     @apply text-stone-800 font-sans antialiased selection:bg-amber-500/20 selection:text-amber-900;
     margin: 0;
     min-height: 100vh;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight font-semibold text-stone-900;
+    font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
   }
 }
 
@@ -192,6 +194,31 @@
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Custom UI Utilities & Micro-interactions */
+.gradient-text-amber {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-brand {
+  background: linear-gradient(135deg, #18181B 0%, #3F3F46 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.glow-card {
+  box-shadow: 0 20px 40px -15px rgba(245, 158, 11, 0.15), 0 0 0 1px rgba(231, 229, 228, 0.9);
+}
+
+.hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.08);
 }
 
 /* Print styles */
