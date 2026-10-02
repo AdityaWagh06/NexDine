@@ -5,11 +5,12 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  "dev": "vite",
+  "build": "tsc -b && vite build",
+  "typecheck": "tsc --noEmit",
+  "lint": "eslint .",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@supabase/supabase-js": "^2.86.0",
     "crypto-js": "^4.2.0",
