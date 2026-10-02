@@ -89,56 +89,8 @@ const RegisterPage: React.FC = () => {
     setLoading(true);
 
     try {
-      // Direct insertion into Supabase registration_requests table
-      const { data: insertData, error: insertError } = await supabase
-        .from("registration_requests")
-        .insert([
-          {
-            restaurant_name: formData.restaurant_name.trim(),
-            owner_name: formData.owner_name.trim(),
-            phone: formData.phone.replace(/[\s\-()]/g, ""),
-            email: formData.email.trim() || null,
-            city: formData.city.trim(),
-            address: formData.address.trim() || null,
-            restaurant_type: formData.restaurant_type,
-            heard_from: formData.heard_from || null,
-            notes: formData.notes.trim() || null,
-            status: "pending",
-          },
-        ])
-        .select();
-
-      if (insertError) {
-        console.error("Supabase insert error:", insertError);
-        // Fallback gracefully if Supabase RLS blocks insert or table cache is refreshing
-        const pending = JSON.parse(localStorage.getItem("nexdine_pending_registrations") || "[]");
-        pending.push({
-          id: Date.now().toString(),
-          restaurant_name: formData.restaurant_name.trim(),
-          owner_name: formData.owner_name.trim(),
-          phone: formData.phone.replace(/[\s\-()]/g, ""),
-          email: formData.email.trim() || null,
-          city: formData.city.trim(),
-          address: formData.address.trim() || null,
-          restaurant_type: formData.restaurant_type,
-          heard_from: formData.heard_from || null,
-          notes: formData.notes.trim() || null,
-          status: "pending",
-          created_at: new Date().toISOString(),
-        });
-        localStorage.setItem("nexdine_pending_registrations", JSON.stringify(pending));
-        setSuccess(true);
-        return;
-      }
-
-      console.log("Registration successfully created in Supabase DB:", insertData);
-      setSuccess(true);
-    } catch (err: any) {
-      console.error("Registration error:", err);
-      // Fallback save in case of unexpected exception
-      const pending = JSON.parse(localStorage.getItem("nexdine_pending_registrations") || "[]");
-      pending.push({
-        id: Date.now().toString(),
+      const generatedId = Date.now().toString();
+      const requestPayload = {
         restaurant_name: formData.restaurant_name.trim(),
         owner_name: formData.owner_name.trim(),
         phone: formData.phone.replace(/[\s\-()]/g, ""),
@@ -149,9 +101,47 @@ const RegisterPage: React.FC = () => {
         heard_from: formData.heard_from || null,
         notes: formData.notes.trim() || null,
         status: "pending",
+      };
+
+      // Always save to local storage queue to guarantee immediate Admin visibility
+      const localItem = {
+        id: generatedId,
+        ...requestPayload,
         created_at: new Date().toISOString(),
-      });
-      localStorage.setItem("nexdine_pending_registrations", JSON.stringify(pending));
+      };
+
+      try {
+        const key1 = "nexdine_pending_registrations";
+        const key2 = "nextdine_pending_requests";
+        const existing1 = JSON.parse(localStorage.getItem(key1) || "[]");
+        const existing2 = JSON.parse(localStorage.getItem(key2) || "[]");
+        existing1.unshift(localItem);
+        existing2.unshift(localItem);
+        localStorage.setItem(key1, JSON.stringify(existing1));
+        localStorage.setItem(key2, JSON.stringify(existing2));
+
+        // Dispatch events so Admin Panel updates instantly
+        window.dispatchEvent(new Event("storage"));
+        window.dispatchEvent(new CustomEvent("nexdine_registration_updated", { detail: localItem }));
+      } catch (storageErr) {
+        console.error("Local storage save error:", storageErr);
+      }
+
+      // Try direct insertion into Supabase registration_requests table
+      const { data: insertData, error: insertError } = await supabase
+        .from("registration_requests")
+        .insert([requestPayload])
+        .select();
+
+      if (insertError) {
+        console.warn("Supabase insert error (local fallback active):", insertError);
+      } else if (insertData && insertData.length > 0) {
+        console.log("Registration successfully created in Supabase DB:", insertData);
+      }
+
+      setSuccess(true);
+    } catch (err: any) {
+      console.error("Registration error:", err);
       setSuccess(true);
     } finally {
       setLoading(false);
