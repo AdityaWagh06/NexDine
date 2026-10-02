@@ -446,17 +446,23 @@ GRANT ALL ON TABLE notifications TO anon, authenticated, service_role;
 DROP POLICY IF EXISTS "Public can create orders" ON orders;
 CREATE POLICY "Public can create orders" ON orders FOR INSERT TO anon, authenticated WITH CHECK (TRUE);
 
+DROP POLICY IF EXISTS "Public can view orders" ON orders;
+CREATE POLICY "Public can view orders" ON orders FOR SELECT TO anon, authenticated USING (TRUE);
+
+DROP POLICY IF EXISTS "Public can update orders" ON orders;
+CREATE POLICY "Public can update orders" ON orders FOR UPDATE TO anon, authenticated USING (TRUE);
+
 DROP POLICY IF EXISTS "Public can submit registration requests" ON registration_requests;
 CREATE POLICY "Public can submit registration requests" ON registration_requests FOR INSERT TO anon, authenticated WITH CHECK (TRUE);
 
 DROP POLICY IF EXISTS "Public can view registration requests" ON registration_requests;
 CREATE POLICY "Public can view registration requests" ON registration_requests FOR SELECT TO anon, authenticated USING (TRUE);
 
--- Restaurant policies (owners manage their data)
-CREATE POLICY "Restaurant owners can view their restaurant" ON restaurants FOR SELECT USING (auth.uid()::text IN (SELECT id::text FROM users WHERE restaurant_id = restaurants.id));
-CREATE POLICY "Restaurant owners can update their restaurant" ON restaurants FOR UPDATE USING (auth.uid()::text IN (SELECT id::text FROM users WHERE restaurant_id = restaurants.id));
-CREATE POLICY "Restaurant owners can manage menu" ON menu_items FOR ALL USING (auth.uid()::text IN (SELECT id::text FROM users WHERE restaurant_id = menu_items.restaurant_id));
-CREATE POLICY "Restaurant owners can manage orders" ON orders FOR ALL USING (auth.uid()::text IN (SELECT id::text FROM users WHERE restaurant_id = orders.restaurant_id));
+DROP POLICY IF EXISTS "Public can manage menu items" ON menu_items;
+CREATE POLICY "Public can manage menu items" ON menu_items FOR ALL TO anon, authenticated USING (TRUE);
+
+DROP POLICY IF EXISTS "Public can manage menu categories" ON menu_categories;
+CREATE POLICY "Public can manage menu categories" ON menu_categories FOR ALL TO anon, authenticated USING (TRUE);
 
 -- =====================================================
 -- ENABLE REAL-TIME REPLICATION
