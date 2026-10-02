@@ -46,7 +46,7 @@ const removeLocalPendingRequest = (id: string) => {
   }
 };
 
-// Get all pending registration requests with real-time updates
+// Get all pending registration requests with real-time updates & local storage sync
 export const subscribeToPendingRequests = (
   callback: (requests: RegistrationRequest[]) => void
 ) => {
@@ -75,7 +75,15 @@ export const subscribeToPendingRequests = (
 
   fetchPending();
 
-  const subscription = supabase
+  // Listen to window storage & custom events for instantaneous update across components/tabs
+  const handleStorageChange = () => fetchPending();
+  window.addEventListener("storage", handleStorageChange);
+  window.addEventListener("nexdine_registration_updated", handleStorageChange);
+
+  // Interval check (3s heartbeat)
+  const intervalId = setInterval(fetchPending, 3000);
+
+  const channel = supabase
     .channel("pending-requests")
     .on(
       "postgres_changes",
@@ -90,7 +98,14 @@ export const subscribeToPendingRequests = (
     )
     .subscribe();
 
-  return subscription;
+  return {
+    unsubscribe: () => {
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("nexdine_registration_updated", handleStorageChange);
+      clearInterval(intervalId);
+      channel.unsubscribe();
+    },
+  };
 };
 
 // Create restaurant account from registration request
