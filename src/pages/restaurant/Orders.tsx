@@ -130,20 +130,30 @@ const Orders: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <ChefHat className="w-6 h-6 text-indigo-600" />
-            Kitchen Live Orders
+            <ChefHat className="w-6 h-6 text-amber-600" />
+            Kitchen Live Orders (KDS)
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
             Scan order tickets in under 2 seconds. Optimized for high-volume service.
           </p>
         </div>
 
-        {pendingCount > 0 && (
-          <div className="inline-flex items-center space-x-2 px-4 py-2.5 rounded-xl bg-amber-500 text-white font-black text-sm shadow-md animate-pulse">
-            <Clock className="w-5 h-5" />
-            <span>{pendingCount} PENDING ORDER{pendingCount > 1 ? "S" : ""}</span>
-          </div>
-        )}
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={() => playSound("notification")}
+            className="inline-flex items-center space-x-1.5 bg-white hover:bg-slate-50 text-slate-800 font-extrabold text-xs px-3 py-2 rounded-xl border border-slate-200 shadow-xs transition-all active:scale-95"
+          >
+            <Volume2 className="w-4 h-4 text-amber-600" />
+            <span>Test Chime</span>
+          </button>
+
+          {pendingCount > 0 && (
+            <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-amber-500 text-white font-black text-xs shadow-md animate-pulse">
+              <Clock className="w-4 h-4" />
+              <span>{pendingCount} PENDING ORDER{pendingCount > 1 ? "S" : ""}</span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Realtime Stream Bar */}
