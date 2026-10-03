@@ -254,6 +254,15 @@ const CustomerMenu: React.FC = () => {
                 </button>
               </div>
 
+              {/* Call Waiter Button */}
+              <button
+                onClick={() => alert("🔔 Staff notified! A waiter is coming to your table shortly.")}
+                className="px-3 py-2 rounded-full bg-amber-100 hover:bg-amber-200 active:scale-95 text-amber-900 font-extrabold text-xs flex items-center gap-1 border border-amber-300 transition-all cursor-pointer"
+                title="Call Waiter to Table"
+              >
+                <span>🔔 Waiter</span>
+              </button>
+
               {/* Order Cart Drawer Button (Screenshot 4) */}
               <button
                 onClick={() => setShowCartDrawer(true)}
