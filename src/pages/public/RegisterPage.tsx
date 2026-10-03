@@ -217,18 +217,47 @@ const RegisterPage: React.FC = () => {
           alt="Restaurant Ambiance"
           className="w-full h-full object-cover"
         />
-      </div>
+  const handleQuickAutofill = () => {
+    setFormData({
+      restaurant_name: "The Grand Amber Bistro",
+      owner_name: "Aditya Wagh",
+      phone: "9876543210",
+      email: "aditya.bistro@nexdine.io",
+      city: "Mumbai",
+      address: "102 Marine Drive, Nariman Point",
+      restaurant_type: "Fine Dining",
+      heard_from: "Google Search",
+      notes: "Requires 12 table QR stands and KDS setup.",
+    });
+    setErrors({});
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-stone-100 via-amber-50/20 to-stone-100 py-12 px-4 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[300px] bg-amber-400/10 blur-[100px] rounded-full pointer-events-none" />
 
       <div className="max-w-2xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-8">
-          <Link
-            to="/"
-            className="inline-flex items-center text-xs font-bold text-stone-500 hover:text-red-600 mb-6 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-1.5" />
-            Back to NextDine Home
-          </Link>
+          <div className="flex items-center justify-between mb-4">
+            <Link
+              to="/"
+              className="inline-flex items-center text-xs font-bold text-stone-500 hover:text-amber-700 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-1.5" />
+              Back to NextDine Home
+            </Link>
+            
+            <button
+              type="button"
+              onClick={handleQuickAutofill}
+              className="inline-flex items-center space-x-1.5 bg-amber-100 hover:bg-amber-200 border border-amber-300 text-amber-900 font-extrabold text-xs px-3 py-1.5 rounded-full shadow-xs transition-all active:scale-95"
+            >
+              <span>⚡ Quick Demo Fill</span>
+            </button>
+          </div>
+
           <div className="flex items-center space-x-4 mb-2">
             <div className="w-14 h-14 rounded-2xl bg-stone-900 text-amber-400 font-black text-2xl flex items-center justify-center shadow-lg">
               ND
