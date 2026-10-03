@@ -87,17 +87,18 @@ const Menu: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
         <div>
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">
             Menu Catalog Management
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500">
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
             Organize catalog dishes, set prices, and control real-time ordering availability
           </p>
         </div>
         <Button
           variant="primary"
+          className="bg-amber-600 hover:bg-amber-700 text-white font-bold"
           icon={<Plus className="w-4 h-4" />}
           onClick={() => setShowAddModal(true)}
         >
