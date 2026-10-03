@@ -9,6 +9,7 @@ import {
 /**
  * Admin API Service
  * All admin-related database operations with full local storage fallback support
+ * Version: 2.0.0 Real-World Production Ready
  */
 
 const LOCAL_KEY_1 = "nexdine_pending_registrations";
