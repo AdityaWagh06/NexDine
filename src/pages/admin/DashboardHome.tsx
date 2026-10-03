@@ -41,18 +41,22 @@ const DashboardHome: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-slate-900 via-slate-800 to-stone-900 p-6 rounded-2xl text-white shadow-xl border border-slate-800">
         <div>
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            NextDine Platform Overview
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold mb-2 border border-emerald-500/30">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <span>Platform Status: Operational 100%</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black tracking-tight">
+            NextDine Super Admin Overview
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Monitor restaurant onboarding, system order volumes, and network performance
+          <p className="text-xs sm:text-sm text-slate-300 font-medium mt-1">
+            Monitor live restaurant registrations, system order volumes, and DB health.
           </p>
         </div>
-        <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-xl bg-slate-900 text-white text-xs font-semibold shadow-sm">
+        <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold shadow-sm">
           <ShieldCheck className="w-4 h-4 text-indigo-400" />
-          <span>Super Admin System</span>
+          <span>Super Admin Access</span>
         </div>
       </div>
 
