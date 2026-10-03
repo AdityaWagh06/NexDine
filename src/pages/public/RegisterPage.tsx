@@ -208,15 +208,6 @@ const RegisterPage: React.FC = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-[#FAF8F5] py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Food Pattern */}
-      <div className="absolute inset-0 z-0 opacity-10">
-        <img
-          src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80"
-          alt="Restaurant Ambiance"
-          className="w-full h-full object-cover"
-        />
   const handleQuickAutofill = () => {
     setFormData({
       restaurant_name: "The Grand Amber Bistro",
