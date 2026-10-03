@@ -194,19 +194,25 @@ const LandingPage: React.FC = () => {
         {/* Center Hero Title Container */}
         <div className="container-custom relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-20 space-y-6">
           
-          {/* Main Short Elegant Title (Ref: TAVERNA RESTAURANT) */}
-          <div className="space-y-1">
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-serif tracking-[0.2em] text-white font-normal uppercase drop-shadow-2xl leading-none">
-              NEXTDINE
+          {/* Ambient SaaS Pill Badge */}
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 text-amber-300 text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-xl">
+            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+            <span>Next-Gen Table Dining OS</span>
+          </div>
+
+          {/* Main Short Elegant Title */}
+          <div className="space-y-2">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tight text-white uppercase drop-shadow-2xl leading-none">
+              NEXT<span className="text-amber-400">DINE</span>
             </h1>
-            <p className="text-sm sm:text-xl font-sans tracking-[0.4em] text-stone-200 font-extrabold uppercase drop-shadow-md">
-              RESTAURANT PLATFORM
+            <p className="text-xs sm:text-lg font-sans tracking-[0.3em] text-stone-200 font-extrabold uppercase drop-shadow-md">
+              SMART QR ORDERING & KITCHEN SYSTEM
             </p>
           </div>
 
           {/* Subhead */}
-          <p className="text-sm sm:text-lg text-stone-200 max-w-xl mx-auto font-medium leading-relaxed drop-shadow-md">
-            Smart Table QR Ordering & Real-Time Kitchen Display System
+          <p className="text-sm sm:text-lg text-stone-300 max-w-xl mx-auto font-medium leading-relaxed drop-shadow-md">
+            Streamline table service, remove waiter bottlenecks, and double kitchen speed with zero app downloads.
           </p>
 
           {/* Action Buttons */}
