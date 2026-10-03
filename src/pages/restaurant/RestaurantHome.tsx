@@ -32,12 +32,28 @@ const RestaurantHome: React.FC = () => {
     return <Loading text="Loading dashboard..." />;
   }
 
+  const [isStoreOpen, setIsStoreOpen] = useState(true);
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-xl font-semibold text-slate-900">Dashboard</h1>
-        <p className="text-sm text-slate-500 mt-0.5">Today's operations at a glance</p>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+        <div>
+          <h1 className="text-2xl font-black text-slate-900 tracking-tight">Restaurant Overview</h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">Live store operations & real-time kitchen stream</p>
+        </div>
+
+        <button
+          onClick={() => setIsStoreOpen(!isStoreOpen)}
+          className={`inline-flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-black transition-all ${
+            isStoreOpen
+              ? "bg-emerald-50 text-emerald-800 border border-emerald-300"
+              : "bg-rose-50 text-rose-800 border border-rose-300"
+          }`}
+        >
+          <span className={`w-2.5 h-2.5 rounded-full ${isStoreOpen ? "bg-emerald-500 animate-pulse" : "bg-rose-500"}`} />
+          <span>{isStoreOpen ? "STORE ONLINE (RECEIVING ORDERS)" : "STORE OFFLINE (PAUSED)"}</span>
+        </button>
       </div>
 
       {/* Pending orders alert */}
