@@ -260,6 +260,31 @@ const AllRestaurants: React.FC = () => {
                 {/* Actions */}
                 <div className="flex sm:flex-row md:flex-col gap-2 md:min-w-[140px] justify-end">
                   <Button
+                    variant="primary"
+                    size="sm"
+                    fullWidth
+                    className="bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-1.5"
+                    onClick={() => {
+                      localStorage.setItem(
+                        "user",
+                        JSON.stringify({
+                          id: restaurant.id,
+                          email: restaurant.email || "demo@nextdine.com",
+                          role: "owner",
+                          restaurant_id: restaurant.id,
+                          restaurant: {
+                            name: restaurant.name,
+                            slug: restaurant.slug || "demo-slug",
+                            is_active: restaurant.status === "active",
+                          },
+                        })
+                      );
+                      window.location.href = "/restaurant";
+                    }}
+                  >
+                    🔑 Launch Portal
+                  </Button>
+                  <Button
                     variant="outline"
                     size="sm"
                     fullWidth
