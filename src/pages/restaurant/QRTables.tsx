@@ -198,6 +198,7 @@ const QRTables: React.FC = () => {
           <Button
             variant="primary"
             size="sm"
+            className="bg-amber-600 hover:bg-amber-700 text-white font-bold"
             icon={<Plus className="w-4 h-4" />}
             onClick={() => setShowAddModal(true)}
           >
