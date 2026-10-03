@@ -70,8 +70,12 @@ const AdminDashboard: React.FC = () => {
               </Link>
             </div>
 
-            {/* Right: Admin email & Logout */}
-            <div className="flex items-center space-x-4">
+            {/* Right: System Status Pulse, Admin email & Logout */}
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="hidden sm:inline-flex items-center space-x-2 bg-slate-800/80 border border-slate-700/80 px-3 py-1 rounded-full text-[11px] font-bold text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                <span>DB Live Sync</span>
+              </div>
               <span className="hidden md:inline text-xs text-slate-400 font-mono">
                 {admin.email}
               </span>
