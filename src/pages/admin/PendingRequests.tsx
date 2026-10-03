@@ -68,18 +68,20 @@ const PendingRequests: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
         <div>
           <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            Pending Applications
+            Pending Applications Queue
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500">
-            Verify restaurant registrations and issue NextDine dashboard access
+          <p className="text-xs sm:text-sm text-slate-500 font-medium">
+            Verify incoming restaurant registrations and issue dashboard login credentials.
           </p>
         </div>
-        <Badge variant="warning" className="text-xs font-bold px-3 py-1.5">
-          {requests.length} Application{requests.length !== 1 ? "s" : ""} Pending
-        </Badge>
+        <div className="flex items-center space-x-2">
+          <Badge variant="warning" className="text-xs font-bold px-3.5 py-2">
+            {requests.length} Application{requests.length !== 1 ? "s" : ""} Pending
+          </Badge>
+        </div>
       </div>
 
       {/* Real-time indicator */}
