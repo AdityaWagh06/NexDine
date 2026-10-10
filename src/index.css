@@ -212,6 +212,10 @@
 }
 
 /* Radiant Ambient Backdrops */
+.glow-purple-flare {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.22) 0%, rgba(139, 92, 246, 0.08) 50%, transparent 80%);
+}
+
 .glow-amber-flare {
   background: radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, rgba(217, 119, 6, 0.05) 50%, transparent 80%);
 }
