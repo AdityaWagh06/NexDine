@@ -339,7 +339,7 @@ const LandingPage: React.FC = () => {
 
             {/* Out-Of-The-Box Dynamic Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight uppercase leading-[0.98] drop-shadow-2xl">
-              THE <span className="bg-amber-400 text-stone-950 px-3.5 py-1 inline-block -rotate-1 rounded-lg shadow-[5px_5px_0px_0px_rgba(255,255,255,0.2)]">DIRECT QR</span> DINING OS.
+              THE <span className="bg-amber-400 text-stone-950 px-3.5 py-1 inline-block -rotate-1 hover:rotate-0 transition-transform duration-300 rounded-lg shadow-[5px_5px_0px_0px_rgba(255,255,255,0.2)]">DIRECT QR</span> DINING OS.
             </h1>
 
             <p className="text-base sm:text-xl text-stone-300 font-normal leading-relaxed max-w-2xl">
