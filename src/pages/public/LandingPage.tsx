@@ -1,12 +1,12 @@
 /**
- * NextDine Landing Page — Dynamic CoreShift Motion & Scroll Animation System
- * Recreated with Framer Motion, Parallax Scroll Physics, Floating Cards,
- * Bento Grid Reveals, Integrations Arc Motion, 3D Testimonial Stack,
- * and Full Interactive KDS Operational Sandbox.
+ * NextDine Landing Page — Recreated Exactly From The CoreShift Reference Video Layout (Frames 0s - 22s)
+ * Complete Motion System: Framer Motion Scroll Reveals, Parallax Floating Physics,
+ * Bento Grid Staggered Entrance, Integrations Arc Motion, 3D Testimonial Stack,
+ * Progressive SVG Line Drawings, Reduced Motion Accessibility, and Live KDS Sandbox.
  */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   Check,
@@ -32,18 +32,40 @@ import { LANDING_PAGE_CONTENT } from "../../config/adminContent";
 
 const LandingPage: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   // Scroll Parallax Hooks for Hero Floating Cards physics
   const { scrollYProgress } = useScroll();
 
-  // Scroll transforms for hero cards
-  const heroParallaxY = useTransform(scrollYProgress, [0, 0.25], [0, -50]);
-  const card1Y = useTransform(scrollYProgress, [0, 0.25], [0, -90]);
-  const card2Y = useTransform(scrollYProgress, [0, 0.25], [0, 70]);
-  const card3Y = useTransform(scrollYProgress, [0, 0.25], [0, -110]);
-  const card4Y = useTransform(scrollYProgress, [0, 0.25], [0, -85]);
-  const card5Y = useTransform(scrollYProgress, [0, 0.25], [0, 95]);
-  const card6Y = useTransform(scrollYProgress, [0, 0.25], [0, -105]);
+  // Bounded scroll transforms for hero cards (disabled if reduced motion requested)
+  const heroParallaxY = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -50]);
+  const card1Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -90]);
+  const card2Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : 70]);
+  const card3Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -110]);
+  const card4Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -85]);
+  const card5Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : 95]);
+  const card6Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -105]);
+
+  // Shared Animation Variants for Motion System
+  const fadeUpVariant = {
+    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
+    },
+  };
+
+  const staggerContainerVariant = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.05,
+      },
+    },
+  };
 
   // Web Audio API Kitchen Bell Sound Synthesizer
   const playKitchenBellSound = () => {
@@ -314,7 +336,7 @@ const LandingPage: React.FC = () => {
       <motion.header
         initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="fixed top-5 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50 bg-white/95 backdrop-blur-md rounded-full px-6 py-3 border border-[#E9E9EE] shadow-lg shadow-black/5 flex items-center justify-between"
       >
         {/* Brand Logo */}
@@ -422,7 +444,7 @@ const LandingPage: React.FC = () => {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="text-4xl sm:text-6xl lg:text-6xl font-black text-[#111111] tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6"
           >
             The Complete <span className="text-[#7650E8]">Digital Dining OS</span> Built For Modern Outlets.
@@ -432,7 +454,7 @@ const LandingPage: React.FC = () => {
           <motion.p
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             className="text-base sm:text-lg text-[#737373] font-medium max-w-2xl mx-auto leading-relaxed mb-8"
           >
             Empower guests to scan table QR codes, explore visual gourmet menus, and self-order directly. Orders stream to your Kitchen Display System in <strong className="text-[#111111] font-bold">0.2 seconds</strong> — with zero waiter errors and 100% direct revenue.
@@ -442,7 +464,7 @@ const LandingPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
+            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link to="/register" className="w-full sm:w-auto">
@@ -591,10 +613,10 @@ const LandingPage: React.FC = () => {
           
           {/* Centered Header */}
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="text-center max-w-3xl mx-auto mb-16 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -609,14 +631,16 @@ const LandingPage: React.FC = () => {
           <div className="space-y-6">
             
             {/* ROW 1: 3 EQUAL COLUMNS */}
-            <div className="grid md:grid-cols-3 gap-6">
-              
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainerVariant}
+              className="grid md:grid-cols-3 gap-6"
+            >
               {/* Card 1 — Direct Table QR Ordering */}
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
+                variants={fadeUpVariant}
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
@@ -653,10 +677,7 @@ const LandingPage: React.FC = () => {
 
               {/* Card 2 — Real-Time Order Management */}
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                variants={fadeUpVariant}
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
@@ -688,10 +709,7 @@ const LandingPage: React.FC = () => {
 
               {/* Card 3 — Live Kitchen Display (KDS) */}
               <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                variants={fadeUpVariant}
                 whileHover={{ y: -8, scale: 1.02 }}
                 className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
@@ -718,18 +736,19 @@ const LandingPage: React.FC = () => {
                   <p className="text-[10px] text-[#555555]">2x Paneer Masala • 4x Naan</p>
                 </div>
               </motion.div>
-
-            </div>
+            </motion.div>
 
             {/* ROW 2: 2 WIDER CARDS */}
-            <div className="grid md:grid-cols-2 gap-6">
-              
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={staggerContainerVariant}
+              className="grid md:grid-cols-2 gap-6"
+            >
               {/* Card 4 (Wide) — Owner Dashboard & Sales Analytics */}
               <motion.div
-                initial={{ opacity: 0, y: 45 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                variants={fadeUpVariant}
                 whileHover={{ y: -8, scale: 1.015 }}
                 className="bg-white rounded-3xl p-8 sm:p-10 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
@@ -762,10 +781,7 @@ const LandingPage: React.FC = () => {
 
               {/* Card 5 (Wide) — 1-Tap Menu & Table Management */}
               <motion.div
-                initial={{ opacity: 0, y: 45 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                variants={fadeUpVariant}
                 whileHover={{ y: -8, scale: 1.015 }}
                 className="bg-white rounded-3xl p-8 sm:p-10 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
@@ -791,7 +807,7 @@ const LandingPage: React.FC = () => {
                 </div>
               </motion.div>
 
-            </div>
+            </motion.div>
 
           </div>
         </div>
@@ -802,10 +818,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="text-center max-w-3xl mx-auto mb-12 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -887,10 +903,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.7 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="bg-white border border-[#E9E9EE] rounded-[40px] p-8 sm:p-16 text-center shadow-sm"
           >
             {/* Small Coral Icon Header */}
@@ -957,10 +973,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1050,10 +1066,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="text-center max-w-3xl mx-auto mb-16 space-y-3"
           >
             <div className="inline-flex items-center space-x-2 bg-[#7650E8]/10 border border-[#7650E8]/30 px-3.5 py-1.5 rounded-full text-[#7650E8] text-xs font-extrabold">
@@ -1069,16 +1085,15 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           {/* 3 Continuous Devices Grid */}
-          <div className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
-            
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainerVariant}
+            className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto"
+          >
             {/* Device 1: Table QR Scan */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex flex-col items-center"
-            >
+            <motion.div variants={fadeUpVariant} className="flex flex-col items-center">
               <span className="text-[11px] uppercase tracking-widest font-bold text-[#7650E8] mb-3 font-mono">
                 1. Table QR Scan
               </span>
@@ -1136,13 +1151,7 @@ const LandingPage: React.FC = () => {
             </motion.div>
 
             {/* Device 2: Select & Order Menu */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="flex flex-col items-center"
-            >
+            <motion.div variants={fadeUpVariant} className="flex flex-col items-center">
               <span className="text-[11px] uppercase tracking-widest font-bold text-[#FF625E] mb-3 font-mono">
                 2. Select & Order Menu
               </span>
@@ -1213,13 +1222,7 @@ const LandingPage: React.FC = () => {
             </motion.div>
 
             {/* Device 3: Live KDS Display Ticket */}
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-col items-center"
-            >
+            <motion.div variants={fadeUpVariant} className="flex flex-col items-center">
               <span className="text-[11px] uppercase tracking-widest font-bold text-emerald-600 mb-3 font-mono">
                 3. Live KDS Stream
               </span>
@@ -1276,7 +1279,7 @@ const LandingPage: React.FC = () => {
               </div>
             </motion.div>
 
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1285,10 +1288,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="text-center max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1300,10 +1303,10 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeUpVariant}
             className="max-w-4xl mx-auto bg-white border border-[#E9E9EE] rounded-3xl p-6 sm:p-10 shadow-lg grid lg:grid-cols-12 gap-8 items-center"
           >
             {/* Sliders Input Side */}
@@ -1402,10 +1405,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="text-center max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1417,10 +1420,10 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 45 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={fadeUpVariant}
             className="max-w-xl mx-auto bg-white border-2 border-[#7650E8] rounded-3xl p-8 sm:p-12 shadow-2xl relative"
           >
             <motion.div
@@ -1480,10 +1483,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="text-center max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1497,10 +1500,10 @@ const LandingPage: React.FC = () => {
               return (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: false, amount: 0.2 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={fadeUpVariant}
                   className="bg-[#F8F8FA] border border-[#E9E9EE] rounded-2xl overflow-hidden shadow-xs transition-colors"
                 >
                   <button
@@ -1589,21 +1592,49 @@ const LandingPage: React.FC = () => {
               <TrendingUp className="w-6 h-6 text-[#7650E8]" />
             </motion.div>
 
-            {/* SVG Connector Lines */}
+            {/* SVG Connector Lines with Progressive Motion Drawing */}
             <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-              <line x1="25%" y1="25%" x2="50%" y2="50%" stroke="#7650E8" strokeWidth="2" strokeDasharray="4 4" />
-              <line x1="75%" y1="25%" x2="50%" y2="50%" stroke="#FF625E" strokeWidth="2" strokeDasharray="4 4" />
-              <line x1="25%" y1="75%" x2="50%" y2="50%" stroke="#5CD8E8" strokeWidth="2" strokeDasharray="4 4" />
-              <line x1="75%" y1="75%" x2="50%" y2="50%" stroke="#7650E8" strokeWidth="2" strokeDasharray="4 4" />
+              <motion.line
+                x1="25%" y1="25%" x2="50%" y2="50%"
+                stroke="#7650E8" strokeWidth="2" strokeDasharray="4 4"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+              />
+              <motion.line
+                x1="75%" y1="25%" x2="50%" y2="50%"
+                stroke="#FF625E" strokeWidth="2" strokeDasharray="4 4"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.2, ease: "easeInOut" }}
+              />
+              <motion.line
+                x1="25%" y1="75%" x2="50%" y2="50%"
+                stroke="#5CD8E8" strokeWidth="2" strokeDasharray="4 4"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
+              />
+              <motion.line
+                x1="75%" y1="75%" x2="50%" y2="50%"
+                stroke="#7650E8" strokeWidth="2" strokeDasharray="4 4"
+                initial={{ pathLength: 0, opacity: 0 }}
+                whileInView={{ pathLength: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, delay: 0.6, ease: "easeInOut" }}
+              />
             </svg>
 
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUpVariant}
             className="space-y-4 max-w-2xl mx-auto"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight uppercase">
@@ -1632,10 +1663,15 @@ const LandingPage: React.FC = () => {
       <footer className="bg-white rounded-t-[44px] border-t border-[#E9E9EE] pt-16 pb-12 shadow-2xl relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-16 border-b border-[#E9E9EE] text-xs">
-            
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainerVariant}
+            className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-16 border-b border-[#E9E9EE] text-xs"
+          >
             {/* Brand Column */}
-            <div className="col-span-2 space-y-4">
+            <motion.div variants={fadeUpVariant} className="col-span-2 space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-xl bg-[#7650E8] text-white font-black text-sm flex items-center justify-center">
                   ND
@@ -1645,45 +1681,50 @@ const LandingPage: React.FC = () => {
               <p className="text-[#737373] text-xs max-w-xs leading-relaxed font-medium">
                 The complete digital dining operating system built for modern restaurants, cafes, and lounges.
               </p>
-            </div>
+            </motion.div>
 
             {/* Product Column */}
-            <div className="space-y-3 font-semibold text-[#555555]">
+            <motion.div variants={fadeUpVariant} className="space-y-3 font-semibold text-[#555555]">
               <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Product</p>
               <p><a href="#hero-section" className="hover:text-[#7650E8]">QR Table Ordering</a></p>
               <p><a href="#menu-catalog-section" className="hover:text-[#7650E8]">Digital Visual Menu</a></p>
               <p><a href="#features-grid" className="hover:text-[#7650E8]">Kitchen Display (KDS)</a></p>
               <p><a href="#pricing-section" className="hover:text-[#7650E8]">Pricing & Trial</a></p>
-            </div>
+            </motion.div>
 
             {/* Platform Column */}
-            <div className="space-y-3 font-semibold text-[#555555]">
+            <motion.div variants={fadeUpVariant} className="space-y-3 font-semibold text-[#555555]">
               <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Platform</p>
               <p><Link to="/login" className="hover:text-[#7650E8]">Owner Portal</Link></p>
               <p><Link to="/admin/login" className="hover:text-[#7650E8]">Admin Dashboard</Link></p>
               <p><Link to="/customer/menu" className="hover:text-[#7650E8]">Customer Demo Menu</Link></p>
               <p><a href="#roi-calculator" className="hover:text-[#7650E8]">ROI Calculator</a></p>
-            </div>
+            </motion.div>
 
             {/* Business Column */}
-            <div className="space-y-3 font-semibold text-[#555555]">
+            <motion.div variants={fadeUpVariant} className="space-y-3 font-semibold text-[#555555]">
               <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Business</p>
               <p><Link to="/register" className="hover:text-[#7650E8]">Register Outlet</Link></p>
               <p><a href="#how-it-works" className="hover:text-[#7650E8]">Live Operational Demo</a></p>
               <p><a href="#faq" className="hover:text-[#7650E8]">FAQ & Support</a></p>
-            </div>
-
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* LARGE STYLIZED CORAL-RED GEOMETRIC OUTLINE BRANDING ACROSS FOOTER BOTTOM (CORESHIFT FRAMES 14S - 16S) */}
-          <div className="pt-12 text-center relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="pt-12 text-center relative"
+          >
             <h1 className="text-6xl sm:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#FF625E]/20 via-[#FF625E]/10 to-transparent tracking-tighter uppercase select-none pointer-events-none font-mono">
               NEXTDINE
             </h1>
             <p className="text-[11px] text-[#737373] font-bold font-mono -mt-6">
               © {new Date().getFullYear()} NextDine OS. All rights reserved.
             </p>
-          </div>
+          </motion.div>
 
         </div>
       </footer>
