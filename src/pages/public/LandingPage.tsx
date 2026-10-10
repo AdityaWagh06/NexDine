@@ -710,7 +710,7 @@ const LandingPage: React.FC = () => {
 
                       {/* Physical Thermal Receipt Ticket */}
                       {liveKdsOrder ? (
-                        <div className="bg-white rounded-xl p-3.5 border-2 border-stone-300 space-y-3 shadow-md font-mono relative overflow-hidden">
+                        <div className="bg-white rounded-xl p-3.5 border-2 border-t-4 border-t-amber-500 border-stone-300 space-y-3 shadow-md font-mono relative overflow-hidden">
                           {/* Receipt Header */}
                           <div className="flex items-center justify-between border-b border-dashed border-stone-300 pb-2">
                             <div>
