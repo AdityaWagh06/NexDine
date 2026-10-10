@@ -237,7 +237,7 @@ const LandingPage: React.FC = () => {
       </div>
 
       {/* Main Navbar */}
-      <header className="bg-stone-900/95 backdrop-blur-md text-white border-b border-stone-800 sticky top-0 z-50 shadow-md">
+      <header className="bg-stone-900/95 backdrop-blur-md text-white border-b-2 border-amber-500/30 sticky top-0 z-50 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
           
           {/* Brand Logo */}
