@@ -357,6 +357,7 @@ const LandingPage: React.FC = () => {
 
               <button
                 onClick={handleBellSoundDemo}
+                title="Tap to trigger Web Audio kitchen chime sound"
                 className="w-full sm:w-auto bg-stone-900 hover:bg-stone-800 border-2 border-amber-500/40 text-amber-300 font-extrabold text-xs uppercase tracking-widest px-6 py-4 rounded-2xl transition-all flex items-center justify-center space-x-2.5 shadow-lg active:scale-95 group"
               >
                 <BellRing className="w-4 h-4 text-amber-400 group-hover:rotate-12 transition-transform" />
