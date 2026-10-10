@@ -1317,8 +1317,8 @@ const LandingPage: React.FC = () => {
               <div className="w-7 h-7 rounded-lg bg-amber-400 text-stone-950 font-black text-xs flex items-center justify-center">
                 ND
               </div>
-              <span className="font-black text-white text-sm">NextDine Restaurant OS</span>
-              <span>© {new Date().getFullYear()} NextDine. All rights reserved.</span>
+              <span className="font-black text-white text-sm uppercase font-mono">NextDine Restaurant OS</span>
+              <span className="font-mono text-[11px] text-stone-500">© {new Date().getFullYear()} NextDine. All rights reserved.</span>
             </div>
 
             <div className="flex items-center space-x-6 font-bold text-stone-300">
