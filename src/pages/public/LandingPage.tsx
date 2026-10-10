@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+// Explicit lucide-react icon imports
 import {
   ArrowRight,
   Check,
