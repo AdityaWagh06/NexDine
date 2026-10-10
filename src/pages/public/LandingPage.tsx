@@ -1290,6 +1290,14 @@ const LandingPage: React.FC = () => {
 
       {/* FLOATING INTERACTIVE QUICK DOCK (OUT OF THE BOX SURPRISE WIDGET) */}
       <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2">
+        <a
+          href="#interactive-sandbox"
+          className="bg-amber-400 hover:bg-amber-300 text-stone-950 p-2.5 rounded-full border-2 border-amber-300 shadow-2xl transition-all hover:scale-105 font-mono text-xs font-black px-3.5 hidden md:flex items-center gap-1.5"
+          title="Jump to Live Operational Sandbox"
+        >
+          <Zap className="w-3.5 h-3.5" />
+          <span>SANDBOX</span>
+        </a>
         <button
           onClick={handleBellSoundDemo}
           className="bg-stone-900 hover:bg-stone-800 text-amber-400 p-3 rounded-full border-2 border-amber-400 shadow-2xl transition-all hover:scale-110 active:scale-95 flex items-center gap-2 font-mono text-xs font-black px-4"
