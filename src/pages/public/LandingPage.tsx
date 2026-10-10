@@ -32,13 +32,13 @@ const LandingPage: React.FC = () => {
       if (!AudioCtx) return;
       const ctx = new AudioCtx();
       
-      // Primary Chime Tone
+      // Primary Chime Tone (B5 Crisp Kitchen Bell Note)
       const osc1 = ctx.createOscillator();
       const gain1 = ctx.createGain();
       osc1.type = "sine";
-      osc1.frequency.setValueAtTime(880, ctx.currentTime); // A5 note
-      gain1.gain.setValueAtTime(0.4, ctx.currentTime);
-      gain1.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.2);
+      osc1.frequency.setValueAtTime(987.77, ctx.currentTime); // B5 note
+      gain1.gain.setValueAtTime(0.45, ctx.currentTime);
+      gain1.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.25);
       
       // Overtone Harmonics
       const osc2 = ctx.createOscillator();
