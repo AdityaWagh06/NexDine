@@ -957,7 +957,7 @@ const LandingPage: React.FC = () => {
           <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             
             {/* Bento Card 1: Instant Menu Sync (Large 2 Cols) */}
-            <div className="md:col-span-2 bg-white/95 backdrop-blur-xl border-2 border-stone-200 rounded-3xl p-8 relative overflow-hidden group hover:border-amber-500 transition-all shadow-md flex flex-col justify-between">
+            <div className="md:col-span-2 bg-white/95 backdrop-blur-xl border-2 border-stone-200 rounded-3xl p-8 relative overflow-hidden group hover:border-amber-500 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(28,25,23,0.9)] transition-all duration-300 shadow-md flex flex-col justify-between">
               <div>
                 <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-300 text-amber-900 flex items-center justify-center font-black text-xl mb-6">
                   <Zap className="w-6 h-6" />
