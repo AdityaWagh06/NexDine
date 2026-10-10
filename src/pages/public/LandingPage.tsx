@@ -791,8 +791,9 @@ const LandingPage: React.FC = () => {
           {/* Architectural Section Marker (No small top pill badge) */}
           <div className="max-w-3xl mb-12 text-left">
             <div className="h-1.5 w-14 bg-amber-500 rounded-full mb-3" />
-            <div className="font-mono text-xs font-black uppercase text-amber-800 tracking-widest mb-1">
-              [ 02 // GOURMET VISUAL CATALOG ]
+            <div className="font-mono text-xs font-black uppercase text-amber-800 tracking-widest mb-1 select-none flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+              <span>[ 02 // GOURMET VISUAL CATALOG ]</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-black text-stone-900 tracking-tight uppercase leading-tight">
               High-Resolution Visual Menus
