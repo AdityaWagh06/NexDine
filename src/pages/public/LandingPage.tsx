@@ -1,3 +1,7 @@
+/**
+ * NextDine Landing Page — Editorial Out-of-the-Box Restaurant Operating System UI
+ * Features: Architectural Index Section System, Kinetic Marquee Ticker, Web Audio Kitchen Bell Synthesizer, Physical Receipt Slip Mockups.
+ */
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // Explicit lucide-react icon imports
