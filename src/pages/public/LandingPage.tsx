@@ -823,7 +823,7 @@ const LandingPage: React.FC = () => {
           {/* Sample Dish Showcase Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
             {filteredShowcaseDishes.map((dish) => (
-              <div key={dish.id} className="bg-[#FAF8F5] rounded-3xl p-4.5 border-2 border-stone-200 hover:border-amber-500 hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(245,158,11,1)] transition-all duration-300 group flex flex-col justify-between">
+              <div key={dish.id} className="bg-[#FAF8F5] rounded-3xl p-4.5 border-2 border-stone-200 hover:border-amber-500 hover:-translate-y-1 shadow-xs hover:shadow-[6px_6px_0px_0px_rgba(245,158,11,1)] transition-all duration-300 group flex flex-col justify-between">
                 <div>
                   <div className="relative h-44 mb-3 rounded-2xl overflow-hidden bg-white p-2 flex items-center justify-center border border-stone-200">
                     <img
