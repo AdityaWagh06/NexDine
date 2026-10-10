@@ -1228,8 +1228,9 @@ const LandingPage: React.FC = () => {
           {/* Architectural Marker */}
           <div className="max-w-3xl mb-14 text-left">
             <div className="h-1.5 w-14 bg-amber-500 rounded-full mb-3" />
-            <div className="font-mono text-xs font-black uppercase text-amber-800 tracking-widest mb-1">
-              [ 07 // FREQUENTLY ASKED QUESTIONS ]
+            <div className="font-mono text-xs font-black uppercase text-amber-800 tracking-widest mb-1 select-none flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600" />
+              <span>[ 07 // FREQUENTLY ASKED QUESTIONS ]</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-black text-stone-900 tracking-tight uppercase leading-tight">
               Frequently Asked Questions
