@@ -4,7 +4,7 @@ import { Smartphone, Zap, ChefHat, TrendingUp, QrCode } from "lucide-react";
 import { EASE_OUT_CUBIC } from "../../utils/motionVariants";
 
 interface BentoFeatureGridProps {
-  featuresRef: React.RefObject<HTMLDivElement | null>;
+  featuresRef: React.RefObject<HTMLElement | null>;
   featuresParallaxY: MotionValue<number>;
   shouldReduceMotion: boolean | null;
 }
