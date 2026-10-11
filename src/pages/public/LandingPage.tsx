@@ -34,9 +34,11 @@ import {
   ChevronRight,
   Sparkles,
   Layers,
-} from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
 import { LANDING_PAGE_CONTENT } from "../../config/adminContent";
+import { EASE_OUT_CUBIC } from "../../utils/motionVariants";
+import { playKitchenBellSound } from "../../utils/soundEffects";
+import type { ConnectedWorkflowItem, TestimonialItem, ShowcaseDishItem } from "../../types/landing";
 
 const LandingPage: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -100,45 +102,7 @@ const LandingPage: React.FC = () => {
   });
   const showcaseNodeDrift = useTransform(showcaseScroll, [0, 1], [15, shouldReduceMotion ? 0 : -15]);
 
-  // Standard Easing Curve for Clean Entrance Motion
-  const easeOutCubic = [0.16, 1, 0.3, 1] as const;
-
-  // Web Audio API Kitchen Bell Sound Synthesizer
-  const playKitchenBellSound = () => {
-    try {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      
-      // Primary Chime Tone (B5 Crisp Note)
-      const osc1 = ctx.createOscillator();
-      const gain1 = ctx.createGain();
-      osc1.type = "sine";
-      osc1.frequency.setValueAtTime(987.77, ctx.currentTime);
-      gain1.gain.setValueAtTime(0.45, ctx.currentTime);
-      gain1.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.25);
-      
-      // Overtone Harmonics
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
-      osc2.type = "sine";
-      osc2.frequency.setValueAtTime(1975.53, ctx.currentTime);
-      gain2.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain2.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.8);
-
-      osc1.connect(gain1);
-      gain1.connect(ctx.destination);
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-
-      osc1.start();
-      osc2.start();
-      osc1.stop(ctx.currentTime + 1.25);
-      osc2.stop(ctx.currentTime + 0.8);
-    } catch (e) {
-      console.log("Audio Context not supported or blocked by browser gesture.");
-    }
-  };
+  const easeOutCubic = EASE_OUT_CUBIC;
 
   // Interactive Live Demo Playground State
   const [demoRestaurantName, setDemoRestaurantName] = useState("Taverna Gourmet Kitchen");
