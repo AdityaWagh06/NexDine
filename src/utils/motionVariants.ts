@@ -5,6 +5,7 @@
 import type { Variants } from "framer-motion";
 
 export const EASE_OUT_CUBIC = [0.16, 1, 0.3, 1] as const;
+export const easeOutCubic = EASE_OUT_CUBIC;
 
 export const createFadeUpVariant = (reducedMotion = false): Variants => ({
   hidden: { opacity: 0, y: reducedMotion ? 0 : 30 },
