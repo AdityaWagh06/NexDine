@@ -1,10 +1,18 @@
 /**
- * NextDine Landing Page — Recreated Exactly From The CoreShift Reference Video Layout (Frames 0s - 22s)
- * Complete Motion System: Framer Motion Scroll Reveals, Parallax Floating Physics,
- * Bento Grid Staggered Entrance, Integrations Arc Motion, 3D Testimonial Stack,
- * Progressive SVG Line Drawings, Reduced Motion Accessibility, and Live KDS Sandbox.
+ * NextDine Landing Page — Complete Scroll Animation & Restored Floating Navbar
+ * 1. Restored Navbar: Fixed positioning using inset-x-0 mx-auto (no transform collision),
+ *    inner motion wrapper for entrance, perfectly centered and persistent across all devices.
+ * 2. Real Scroll-Linked Parallax: Section-targeted useScroll hooks (heroRef, featuresRef,
+ *    workflowRef, testimonialRef, showcaseRef) controlling bounded transforms on both scroll-down
+ *    and scroll-up.
+ * 3. Compounded Micro-Physics: Outer motion.div for scroll parallax + inner motion.div for
+ *    gentle continuous floating without CSS animation transform collisions.
+ * 4. Staggered Scroll Reveals: Progressive whileInView animations across all sections,
+ *    bento cards, interactive mockups, and SVG connector line pathLength drawing.
+ * 5. Full Preservation: 100% of NextDine content, features, routes, data, live KDS sandbox,
+ *    Web Audio chime, and pricing model preserved.
  */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import {
@@ -34,38 +42,66 @@ const LandingPage: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
-  // Scroll Parallax Hooks for Hero Floating Cards physics
-  const { scrollYProgress } = useScroll();
+  // Section Refs for Target-Specific Scroll Tracking
+  const heroRef = useRef<HTMLElement>(null);
+  const featuresRef = useRef<HTMLElement>(null);
+  const workflowRef = useRef<HTMLElement>(null);
+  const testimonialRef = useRef<HTMLElement>(null);
+  const showcaseRef = useRef<HTMLElement>(null);
 
-  // Bounded scroll transforms for hero cards (disabled if reduced motion requested)
-  const heroParallaxY = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -50]);
-  const card1Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -90]);
-  const card2Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : 70]);
-  const card3Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -110]);
-  const card4Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -85]);
-  const card5Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : 95]);
-  const card6Y = useTransform(scrollYProgress, [0, 0.25], [0, shouldReduceMotion ? 0 : -105]);
+  // 1. HERO SECTION SCROLL PROGRESS (tracks scroll over hero from 0 to 1)
+  const { scrollYProgress: heroScroll } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
 
-  // Shared Animation Variants for Motion System
-  const fadeUpVariant = {
-    hidden: { opacity: 0, y: shouldReduceMotion ? 0 : 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-    },
-  };
+  // Bounded scroll-linked transforms for Hero floating cards
+  const card1Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -75]);
+  const card2Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 55]);
+  const card3Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -95]);
+  const card4Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -65]);
+  const card5Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 80]);
+  const card6Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -85]);
 
-  const staggerContainerVariant = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.05,
-      },
-    },
-  };
+  const card1Rotate = useTransform(heroScroll, [0, 1], [-3, shouldReduceMotion ? -3 : -7]);
+  const card2Rotate = useTransform(heroScroll, [0, 1], [2, shouldReduceMotion ? 2 : 6]);
+  const card4Rotate = useTransform(heroScroll, [0, 1], [3, shouldReduceMotion ? 3 : 7]);
+  const card6Rotate = useTransform(heroScroll, [0, 1], [4, shouldReduceMotion ? 4 : 1]);
+
+  const heroContentY = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 40]);
+  const heroContentOpacity = useTransform(heroScroll, [0, 0.8], [1, 0.3]);
+
+  // 2. FEATURES SECTION SCROLL PROGRESS
+  const { scrollYProgress: featuresScroll } = useScroll({
+    target: featuresRef,
+    offset: ["start end", "end start"],
+  });
+  const featuresParallaxY = useTransform(featuresScroll, [0, 1], [30, shouldReduceMotion ? 0 : -30]);
+
+  // 3. WORKFLOW ARC SCROLL PROGRESS
+  const { scrollYProgress: workflowScroll } = useScroll({
+    target: workflowRef,
+    offset: ["start end", "end start"],
+  });
+  const arcParallaxY = useTransform(workflowScroll, [0, 1], [25, shouldReduceMotion ? 0 : -25]);
+
+  // 4. TESTIMONIAL SECTION SCROLL PROGRESS
+  const { scrollYProgress: testimonialScroll } = useScroll({
+    target: testimonialRef,
+    offset: ["start end", "end start"],
+  });
+  const sideCardLeftX = useTransform(testimonialScroll, [0, 1], [-25, shouldReduceMotion ? 0 : 15]);
+  const sideCardRightX = useTransform(testimonialScroll, [0, 1], [25, shouldReduceMotion ? 0 : -15]);
+
+  // 5. SHOWCASE SECTION SCROLL PROGRESS
+  const { scrollYProgress: showcaseScroll } = useScroll({
+    target: showcaseRef,
+    offset: ["start end", "end start"],
+  });
+  const showcaseNodeDrift = useTransform(showcaseScroll, [0, 1], [15, shouldReduceMotion ? 0 : -15]);
+
+  // Standard Easing Curve for Clean Entrance Motion
+  const easeOutCubic = [0.16, 1, 0.3, 1] as const;
 
   // Web Audio API Kitchen Bell Sound Synthesizer
   const playKitchenBellSound = () => {
@@ -332,65 +368,72 @@ const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white text-[#111111] selection:bg-[#7650E8]/20 selection:text-[#7650E8] font-sans antialiased overflow-x-hidden relative">
       
-      {/* FLOATING NAVIGATION HEADER (CORESHIFT REFERENCE STYLE - FRAME 0S) */}
-      <motion.header
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-5 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50 bg-white/95 backdrop-blur-md rounded-full px-6 py-3 border border-[#E9E9EE] shadow-lg shadow-black/5 flex items-center justify-between"
-      >
-        {/* Brand Logo */}
-        <Link to="/" className="flex items-center space-x-3 group">
-          <motion.div
-            whileHover={{ scale: 1.1, rotate: 3 }}
-            className="w-9 h-9 rounded-xl bg-[#7650E8] text-white font-black text-sm flex items-center justify-center shadow-md shadow-[#7650E8]/20"
-          >
-            ND
-          </motion.div>
-          <div className="flex flex-col">
-            <span className="text-base font-extrabold tracking-tight text-[#111111] leading-none">
-              Next<span className="text-[#7650E8]">Dine</span>
-            </span>
-            <span className="text-[9px] font-bold tracking-[0.2em] text-[#737373] uppercase -mt-0.5 font-mono">
-              RESTAURANT OS
-            </span>
-          </div>
-        </Link>
-
-        {/* Center Navigation Links */}
-        <nav className="hidden md:flex items-center space-x-8 text-xs font-bold text-[#555555]">
-          <a href="#hero-section" className="hover:text-[#7650E8] transition-colors">Product</a>
-          <a href="#how-it-works" className="hover:text-[#7650E8] transition-colors">How It Works</a>
-          <a href="#features-grid" className="hover:text-[#7650E8] transition-colors">Features</a>
-          <a href="#menu-catalog-section" className="hover:text-[#7650E8] transition-colors">Visual Catalog</a>
-          <a href="#pricing-section" className="hover:text-[#7650E8] transition-colors">Pricing</a>
-          <a href="#roi-calculator" className="hover:text-[#7650E8] transition-colors">ROI Calculator</a>
-        </nav>
-
-        {/* Right CTAs */}
-        <div className="hidden md:flex items-center space-x-4">
-          <Link to="/login" className="text-xs font-bold text-[#111111] hover:text-[#7650E8] transition-colors">
-            Sign In
-          </Link>
-          <Link to="/register">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#FF625E] hover:bg-[#e8504c] text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md shadow-[#FF625E]/20 transition-all uppercase tracking-wider"
-            >
-              Start Free Trial →
-            </motion.button>
-          </Link>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-[#111111] hover:text-[#7650E8] transition-colors"
+      {/* 
+        FLOATING NAVIGATION HEADER (CORESHIFT REFERENCE STYLE - FRAME 0S)
+        RULE 2 COMPLIANCE: Stable positioning container via fixed top-5 inset-x-0 mx-auto w-[92%] max-w-6xl.
+        Outer container has NO transforms or entrance transitions, preventing any centering offset collisions.
+        Inner motion.div smoothly handles the initial load reveal.
+      */}
+      <header className="fixed top-5 inset-x-0 mx-auto w-[92%] max-w-6xl z-50 pointer-events-none">
+        <motion.div
+          initial={{ y: -30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6, ease: easeOutCubic }}
+          className="w-full bg-white/95 backdrop-blur-md rounded-full px-6 py-3 border border-[#E9E9EE] shadow-lg shadow-black/5 flex items-center justify-between pointer-events-auto"
         >
-          {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
-        </button>
-      </motion.header>
+          {/* Brand Logo */}
+          <Link to="/" className="flex items-center space-x-3 group">
+            <motion.div
+              whileHover={{ scale: 1.1, rotate: 3 }}
+              className="w-9 h-9 rounded-xl bg-[#7650E8] text-white font-black text-sm flex items-center justify-center shadow-md shadow-[#7650E8]/20"
+            >
+              ND
+            </motion.div>
+            <div className="flex flex-col">
+              <span className="text-base font-extrabold tracking-tight text-[#111111] leading-none">
+                Next<span className="text-[#7650E8]">Dine</span>
+              </span>
+              <span className="text-[9px] font-bold tracking-[0.2em] text-[#737373] uppercase -mt-0.5 font-mono">
+                RESTAURANT OS
+              </span>
+            </div>
+          </Link>
+
+          {/* Center Navigation Links */}
+          <nav className="hidden md:flex items-center space-x-8 text-xs font-bold text-[#555555]">
+            <a href="#hero-section" className="hover:text-[#7650E8] transition-colors">Product</a>
+            <a href="#how-it-works" className="hover:text-[#7650E8] transition-colors">How It Works</a>
+            <a href="#features-grid" className="hover:text-[#7650E8] transition-colors">Features</a>
+            <a href="#menu-catalog-section" className="hover:text-[#7650E8] transition-colors">Visual Catalog</a>
+            <a href="#pricing-section" className="hover:text-[#7650E8] transition-colors">Pricing</a>
+            <a href="#roi-calculator" className="hover:text-[#7650E8] transition-colors">ROI Calculator</a>
+          </nav>
+
+          {/* Right CTAs */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Link to="/login" className="text-xs font-bold text-[#111111] hover:text-[#7650E8] transition-colors">
+              Sign In
+            </Link>
+            <Link to="/register">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-[#FF625E] hover:bg-[#e8504c] text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md shadow-[#FF625E]/20 transition-all uppercase tracking-wider"
+              >
+                Start Free Trial →
+              </motion.button>
+            </Link>
+          </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-[#111111] hover:text-[#7650E8] transition-colors"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
+          </button>
+        </motion.div>
+      </header>
 
       {/* Mobile Menu Drawer */}
       <AnimatePresence>
@@ -399,8 +442,8 @@ const LandingPage: React.FC = () => {
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.3 }}
-            className="fixed top-20 left-4 right-4 bg-white border border-[#E9E9EE] rounded-3xl p-6 shadow-2xl z-50 space-y-4 text-xs uppercase font-extrabold tracking-wider text-[#111111]"
+            transition={{ duration: 0.25, ease: easeOutCubic }}
+            className="fixed top-24 inset-x-4 max-w-md mx-auto bg-white border border-[#E9E9EE] rounded-3xl p-6 shadow-2xl z-50 space-y-4 text-xs uppercase font-extrabold tracking-wider text-[#111111]"
           >
             <a href="#hero-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Product</a>
             <a href="#how-it-works" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
@@ -422,14 +465,20 @@ const LandingPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* 1. HERO SECTION — CORESHIFT COMPOSITION WITH DYNAMIC SCROLL & FLOATING CARDS (FRAMES 0S - 2S) */}
-      <section id="hero-section" className="pt-36 sm:pt-44 pb-28 bg-white relative overflow-hidden">
+      {/* 
+        1. HERO SECTION — CORESHIFT COMPOSITION WITH DYNAMIC SCROLL PARALLAX (FRAMES 0S - 2S)
+        Outer motion.div connected to heroScroll progress.
+        Inner motion.divs handle gentle floating oscillation without CSS transform collision.
+      */}
+      <section ref={heroRef} id="hero-section" className="pt-36 sm:pt-44 pb-28 bg-white relative overflow-hidden">
         
         {/* Subtle Background Glow Mesh */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-[#7650E8]/10 via-[#FF625E]/5 to-[#5CD8E8]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-        <motion.div style={{ y: heroParallaxY }} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          
+        <motion.div
+          style={{ y: heroContentY, opacity: heroContentOpacity }}
+          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+        >
           {/* Centered Icon Container (Matching CoreShift Hero Icon) */}
           <motion.div
             initial={{ scale: 0, rotate: -20 }}
@@ -444,7 +493,7 @@ const LandingPage: React.FC = () => {
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0.1, ease: easeOutCubic }}
             className="text-4xl sm:text-6xl lg:text-6xl font-black text-[#111111] tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6"
           >
             The Complete <span className="text-[#7650E8]">Digital Dining OS</span> Built For Modern Outlets.
@@ -454,7 +503,7 @@ const LandingPage: React.FC = () => {
           <motion.p
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0.2, ease: easeOutCubic }}
             className="text-base sm:text-lg text-[#737373] font-medium max-w-2xl mx-auto leading-relaxed mb-8"
           >
             Empower guests to scan table QR codes, explore visual gourmet menus, and self-order directly. Orders stream to your Kitchen Display System in <strong className="text-[#111111] font-bold">0.2 seconds</strong> — with zero waiter errors and 100% direct revenue.
@@ -464,7 +513,7 @@ const LandingPage: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.7, delay: 0.3, ease: easeOutCubic }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link to="/register" className="w-full sm:w-auto">
@@ -488,135 +537,183 @@ const LandingPage: React.FC = () => {
               <span>Ring Kitchen Bell 🔔 ({bellTriggeredCount})</span>
             </motion.button>
           </motion.div>
-
         </motion.div>
 
-        {/* FLOATING PHOTOGRAPHIC CARDS WITH CONTINUOUS FLOATING & SCROLL PARALLAX PHYSICS */}
+        {/* 
+          FLOATING PHOTOGRAPHIC CARDS WITH REAL SCROLL PARALLAX & CONTINUOUS FLOATING PHYSICS
+          Outer motion.div tracks heroScroll and card rotate.
+          Inner motion.div runs gentle float oscillation.
+        */}
         
         {/* Floating Card 1 — Top Left: Chef Plating Photography */}
         <motion.div
-          style={{ y: card1Y }}
-          initial={{ opacity: 0, x: -60, rotate: -8 }}
-          animate={{ opacity: 1, x: 0, rotate: -3 }}
-          transition={{ duration: 0.9, delay: 0.3 }}
-          className="hidden lg:block absolute top-28 left-6 xl:left-12 w-44 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl animate-float-slow z-20 cursor-pointer"
+          style={{ y: card1Y, rotate: card1Rotate }}
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: easeOutCubic }}
+          className="hidden lg:block absolute top-28 left-6 xl:left-12 z-20 pointer-events-auto"
         >
-          <img
-            src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=400&q=80"
-            alt="Chef Plating Gourmet Dish"
-            className="w-full h-36 object-cover rounded-xl mb-1.5"
-          />
-          <div className="px-1 text-left">
-            <p className="text-[11px] font-black text-[#111111]">Chef Gourmet Kitchen</p>
-            <p className="text-[9px] text-[#737373] font-medium">Live Order Prep</p>
-          </div>
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+            className="w-44 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=400&q=80"
+              alt="Chef Plating Gourmet Dish"
+              className="w-full h-36 object-cover rounded-xl mb-1.5"
+            />
+            <div className="px-1 text-left">
+              <p className="text-[11px] font-black text-[#111111]">Chef Gourmet Kitchen</p>
+              <p className="text-[9px] text-[#737373] font-medium">Live Order Prep</p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Floating Card 2 — Mid Left: Table QR Scan UI Badge */}
         <motion.div
-          style={{ y: card2Y }}
-          initial={{ opacity: 0, x: -80, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.4 }}
-          className="hidden lg:block absolute top-72 left-8 xl:left-16 w-48 rounded-2xl border border-[#7650E8]/30 bg-white p-3 shadow-2xl animate-float-reverse z-20 cursor-pointer"
+          style={{ y: card2Y, rotate: card2Rotate }}
+          initial={{ opacity: 0, x: -70 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: easeOutCubic }}
+          className="hidden lg:block absolute top-72 left-8 xl:left-16 z-20 pointer-events-auto"
         >
-          <div className="flex items-center space-x-2 border-b border-[#E9E9EE] pb-2 mb-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-extrabold text-xs text-[#111111]">Table #04 Active</span>
-          </div>
-          <div className="text-left text-[10px] space-y-1 text-[#555555] font-semibold">
-            <p className="text-[#7650E8] font-bold">Paneer Butter Masala x2</p>
-            <p>Garlic Butter Naan x4</p>
-            <p className="text-[#111111] font-black pt-1 border-t border-[#E9E9EE]">Total: ₹700</p>
-          </div>
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, 7, 0] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="w-48 rounded-2xl border border-[#7650E8]/30 bg-white p-3 shadow-2xl hover:shadow-2xl transition-shadow cursor-pointer"
+          >
+            <div className="flex items-center space-x-2 border-b border-[#E9E9EE] pb-2 mb-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-extrabold text-xs text-[#111111]">Table #04 Active</span>
+            </div>
+            <div className="text-left text-[10px] space-y-1 text-[#555555] font-semibold">
+              <p className="text-[#7650E8] font-bold">Paneer Butter Masala x2</p>
+              <p>Garlic Butter Naan x4</p>
+              <p className="text-[#111111] font-black pt-1 border-t border-[#E9E9EE]">Total: ₹700</p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Floating Card 3 — Bottom Left: Customer Scanning QR Photo */}
         <motion.div
           style={{ y: card3Y }}
-          initial={{ opacity: 0, y: 60, rotate: -12 }}
-          animate={{ opacity: 1, y: 0, rotate: -6 }}
-          transition={{ duration: 0.9, delay: 0.5 }}
-          className="hidden lg:block absolute bottom-12 left-10 xl:left-20 w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl animate-float-slow z-20 cursor-pointer"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: easeOutCubic }}
+          className="hidden lg:block absolute bottom-12 left-10 xl:left-20 z-20 pointer-events-auto"
         >
-          <img
-            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80"
-            alt="Customer Ordering at Restaurant Table"
-            className="w-full h-32 object-cover rounded-xl mb-1.5"
-          />
-          <p className="text-[10px] font-black text-[#111111] text-center">Scan & Self Order</p>
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+            className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer -rotate-6"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80"
+              alt="Customer Ordering at Restaurant Table"
+              className="w-full h-32 object-cover rounded-xl mb-1.5"
+            />
+            <p className="text-[10px] font-black text-[#111111] text-center">Scan & Self Order</p>
+          </motion.div>
         </motion.div>
 
         {/* Floating Card 4 — Top Right: High-Res Food Photography */}
         <motion.div
-          style={{ y: card4Y }}
-          initial={{ opacity: 0, x: 60, rotate: 8 }}
-          animate={{ opacity: 1, x: 0, rotate: 3 }}
-          transition={{ duration: 0.9, delay: 0.3 }}
-          className="hidden lg:block absolute top-28 right-6 xl:right-12 w-44 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl animate-float-slow z-20 cursor-pointer"
+          style={{ y: card4Y, rotate: card4Rotate }}
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: easeOutCubic }}
+          className="hidden lg:block absolute top-28 right-6 xl:right-12 z-20 pointer-events-auto"
         >
-          <img
-            src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80"
-            alt="Truffle Honey Glazed Dish"
-            className="w-full h-36 object-cover rounded-xl mb-1.5"
-          />
-          <div className="px-1 text-left flex justify-between items-center">
-            <div>
-              <p className="text-[11px] font-black text-[#111111]">Truffle Honey Glazed</p>
-              <p className="text-[9px] text-[#7650E8] font-bold">4.9 ★ Rating</p>
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
+            transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
+            className="w-44 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80"
+              alt="Truffle Honey Glazed Dish"
+              className="w-full h-36 object-cover rounded-xl mb-1.5"
+            />
+            <div className="px-1 text-left flex justify-between items-center">
+              <div>
+                <p className="text-[11px] font-black text-[#111111]">Truffle Honey Glazed</p>
+                <p className="text-[9px] text-[#7650E8] font-bold">4.9 ★ Rating</p>
+              </div>
+              <span className="text-xs font-black text-[#FF625E]">$18.99</span>
             </div>
-            <span className="text-xs font-black text-[#FF625E]">$18.99</span>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Floating Card 5 — Mid Right: KDS Order Status Badge */}
         <motion.div
           style={{ y: card5Y }}
-          initial={{ opacity: 0, x: 80, scale: 0.8 }}
-          animate={{ opacity: 1, x: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.4 }}
-          className="hidden lg:block absolute top-72 right-8 xl:right-16 w-50 rounded-2xl border border-[#E9E9EE] bg-white p-3 shadow-2xl animate-float-reverse z-20 cursor-pointer"
+          initial={{ opacity: 0, x: 70 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: easeOutCubic }}
+          className="hidden lg:block absolute top-72 right-8 xl:right-16 z-20 pointer-events-auto"
         >
-          <div className="flex items-center justify-between border-b border-[#E9E9EE] pb-2 mb-2">
-            <span className="font-mono text-xs font-black text-[#7650E8]">Order #104</span>
-            <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[9px] font-black uppercase">
-              🍳 COOKING
-            </span>
-          </div>
-          <div className="text-left text-[10px] text-[#555555] font-semibold space-y-1">
-            <p>Live Kitchen Display Ticket</p>
-            <p className="text-[#111111] font-bold">0.2s Dispatch Speed</p>
-          </div>
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, 8, 0] }}
+            transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-50 rounded-2xl border border-[#E9E9EE] bg-white p-3 shadow-2xl hover:shadow-2xl transition-shadow cursor-pointer -rotate-2"
+          >
+            <div className="flex items-center justify-between border-b border-[#E9E9EE] pb-2 mb-2">
+              <span className="font-mono text-xs font-black text-[#7650E8]">Order #104</span>
+              <span className="bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full text-[9px] font-black uppercase">
+                🍳 COOKING
+              </span>
+            </div>
+            <div className="text-left text-[10px] text-[#555555] font-semibold space-y-1">
+              <p>Live Kitchen Display Ticket</p>
+              <p className="text-[#111111] font-bold">0.2s Dispatch Speed</p>
+            </div>
+          </motion.div>
         </motion.div>
 
         {/* Floating Card 6 — Bottom Right: Staff Serving Dining Table Photo */}
         <motion.div
-          style={{ y: card6Y }}
-          initial={{ opacity: 0, y: 60, rotate: 10 }}
-          animate={{ opacity: 1, y: 0, rotate: 4 }}
-          transition={{ duration: 0.9, delay: 0.5 }}
-          className="hidden lg:block absolute bottom-12 right-10 xl:right-20 w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl animate-float-slow z-20 cursor-pointer"
+          style={{ y: card6Y, rotate: card6Rotate }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: easeOutCubic }}
+          className="hidden lg:block absolute bottom-12 right-10 xl:right-20 z-20 pointer-events-auto"
         >
-          <img
-            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
-            alt="Restaurant Dining Ambiance"
-            className="w-full h-32 object-cover rounded-xl mb-1.5"
-          />
-          <p className="text-[10px] font-black text-[#111111] text-center">Faster Table Turns</p>
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, -7, 0] }}
+            transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
+            className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
+              alt="Restaurant Dining Ambiance"
+              className="w-full h-32 object-cover rounded-xl mb-1.5"
+            />
+            <p className="text-[10px] font-black text-[#111111] text-center">Faster Table Turns</p>
+          </motion.div>
         </motion.div>
 
       </section>
 
-      {/* 2. FEATURE SECTION — "BUILT FOR EVERYONE" 5-CARD BENTO GRID WITH STAGGERED SCROLL REVEALS (FRAMES 3S - 5S) */}
-      <section id="features-grid" className="py-24 bg-[#F8F8FA] border-y border-[#E9E9EE]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 
+        2. FEATURE SECTION — "BUILT FOR EVERYONE" 5-CARD BENTO GRID (FRAMES 3S - 5S)
+        Staggered scroll entrances for Section Title, Subtitle, Row 1 (3 equal cards), Row 2 (2 wider cards).
+      */}
+      <section ref={featuresRef} id="features-grid" className="py-24 bg-[#F8F8FA] border-y border-[#E9E9EE] relative overflow-hidden">
+        {/* Subtle scroll-linked decorative ambient drift */}
+        <motion.div
+          style={{ y: featuresParallaxY }}
+          className="absolute -top-24 right-10 w-96 h-96 bg-[#7650E8]/5 rounded-full blur-3xl pointer-events-none -z-0"
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Centered Header */}
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-16 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -631,17 +728,15 @@ const LandingPage: React.FC = () => {
           <div className="space-y-6">
             
             {/* ROW 1: 3 EQUAL COLUMNS */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={staggerContainerVariant}
-              className="grid md:grid-cols-3 gap-6"
-            >
+            <div className="grid md:grid-cols-3 gap-6">
+              
               {/* Card 1 — Direct Table QR Ordering */}
               <motion.div
-                variants={fadeUpVariant}
-                whileHover={{ y: -8, scale: 1.02 }}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: 0.1, ease: easeOutCubic }}
+                whileHover={{ y: -6, scale: 1.015 }}
                 className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -657,7 +752,7 @@ const LandingPage: React.FC = () => {
                 {/* Mini Realistic UI Illustration with Scanning Radar Line Animation */}
                 <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-3 border border-[#E9E9EE] space-y-2 text-xs relative overflow-hidden">
                   <motion.div
-                    animate={{ y: ["0%", "100%", "0%"] }}
+                    animate={shouldReduceMotion ? {} : { y: ["0%", "100%", "0%"] }}
                     transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-x-0 h-0.5 bg-[#7650E8] shadow-sm shadow-[#7650E8]"
                   />
@@ -677,8 +772,11 @@ const LandingPage: React.FC = () => {
 
               {/* Card 2 — Real-Time Order Management */}
               <motion.div
-                variants={fadeUpVariant}
-                whileHover={{ y: -8, scale: 1.02 }}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: easeOutCubic }}
+                whileHover={{ y: -6, scale: 1.015 }}
                 className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -699,7 +797,7 @@ const LandingPage: React.FC = () => {
                   </div>
                   <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
                     <motion.div
-                      animate={{ width: ["20%", "95%", "20%"] }}
+                      animate={shouldReduceMotion ? {} : { width: ["20%", "95%", "20%"] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                       className="bg-emerald-500 h-full"
                     />
@@ -709,8 +807,11 @@ const LandingPage: React.FC = () => {
 
               {/* Card 3 — Live Kitchen Display (KDS) */}
               <motion.div
-                variants={fadeUpVariant}
-                whileHover={{ y: -8, scale: 1.02 }}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: easeOutCubic }}
+                whileHover={{ y: -6, scale: 1.015 }}
                 className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -726,7 +827,7 @@ const LandingPage: React.FC = () => {
                 {/* Mini Realistic UI Illustration with Ticket Motion */}
                 <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-3 border border-[#E9E9EE] space-y-2 text-xs font-mono">
                   <motion.div
-                    animate={{ x: [-5, 0, -5] }}
+                    animate={shouldReduceMotion ? {} : { x: [-5, 0, -5] }}
                     transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                     className="flex justify-between items-center border-b border-dashed border-stone-300 pb-1 text-[11px]"
                   >
@@ -736,20 +837,19 @@ const LandingPage: React.FC = () => {
                   <p className="text-[10px] text-[#555555]">2x Paneer Masala • 4x Naan</p>
                 </div>
               </motion.div>
-            </motion.div>
+
+            </div>
 
             {/* ROW 2: 2 WIDER CARDS */}
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.2 }}
-              variants={staggerContainerVariant}
-              className="grid md:grid-cols-2 gap-6"
-            >
+            <div className="grid md:grid-cols-2 gap-6">
+              
               {/* Card 4 (Wide) — Owner Dashboard & Sales Analytics */}
               <motion.div
-                variants={fadeUpVariant}
-                whileHover={{ y: -8, scale: 1.015 }}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: 0.15, ease: easeOutCubic }}
+                whileHover={{ y: -6, scale: 1.01 }}
                 className="bg-white rounded-3xl p-8 sm:p-10 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -781,8 +881,11 @@ const LandingPage: React.FC = () => {
 
               {/* Card 5 (Wide) — 1-Tap Menu & Table Management */}
               <motion.div
-                variants={fadeUpVariant}
-                whileHover={{ y: -8, scale: 1.015 }}
+                initial={{ opacity: 0, y: 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.6, delay: 0.25, ease: easeOutCubic }}
+                whileHover={{ y: -6, scale: 1.01 }}
                 className="bg-white rounded-3xl p-8 sm:p-10 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -807,7 +910,7 @@ const LandingPage: React.FC = () => {
                 </div>
               </motion.div>
 
-            </motion.div>
+            </div>
 
           </div>
         </div>
@@ -818,10 +921,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-12 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -857,10 +960,10 @@ const LandingPage: React.FC = () => {
                 <motion.div
                   layout
                   key={dish.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.92 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
+                  exit={{ opacity: 0, scale: 0.92 }}
+                  transition={{ duration: 0.35, ease: easeOutCubic }}
                   whileHover={{ y: -6 }}
                   className="bg-white rounded-3xl p-4 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                 >
@@ -899,14 +1002,20 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* 4. INTEGRATIONS & CONNECTED WORKFLOWS SECTION (CORESHIFT ARC TILES - FRAMES 6S - 9S) */}
-      <section className="py-24 bg-[#F8F8FA] border-b border-[#E9E9EE]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section ref={workflowRef} className="py-24 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
+        {/* Subtle scroll-linked ambient drift */}
+        <motion.div
+          style={{ y: arcParallaxY }}
+          className="absolute -bottom-20 left-10 w-96 h-96 bg-[#5CD8E8]/5 rounded-full blur-3xl pointer-events-none -z-0"
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="bg-white border border-[#E9E9EE] rounded-[40px] p-8 sm:p-16 text-center shadow-sm"
           >
             {/* Small Coral Icon Header */}
@@ -942,7 +1051,11 @@ const LandingPage: React.FC = () => {
                 return (
                   <motion.button
                     key={item.id}
-                    whileHover={{ scale: 1.15, y: -10 }}
+                    initial={{ opacity: 0, y: 25 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: idx * 0.08, ease: easeOutCubic }}
+                    whileHover={{ scale: 1.15, y: -8 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setActiveWorkflowIndex(idx)}
                     className={`w-20 h-20 sm:w-24 sm:h-24 rounded-3xl flex flex-col items-center justify-center transition-all duration-300 shadow-md ${
@@ -969,14 +1082,14 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* 5. TESTIMONIAL CAROUSEL SECTION — "WORDS OF APPRECIATION" (CORESHIFT 3D STACK - FRAMES 10S - 13S) */}
-      <section className="py-24 bg-white border-b border-[#E9E9EE] relative">
+      <section ref={testimonialRef} className="py-24 bg-white border-b border-[#E9E9EE] relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -987,7 +1100,7 @@ const LandingPage: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* 3D Stacked Card Display */}
+          {/* 3D Stacked Card Display with Scroll Parallax on Side Cards */}
           <div className="relative max-w-2xl mx-auto min-h-[260px] flex items-center justify-center">
             
             {/* Center Active Testimonial Card */}
@@ -997,7 +1110,7 @@ const LandingPage: React.FC = () => {
                 initial={{ opacity: 0, x: 50, scale: 0.95 }}
                 animate={{ opacity: 1, x: 0, scale: 1 }}
                 exit={{ opacity: 0, x: -50, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
+                transition={{ duration: 0.4, ease: easeOutCubic }}
                 className="bg-white rounded-3xl p-8 sm:p-10 shadow-xl border border-[#E9E9EE] max-w-xl w-full relative z-10 text-center space-y-5"
               >
                 {/* Layered Origami Purple Backdrop Accent */}
@@ -1034,9 +1147,15 @@ const LandingPage: React.FC = () => {
               </motion.div>
             </AnimatePresence>
 
-            {/* Partially Visible Angled Side Cards */}
-            <div className="hidden md:block absolute -left-16 top-4 w-72 h-48 bg-[#F8F8FA] rounded-3xl border border-[#E9E9EE] shadow-md opacity-30 -rotate-6 scale-90 select-none pointer-events-none" />
-            <div className="hidden md:block absolute -right-16 top-4 w-72 h-48 bg-[#F8F8FA] rounded-3xl border border-[#E9E9EE] shadow-md opacity-30 rotate-6 scale-90 select-none pointer-events-none" />
+            {/* Partially Visible Angled Side Cards with Parallax Translation */}
+            <motion.div
+              style={{ x: sideCardLeftX }}
+              className="hidden md:block absolute -left-16 top-4 w-72 h-48 bg-[#F8F8FA] rounded-3xl border border-[#E9E9EE] shadow-md opacity-35 -rotate-6 scale-90 select-none pointer-events-none"
+            />
+            <motion.div
+              style={{ x: sideCardRightX }}
+              className="hidden md:block absolute -right-16 top-4 w-72 h-48 bg-[#F8F8FA] rounded-3xl border border-[#E9E9EE] shadow-md opacity-35 rotate-6 scale-90 select-none pointer-events-none"
+            />
 
           </div>
 
@@ -1066,10 +1185,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-16 space-y-3"
           >
             <div className="inline-flex items-center space-x-2 bg-[#7650E8]/10 border border-[#7650E8]/30 px-3.5 py-1.5 rounded-full text-[#7650E8] text-xs font-extrabold">
@@ -1084,16 +1203,16 @@ const LandingPage: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* 3 Continuous Devices Grid */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainerVariant}
-            className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto"
-          >
+          {/* 3 Continuous Devices Grid with Staggered Entrances */}
+          <div className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
             {/* Device 1: Table QR Scan */}
-            <motion.div variants={fadeUpVariant} className="flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: easeOutCubic }}
+              className="flex flex-col items-center"
+            >
               <span className="text-[11px] uppercase tracking-widest font-bold text-[#7650E8] mb-3 font-mono">
                 1. Table QR Scan
               </span>
@@ -1151,7 +1270,13 @@ const LandingPage: React.FC = () => {
             </motion.div>
 
             {/* Device 2: Select & Order Menu */}
-            <motion.div variants={fadeUpVariant} className="flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: easeOutCubic }}
+              className="flex flex-col items-center"
+            >
               <span className="text-[11px] uppercase tracking-widest font-bold text-[#FF625E] mb-3 font-mono">
                 2. Select & Order Menu
               </span>
@@ -1222,7 +1347,13 @@ const LandingPage: React.FC = () => {
             </motion.div>
 
             {/* Device 3: Live KDS Display Ticket */}
-            <motion.div variants={fadeUpVariant} className="flex flex-col items-center">
+            <motion.div
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: easeOutCubic }}
+              className="flex flex-col items-center"
+            >
               <span className="text-[11px] uppercase tracking-widest font-bold text-emerald-600 mb-3 font-mono">
                 3. Live KDS Stream
               </span>
@@ -1278,8 +1409,8 @@ const LandingPage: React.FC = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
 
-          </motion.div>
         </div>
       </section>
 
@@ -1288,10 +1419,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1303,10 +1434,10 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="max-w-4xl mx-auto bg-white border border-[#E9E9EE] rounded-3xl p-6 sm:p-10 shadow-lg grid lg:grid-cols-12 gap-8 items-center"
           >
             {/* Sliders Input Side */}
@@ -1405,10 +1536,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1420,10 +1551,10 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="max-w-xl mx-auto bg-white border-2 border-[#7650E8] rounded-3xl p-8 sm:p-12 shadow-2xl relative"
           >
             <motion.div
@@ -1483,10 +1614,10 @@ const LandingPage: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-14 space-y-3"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -1500,10 +1631,10 @@ const LandingPage: React.FC = () => {
               return (
                 <motion.div
                   key={idx}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, amount: 0.2 }}
-                  variants={fadeUpVariant}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{ duration: 0.4, delay: idx * 0.08, ease: easeOutCubic }}
                   className="bg-[#F8F8FA] border border-[#E9E9EE] rounded-2xl overflow-hidden shadow-xs transition-colors"
                 >
                   <button
@@ -1538,8 +1669,11 @@ const LandingPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 10. FINAL PRODUCT SHOWCASE — "ALL-IN-ONE RESTAURANT OS PLATFORM" (CORESHIFT CONNECTED DIAGRAM - FRAMES 17S - 19S) */}
-      <section className="py-28 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
+      {/* 
+        10. FINAL PRODUCT SHOWCASE — "ALL-IN-ONE RESTAURANT OS PLATFORM" (CORESHIFT CONNECTED DIAGRAM - FRAMES 17S - 19S)
+        Progressive SVG line drawing via motion.line pathLength + drifting feature nodes.
+      */}
+      <section ref={showcaseRef} className="py-28 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-12">
           
           {/* Central Connected Diagram */}
@@ -1547,19 +1681,18 @@ const LandingPage: React.FC = () => {
             
             {/* Center Purple Tile */}
             <motion.div
-              animate={{ y: [0, -10, 0] }}
+              animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               className="w-24 h-24 rounded-3xl bg-[#7650E8] text-white flex items-center justify-center font-black text-3xl shadow-2xl shadow-[#7650E8]/40 relative z-20 border-2 border-white"
             >
               <Utensils className="w-10 h-10 text-white" />
             </motion.div>
 
-            {/* Surrounding Connected Feature Tiles (CoreShift Frames 17s - 19s) */}
+            {/* Surrounding Connected Feature Tiles with Scroll-Linked Drift */}
             
             {/* Top Left Tile — Yellow Accent (Menu) */}
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              style={{ y: showcaseNodeDrift }}
               className="absolute top-2 left-6 w-14 h-14 rounded-2xl bg-[#FFD45C] text-amber-900 flex items-center justify-center shadow-md z-10"
             >
               <Utensils className="w-6 h-6" />
@@ -1567,8 +1700,7 @@ const LandingPage: React.FC = () => {
 
             {/* Top Right Tile — Coral Accent (Live KDS) */}
             <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              style={{ y: showcaseNodeDrift }}
               className="absolute top-2 right-6 w-14 h-14 rounded-2xl bg-[#FF625E] text-white flex items-center justify-center shadow-md z-10"
             >
               <ChefHat className="w-6 h-6" />
@@ -1576,8 +1708,6 @@ const LandingPage: React.FC = () => {
 
             {/* Bottom Left Tile — Cyan Accent (Table QR) */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
               className="absolute bottom-2 left-6 w-14 h-14 rounded-2xl bg-[#5CD8E8] text-slate-900 flex items-center justify-center shadow-md z-10"
             >
               <QrCode className="w-6 h-6" />
@@ -1585,8 +1715,6 @@ const LandingPage: React.FC = () => {
 
             {/* Bottom Right Tile — White Card (Analytics) */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
               className="absolute bottom-2 right-6 w-14 h-14 rounded-2xl bg-white border border-[#E9E9EE] text-[#111111] flex items-center justify-center shadow-md z-10"
             >
               <TrendingUp className="w-6 h-6 text-[#7650E8]" />
@@ -1631,10 +1759,10 @@ const LandingPage: React.FC = () => {
           </div>
 
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={fadeUpVariant}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: easeOutCubic }}
             className="space-y-4 max-w-2xl mx-auto"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight uppercase">
@@ -1663,15 +1791,9 @@ const LandingPage: React.FC = () => {
       <footer className="bg-white rounded-t-[44px] border-t border-[#E9E9EE] pt-16 pb-12 shadow-2xl relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={staggerContainerVariant}
-            className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-16 border-b border-[#E9E9EE] text-xs"
-          >
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 pb-16 border-b border-[#E9E9EE] text-xs">
             {/* Brand Column */}
-            <motion.div variants={fadeUpVariant} className="col-span-2 space-y-4">
+            <div className="col-span-2 space-y-4">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 rounded-xl bg-[#7650E8] text-white font-black text-sm flex items-center justify-center">
                   ND
@@ -1681,34 +1803,34 @@ const LandingPage: React.FC = () => {
               <p className="text-[#737373] text-xs max-w-xs leading-relaxed font-medium">
                 The complete digital dining operating system built for modern restaurants, cafes, and lounges.
               </p>
-            </motion.div>
+            </div>
 
             {/* Product Column */}
-            <motion.div variants={fadeUpVariant} className="space-y-3 font-semibold text-[#555555]">
+            <div className="space-y-3 font-semibold text-[#555555]">
               <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Product</p>
               <p><a href="#hero-section" className="hover:text-[#7650E8]">QR Table Ordering</a></p>
               <p><a href="#menu-catalog-section" className="hover:text-[#7650E8]">Digital Visual Menu</a></p>
               <p><a href="#features-grid" className="hover:text-[#7650E8]">Kitchen Display (KDS)</a></p>
               <p><a href="#pricing-section" className="hover:text-[#7650E8]">Pricing & Trial</a></p>
-            </motion.div>
+            </div>
 
             {/* Platform Column */}
-            <motion.div variants={fadeUpVariant} className="space-y-3 font-semibold text-[#555555]">
+            <div className="space-y-3 font-semibold text-[#555555]">
               <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Platform</p>
               <p><Link to="/login" className="hover:text-[#7650E8]">Owner Portal</Link></p>
               <p><Link to="/admin/login" className="hover:text-[#7650E8]">Admin Dashboard</Link></p>
               <p><Link to="/customer/menu" className="hover:text-[#7650E8]">Customer Demo Menu</Link></p>
               <p><a href="#roi-calculator" className="hover:text-[#7650E8]">ROI Calculator</a></p>
-            </motion.div>
+            </div>
 
             {/* Business Column */}
-            <motion.div variants={fadeUpVariant} className="space-y-3 font-semibold text-[#555555]">
+            <div className="space-y-3 font-semibold text-[#555555]">
               <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Business</p>
               <p><Link to="/register" className="hover:text-[#7650E8]">Register Outlet</Link></p>
               <p><a href="#how-it-works" className="hover:text-[#7650E8]">Live Operational Demo</a></p>
               <p><a href="#faq" className="hover:text-[#7650E8]">FAQ & Support</a></p>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* LARGE STYLIZED CORAL-RED GEOMETRIC OUTLINE BRANDING ACROSS FOOTER BOTTOM (CORESHIFT FRAMES 14S - 16S) */}
           <motion.div
