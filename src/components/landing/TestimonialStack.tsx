@@ -23,6 +23,7 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
 }) => {
   const shouldReduceMotion = useReducedMotion() ?? false;
   const [direction, setDirection] = React.useState<number>(1);
+  const [isPaused, setIsPaused] = React.useState<boolean>(false);
 
   const prevIndex = activeTestimonialIndex === 0 ? testimonials.length - 1 : activeTestimonialIndex - 1;
   const nextIndex = activeTestimonialIndex === testimonials.length - 1 ? 0 : activeTestimonialIndex + 1;
@@ -36,6 +37,15 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
     setDirection(1);
     setActiveTestimonialIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
   };
+
+  React.useEffect(() => {
+    if (isPaused || shouldReduceMotion) return;
+    const interval = setInterval(() => {
+      setDirection(1);
+      setActiveTestimonialIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    }, 6500);
+    return () => clearInterval(interval);
+  }, [isPaused, shouldReduceMotion, testimonials.length, setActiveTestimonialIndex]);
 
   const slideVariants = {
     enter: (dir: number) => ({
@@ -79,7 +89,11 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
         </motion.div>
 
         {/* 3D Stacked Card Display with Scroll Parallax on Side Cards */}
-        <div className="relative max-w-2xl mx-auto min-h-[300px] flex items-center justify-center">
+        <div
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          className="relative max-w-2xl mx-auto min-h-[300px] flex items-center justify-center"
+        >
           {/* Left Adjacent Preview Card */}
           <motion.div
             style={{ x: sideCardLeftX }}
