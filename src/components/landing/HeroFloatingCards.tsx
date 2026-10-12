@@ -40,8 +40,8 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         className="hidden lg:block absolute top-20 left-4 xl:left-8 z-20 pointer-events-auto"
       >
         <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
-          transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={shouldReduceMotion ? {} : { y: [0, -6, 0], rotate: [0, 0.8, 0] }}
+          transition={{ duration: 5.4, repeat: Infinity, ease: "easeInOut" }}
           className="w-44 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
         >
           <img
@@ -65,8 +65,8 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         className="hidden lg:block absolute top-[290px] left-6 xl:left-12 z-20 pointer-events-auto"
       >
         <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, 7, 0] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          animate={shouldReduceMotion ? {} : { y: [0, 5, 0] }}
+          transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
           className="w-48 rounded-2xl border border-[#7650E8]/30 bg-white p-3 shadow-2xl hover:shadow-2xl transition-shadow cursor-pointer"
         >
           <div className="flex items-center space-x-2 border-b border-[#E9E9EE] pb-2 mb-2">
@@ -81,7 +81,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 3 — Bottom Left: Lower card moves in from bottom-left */}
+      {/* Floating Card 3 — Bottom Left: Stable settled card framing bottom */}
       <motion.div
         style={{ y: card3Y }}
         initial={{ opacity: 0, x: -40, y: 40, scale: 0.94 }}
@@ -89,18 +89,14 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         transition={{ duration: 0.75, delay: 0.84, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute bottom-4 left-6 xl:left-12 z-20 pointer-events-auto"
       >
-        <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
-          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer -rotate-6"
-        >
+        <div className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer -rotate-6">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80"
             alt="Customer Ordering at Restaurant Table"
             className="w-full h-32 object-cover rounded-xl mb-1.5"
           />
           <p className="text-[10px] font-black text-[#111111] text-center">Scan & Self Order</p>
-        </motion.div>
+        </div>
       </motion.div>
 
       {/* Floating Card 4 — Top Right: Upper card moves in from top-right */}
@@ -112,7 +108,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         className="hidden lg:block absolute top-20 right-4 xl:right-8 z-20 pointer-events-auto"
       >
         <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
+          animate={shouldReduceMotion ? {} : { y: [0, -7, 0], rotate: [0, -0.8, 0] }}
           transition={{ duration: 5.8, repeat: Infinity, ease: "easeInOut" }}
           className="w-44 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
         >
@@ -140,8 +136,8 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         className="hidden lg:block absolute top-[290px] right-6 xl:right-12 z-20 pointer-events-auto"
       >
         <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, 8, 0] }}
-          transition={{ duration: 6.2, repeat: Infinity, ease: "easeInOut" }}
+          animate={shouldReduceMotion ? {} : { y: [0, 6, 0] }}
+          transition={{ duration: 6.6, repeat: Infinity, ease: "easeInOut" }}
           className="w-50 rounded-2xl border border-[#E9E9EE] bg-white p-3 shadow-2xl hover:shadow-2xl transition-shadow cursor-pointer -rotate-2"
         >
           <div className="flex items-center justify-between border-b border-[#E9E9EE] pb-2 mb-2">
@@ -157,7 +153,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 6 — Bottom Right: Lower card moves in from bottom-right */}
+      {/* Floating Card 6 — Bottom Right: Stable settled card framing bottom */}
       <motion.div
         style={{ y: card6Y, rotate: card6Rotate }}
         initial={{ opacity: 0, x: 40, y: 40, scale: 0.94 }}
@@ -165,18 +161,14 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         transition={{ duration: 0.75, delay: 0.9, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute bottom-4 right-6 xl:right-12 z-20 pointer-events-auto"
       >
-        <motion.div
-          animate={shouldReduceMotion ? {} : { y: [0, -7, 0] }}
-          transition={{ duration: 5.2, repeat: Infinity, ease: "easeInOut" }}
-          className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
-        >
+        <div className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
           <img
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
             alt="Restaurant Dining Ambiance"
             className="w-full h-32 object-cover rounded-xl mb-1.5"
           />
           <p className="text-[10px] font-black text-[#111111] text-center">Faster Table Turns</p>
-        </motion.div>
+        </div>
       </motion.div>
     </>
   );
