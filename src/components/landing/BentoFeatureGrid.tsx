@@ -115,14 +115,19 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
               {/* Mini Realistic UI Illustration with Progress Animation */}
               <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-3 border border-[#E9E9EE] space-y-2 text-xs">
                 <div className="flex justify-between items-center font-extrabold text-[11px]">
-                  <span className="text-[#111111]">Order #104 Sync</span>
-                  <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px]">0.2s Stream</span>
+                  <span className="text-[#111111] flex items-center gap-1.5 font-mono">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping inline-block" />
+                    Order #104 Sync
+                  </span>
+                  <span className="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-mono font-bold">
+                    0.2s Stream
+                  </span>
                 </div>
-                <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-stone-200 h-2 rounded-full overflow-hidden relative">
                   <motion.div
-                    animate={shouldReduceMotion ? {} : { width: ["20%", "95%", "20%"] }}
-                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                    className="bg-emerald-500 h-full"
+                    animate={shouldReduceMotion ? {} : { width: ["15%", "92%", "15%"] }}
+                    transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+                    className="bg-gradient-to-r from-emerald-500 to-[#5CD8E8] h-full rounded-full"
                   />
                 </div>
               </div>
@@ -150,14 +155,16 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
               {/* Mini Realistic UI Illustration with Ticket Motion */}
               <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-3 border border-[#E9E9EE] space-y-2 text-xs font-mono">
                 <motion.div
-                  animate={shouldReduceMotion ? {} : { x: [-5, 0, -5] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="flex justify-between items-center border-b border-dashed border-stone-300 pb-1 text-[11px]"
+                  animate={shouldReduceMotion ? {} : { x: [-3, 0, -3] }}
+                  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+                  className="flex justify-between items-center border-b border-dashed border-stone-300 pb-1.5 text-[11px]"
                 >
                   <span className="font-bold text-[#111111]">TICKET #104</span>
-                  <span className="text-[#FF625E] font-black">COOKING</span>
+                  <span className="text-[#FF625E] bg-[#FF625E]/10 px-2 py-0.5 rounded text-[10px] font-black tracking-wider">
+                    COOKING
+                  </span>
                 </motion.div>
-                <p className="text-[10px] text-[#555555]">2x Paneer Masala • 4x Naan</p>
+                <p className="text-[10px] text-[#555555] font-semibold">2x Paneer Masala • 4x Naan</p>
               </div>
             </motion.div>
           </div>
@@ -185,17 +192,17 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
 
               {/* Mini Dashboard Component Illustration */}
               <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-4 border border-[#E9E9EE] grid grid-cols-2 sm:grid-cols-3 gap-3 text-xs">
-                <div className="bg-white p-3 rounded-xl border border-[#E9E9EE]">
-                  <span className="text-[10px] text-[#737373] font-bold block">Gross Sales</span>
-                  <span className="text-base font-black text-[#111111]">₹85,400</span>
+                <div className="bg-white p-3 rounded-xl border border-[#E9E9EE] hover:border-[#7650E8]/30 transition-colors">
+                  <span className="text-[10px] text-[#737373] font-bold block uppercase font-mono">Gross Sales</span>
+                  <span className="text-base font-black text-[#111111] font-mono">₹85,400</span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-[#E9E9EE]">
-                  <span className="text-[10px] text-[#737373] font-bold block">Saved Fees</span>
-                  <span className="text-base font-black text-emerald-600">₹18,700</span>
+                <div className="bg-white p-3 rounded-xl border border-[#E9E9EE] hover:border-emerald-300 transition-colors">
+                  <span className="text-[10px] text-[#737373] font-bold block uppercase font-mono">Saved Fees</span>
+                  <span className="text-base font-black text-emerald-600 font-mono">₹18,700</span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-[#E9E9EE] col-span-2 sm:col-span-1">
-                  <span className="text-[10px] text-[#737373] font-bold block">Active Outlets</span>
-                  <span className="text-base font-black text-[#7650E8]">450+ Outlets</span>
+                <div className="bg-white p-3 rounded-xl border border-[#E9E9EE] col-span-2 sm:col-span-1 hover:border-[#7650E8]/30 transition-colors">
+                  <span className="text-[10px] text-[#737373] font-bold block uppercase font-mono">Active Outlets</span>
+                  <span className="text-base font-black text-[#7650E8] font-mono">450+ Outlets</span>
                 </div>
               </div>
             </motion.div>
@@ -225,9 +232,14 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
                   <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
                   <span className="font-extrabold text-[#111111]">Chef Special Tandoori Chicken</span>
                 </div>
-                <span className="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-3 py-1 rounded-full uppercase">
-                  1-Tap Active
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="bg-emerald-100 text-emerald-800 font-bold text-[10px] px-3 py-1 rounded-full uppercase font-mono">
+                    1-Tap Active
+                  </span>
+                  <div className="w-9 h-5 bg-emerald-500 rounded-full p-0.5 flex items-center justify-end shadow-xs">
+                    <div className="w-4 h-4 bg-white rounded-full shadow-sm" />
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
