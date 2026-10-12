@@ -12,9 +12,9 @@
  * 5. Full Preservation: 100% of NextDine content, features, routes, data, live KDS sandbox,
  *    Web Audio chime, and pricing model preserved.
  */
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useReducedMotion, useMotionValue, animate } from "framer-motion";
 import {
   ArrowRight,
   Check,
@@ -40,6 +40,39 @@ import { VisualMenuCatalog } from "../../components/landing/VisualMenuCatalog";
 import { WorkflowArcSection } from "../../components/landing/WorkflowArcSection";
 import { TestimonialStack } from "../../components/landing/TestimonialStack";
 import { LandingFooter } from "../../components/landing/LandingFooter";
+
+const AnimatedNumberCounter: React.FC<{ value: number; prefix?: string; suffix?: string }> = ({
+  value,
+  prefix = "",
+  suffix = "",
+}) => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
+  const count = useMotionValue(value);
+  const [displayValue, setDisplayValue] = useState(() => value.toLocaleString("en-IN"));
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      setDisplayValue(value.toLocaleString("en-IN"));
+      return;
+    }
+    const controls = animate(count, value, {
+      duration: 0.55,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (latest) => {
+        setDisplayValue(Math.round(latest).toLocaleString("en-IN"));
+      },
+    });
+    return () => controls.stop();
+  }, [value, shouldReduceMotion, count]);
+
+  return (
+    <span>
+      {prefix}
+      {displayValue}
+      {suffix}
+    </span>
+  );
+};
 
 const LandingPage: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -836,7 +869,7 @@ const LandingPage: React.FC = () => {
               <div>
                 <p className="text-xs uppercase font-extrabold text-[#737373] tracking-wider font-mono">Estimated Monthly Savings</p>
                 <p className="text-4xl sm:text-5xl font-black text-[#111111] mt-1 font-mono">
-                  ₹{aggregatorCommissionSaved.toLocaleString("en-IN")}
+                  <AnimatedNumberCounter value={aggregatorCommissionSaved} prefix="₹" />
                 </p>
                 <p className="text-[11px] text-[#737373] mt-1 font-semibold">Saved vs 22% aggregator commission fees</p>
               </div>
