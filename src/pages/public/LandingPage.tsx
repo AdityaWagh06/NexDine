@@ -96,7 +96,16 @@ const LandingPage: React.FC = () => {
   const sideCardLeftX = useTransform(testimonialScroll, [0, 1], [-25, shouldReduceMotion ? 0 : 15]);
   const sideCardRightX = useTransform(testimonialScroll, [0, 1], [25, shouldReduceMotion ? 0 : -15]);
 
-  // 5. SHOWCASE SECTION SCROLL PROGRESS
+  // 5. SANDBOX / HOW-IT-WORKS SECTION SCROLL PROGRESS
+  const sandboxRef = useRef<HTMLElement>(null);
+  const { scrollYProgress: sandboxScroll } = useScroll({
+    target: sandboxRef,
+    offset: ["start end", "end start"],
+  });
+  const phone1ParallaxY = useTransform(sandboxScroll, [0, 1], [shouldReduceMotion ? 0 : -12, shouldReduceMotion ? 0 : 12]);
+  const phone3ParallaxY = useTransform(sandboxScroll, [0, 1], [shouldReduceMotion ? 0 : 12, shouldReduceMotion ? 0 : -12]);
+
+  // 6. SHOWCASE SECTION SCROLL PROGRESS
   const { scrollYProgress: showcaseScroll } = useScroll({
     target: showcaseRef,
     offset: ["start end", "end start"],
@@ -475,14 +484,14 @@ const LandingPage: React.FC = () => {
       />
 
       {/* 6. INTERACTIVE LIVE DEMO & SANDBOX PLAYGROUND SECTION */}
-      <section id="how-it-works" className="py-16 sm:py-20 bg-[#F8F8FA] border-b border-[#E9E9EE]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section ref={sandboxRef} id="how-it-works" className="py-16 sm:py-20 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <motion.div
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.12 }}
-            transition={{ duration: 0.6, ease: easeOutCubic }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.65, ease: easeOutCubic }}
             className="text-center max-w-3xl mx-auto mb-12 space-y-2.5"
           >
             <div className="inline-flex items-center space-x-2 bg-[#7650E8]/10 border border-[#7650E8]/30 px-3.5 py-1.5 rounded-full text-[#7650E8] text-xs font-extrabold">
@@ -497,20 +506,36 @@ const LandingPage: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* 3 Continuous Devices Grid with Staggered Entrances */}
-          <div className="grid md:grid-cols-3 gap-6 items-stretch max-w-6xl mx-auto">
-            {/* Device 1: Table QR Scan */}
-            <motion.div
-              initial={{ opacity: 0, y: 35 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: easeOutCubic }}
-              className="flex flex-col items-center"
+          {/* 3 Continuous Devices Grid with Staggered Entrances and Subtle Parallax */}
+          <div className="relative max-w-6xl mx-auto">
+            {/* SVG Connector Flow Arc connecting device steps */}
+            <svg
+              className="absolute top-1/2 left-10 right-10 w-[calc(100%-80px)] h-12 -translate-y-1/2 pointer-events-none hidden md:block -z-0 opacity-40"
+              viewBox="0 0 1000 50"
+              fill="none"
             >
-              <span className="text-[11px] uppercase tracking-widest font-bold text-[#7650E8] mb-3 font-mono">
-                1. Table QR Scan
-              </span>
-              <div className="w-full max-w-[300px] h-[520px] bg-stone-900 p-3 rounded-[40px] shadow-2xl border-[4px] border-stone-800 relative flex flex-col justify-between">
+              <path
+                d="M 150 25 C 350 45, 650 5, 850 25"
+                stroke="#7650E8"
+                strokeWidth="2.5"
+                strokeDasharray="8 8"
+              />
+            </svg>
+
+            <div className="grid md:grid-cols-3 gap-6 items-stretch relative z-10">
+              {/* Device 1: Table QR Scan */}
+              <motion.div
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 35 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.65, delay: 0.08, ease: easeOutCubic }}
+                style={{ y: phone1ParallaxY }}
+                className="flex flex-col items-center"
+              >
+                <span className="text-[11px] uppercase tracking-widest font-bold text-[#7650E8] mb-3 font-mono">
+                  1. Table QR Scan
+                </span>
+                <div className="w-full max-w-[300px] h-[520px] bg-stone-900 p-3 rounded-[40px] shadow-2xl border-[4px] border-stone-800 relative flex flex-col justify-between hover:border-stone-700 transition-colors">
                 <div className="bg-[#FAF8F5] rounded-[30px] p-4 text-[#111111] h-full flex flex-col justify-between">
                   <div className="space-y-3">
                     <div className="text-center pb-2 border-b border-stone-200">
@@ -642,10 +667,11 @@ const LandingPage: React.FC = () => {
 
             {/* Device 3: Live KDS Display Ticket */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 35 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: easeOutCubic }}
+              transition={{ duration: 0.65, delay: 0.24, ease: easeOutCubic }}
+              style={{ y: phone3ParallaxY }}
               className="flex flex-col items-center"
             >
               <span className="text-[11px] uppercase tracking-widest font-bold text-emerald-600 mb-3 font-mono">
@@ -704,9 +730,10 @@ const LandingPage: React.FC = () => {
               </div>
             </motion.div>
           </div>
-
         </div>
-      </section>
+
+      </div>
+    </section>
 
       {/* 7. FINANCIAL SAVINGS & ROI CALCULATOR SECTION */}
       <section id="roi-calculator" className="py-16 sm:py-20 bg-white border-b border-[#E9E9EE]">
