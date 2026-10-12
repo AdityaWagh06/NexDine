@@ -18,7 +18,7 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
     <section
       ref={featuresRef}
       id="features-grid"
-      className="py-24 bg-[#F8F8FA] border-y border-[#E9E9EE] relative overflow-hidden"
+      className="py-16 sm:py-20 bg-[#F8F8FA] border-y border-[#E9E9EE] relative overflow-hidden"
     >
       {/* Subtle scroll-linked decorative ambient drift */}
       <motion.div
@@ -29,11 +29,11 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Centered Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.12 }}
           transition={{ duration: 0.6, ease: EASE_OUT_CUBIC }}
-          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+          className="text-center max-w-3xl mx-auto mb-12 space-y-2.5"
         >
           <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
             Built For Modern Outlets

@@ -340,7 +340,7 @@ const LandingPage: React.FC = () => {
         Outer motion.div connected to heroScroll progress.
         Inner motion.divs handle gentle floating oscillation without CSS transform collision.
       */}
-      <section ref={heroRef} id="hero-section" className="pt-36 sm:pt-44 pb-28 bg-white relative overflow-hidden">
+      <section ref={heroRef} id="hero-section" className="pt-32 sm:pt-40 pb-20 sm:pb-24 bg-white relative overflow-hidden">
         
         {/* Subtle Background Glow Mesh */}
         <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[400px] bg-gradient-to-tr from-[#7650E8]/10 via-[#FF625E]/5 to-[#5CD8E8]/10 rounded-full blur-3xl pointer-events-none -z-10" />
@@ -464,15 +464,15 @@ const LandingPage: React.FC = () => {
       />
 
       {/* 6. INTERACTIVE LIVE DEMO & SANDBOX PLAYGROUND SECTION */}
-      <section id="how-it-works" className="py-24 bg-[#F8F8FA] border-b border-[#E9E9EE]">
+      <section id="how-it-works" className="py-16 sm:py-20 bg-[#F8F8FA] border-b border-[#E9E9EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.12 }}
             transition={{ duration: 0.6, ease: easeOutCubic }}
-            className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-12 space-y-2.5"
           >
             <div className="inline-flex items-center space-x-2 bg-[#7650E8]/10 border border-[#7650E8]/30 px-3.5 py-1.5 rounded-full text-[#7650E8] text-xs font-extrabold">
               <Sparkles className="w-4 h-4 text-[#7650E8]" />
@@ -698,15 +698,15 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* 7. FINANCIAL SAVINGS & ROI CALCULATOR SECTION */}
-      <section id="roi-calculator" className="py-24 bg-white border-b border-[#E9E9EE]">
+      <section id="roi-calculator" className="py-16 sm:py-20 bg-white border-b border-[#E9E9EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.12 }}
             transition={{ duration: 0.6, ease: easeOutCubic }}
-            className="text-center max-w-3xl mx-auto mb-14 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-12 space-y-2.5"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
               Calculate Your Monthly Savings
@@ -815,15 +815,15 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* 8. PRICING SECTION (PRESERVING NEXTDINE ₹999/MO PLAN) */}
-      <section id="pricing-section" className="py-24 bg-[#F8F8FA] border-b border-[#E9E9EE]">
+      <section id="pricing-section" className="py-16 sm:py-20 bg-[#F8F8FA] border-b border-[#E9E9EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.12 }}
             transition={{ duration: 0.6, ease: easeOutCubic }}
-            className="text-center max-w-3xl mx-auto mb-14 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-12 space-y-2.5"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
               {LANDING_PAGE_CONTENT.pricing.title}
@@ -893,15 +893,15 @@ const LandingPage: React.FC = () => {
       </section>
 
       {/* 9. FREQUENTLY ASKED QUESTIONS (FAQ ACCORDION) */}
-      <section id="faq" className="py-24 bg-white border-b border-[#E9E9EE]">
+      <section id="faq" className="py-16 sm:py-20 bg-white border-b border-[#E9E9EE]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.12 }}
             transition={{ duration: 0.6, ease: easeOutCubic }}
-            className="text-center max-w-3xl mx-auto mb-14 space-y-3"
+            className="text-center max-w-3xl mx-auto mb-12 space-y-2.5"
           >
             <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
               Frequently Asked Questions
@@ -956,8 +956,8 @@ const LandingPage: React.FC = () => {
         10. FINAL PRODUCT SHOWCASE — "ALL-IN-ONE RESTAURANT OS PLATFORM" (CORESHIFT CONNECTED DIAGRAM - FRAMES 17S - 19S)
         Progressive SVG line drawing via motion.line pathLength + drifting feature nodes.
       */}
-      <section ref={showcaseRef} className="py-28 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-12">
+      <section ref={showcaseRef} className="py-20 sm:py-24 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-10">
           
           {/* Central Connected Diagram */}
           <div className="relative max-w-lg mx-auto min-h-[280px] flex items-center justify-center">

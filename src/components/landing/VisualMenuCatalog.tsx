@@ -22,14 +22,14 @@ export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
       : dishes.filter((d) => d.category === activeCategoryFilter);
 
   return (
-    <section id="menu-catalog-section" className="py-24 bg-white border-b border-[#E9E9EE]">
+    <section id="menu-catalog-section" className="py-16 sm:py-20 bg-white border-b border-[#E9E9EE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.12 }}
           transition={{ duration: 0.6, ease: EASE_OUT_CUBIC }}
-          className="text-center max-w-3xl mx-auto mb-12 space-y-3"
+          className="text-center max-w-3xl mx-auto mb-10 space-y-2.5"
         >
           <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
             High-Resolution Visual Menus

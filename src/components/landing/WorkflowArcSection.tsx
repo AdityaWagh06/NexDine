@@ -20,7 +20,7 @@ export const WorkflowArcSection: React.FC<WorkflowArcSectionProps> = ({
   setActiveWorkflowIndex,
 }) => {
   return (
-    <section ref={workflowRef} className="py-24 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
+    <section ref={workflowRef} className="py-16 sm:py-20 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
       {/* Subtle scroll-linked ambient drift */}
       <motion.div
         style={{ y: arcParallaxY }}
@@ -29,11 +29,11 @@ export const WorkflowArcSection: React.FC<WorkflowArcSectionProps> = ({
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 35 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.12 }}
           transition={{ duration: 0.6, ease: EASE_OUT_CUBIC }}
-          className="bg-white border border-[#E9E9EE] rounded-[40px] p-8 sm:p-16 text-center shadow-sm"
+          className="bg-white border border-[#E9E9EE] rounded-[40px] p-8 sm:p-12 text-center shadow-sm"
         >
           {/* Small Coral Icon Header */}
           <div className="w-10 h-10 rounded-xl bg-[#FF625E]/10 text-[#FF625E] flex items-center justify-center font-bold mx-auto mb-4">

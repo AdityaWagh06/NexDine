@@ -22,14 +22,14 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
   sideCardRightX,
 }) => {
   return (
-    <section ref={testimonialRef} className="py-24 bg-white border-b border-[#E9E9EE] relative">
+    <section ref={testimonialRef} className="py-16 sm:py-20 bg-white border-b border-[#E9E9EE] relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.12 }}
           transition={{ duration: 0.6, ease: EASE_OUT_CUBIC }}
-          className="max-w-3xl mx-auto mb-14 space-y-3"
+          className="max-w-3xl mx-auto mb-10 space-y-2.5"
         >
           <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
             Words of Appreciation
