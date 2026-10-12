@@ -67,23 +67,29 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
               </div>
 
               {/* Mini Realistic UI Illustration with Scanning Radar Line Animation */}
-              <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-3 border border-[#E9E9EE] space-y-2 text-xs relative overflow-hidden">
+              <div className="mt-8 bg-[#F8F8FA] rounded-2xl p-3 border border-[#E9E9EE] space-y-2 text-xs relative overflow-hidden group/scanner">
                 <motion.div
                   animate={shouldReduceMotion ? {} : { y: ["0%", "100%", "0%"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-x-0 h-0.5 bg-[#7650E8] shadow-sm shadow-[#7650E8]"
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-[#7650E8] to-transparent shadow-xs shadow-[#7650E8] z-10"
                 />
                 <div className="flex justify-between items-center pb-2 border-b border-[#E9E9EE] font-bold">
                   <span className="text-[#7650E8]">Taverna Kitchen</span>
-                  <span className="bg-[#7650E8]/10 text-[#7650E8] px-2 py-0.5 rounded text-[10px]">Table #04</span>
+                  <span className="bg-[#7650E8]/10 text-[#7650E8] px-2 py-0.5 rounded text-[10px] flex items-center gap-1 font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#7650E8] animate-pulse" />
+                    Table #04
+                  </span>
                 </div>
                 <div className="flex justify-between items-center text-[11px] font-semibold text-[#111111]">
                   <span>Paneer Butter Masala</span>
-                  <span className="text-[#7650E8]">₹260</span>
+                  <span className="text-[#7650E8] font-mono font-bold">₹260</span>
                 </div>
-                <button className="w-full bg-[#7650E8] text-white py-1.5 rounded-lg font-bold text-[10px] uppercase">
+                <motion.button
+                  whileTap={{ scale: 0.96 }}
+                  className="w-full bg-[#7650E8] hover:bg-[#643ed8] text-white py-1.5 rounded-lg font-bold text-[10px] uppercase transition-colors"
+                >
                   + Add To Cart
-                </button>
+                </motion.button>
               </div>
             </motion.div>
 
