@@ -601,17 +601,23 @@ const LandingPage: React.FC = () => {
               </span>
               <div className="w-full max-w-[300px] h-[520px] bg-stone-900 p-3 rounded-[40px] shadow-2xl border-[4px] border-[#7650E8] relative flex flex-col justify-between">
                 
-                {orderSentToast && (
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.8, opacity: 0 }}
-                    className="absolute top-10 left-3 right-3 bg-emerald-600 text-white p-2 rounded-xl shadow-lg text-[10px] font-bold flex items-center justify-between z-40"
-                  >
-                    <span>Order Sent & Bell Chimed!</span>
-                    <span className="text-[9px] bg-emerald-800 px-1 py-0.5 rounded font-mono">0.2s</span>
-                  </motion.div>
-                )}
+                <AnimatePresence>
+                  {orderSentToast && (
+                    <motion.div
+                      initial={{ scale: 0.85, opacity: 0, y: -10 }}
+                      animate={{ scale: 1, opacity: 1, y: 0 }}
+                      exit={{ scale: 0.85, opacity: 0, y: -10 }}
+                      transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                      className="absolute top-10 left-3 right-3 bg-emerald-600 text-white p-2.5 rounded-xl shadow-xl text-[10px] font-bold flex items-center justify-between z-40 border border-emerald-400/40"
+                    >
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-2 h-2 rounded-full bg-white animate-ping" />
+                        <span>Order Sent & Kitchen Bell Chimed!</span>
+                      </div>
+                      <span className="text-[9px] bg-emerald-800 px-1.5 py-0.5 rounded font-mono font-bold">0.2s</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
 
                 <div className="bg-[#FAF8F5] rounded-[30px] p-4 text-[#111111] h-full flex flex-col justify-between">
                   <div className="space-y-2">
@@ -685,46 +691,59 @@ const LandingPage: React.FC = () => {
                       <span className="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-1.5 py-0.5 rounded">Live Stream</span>
                     </div>
 
-                    {liveKdsOrder ? (
-                      <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-white rounded-xl p-3 border-2 border-t-4 border-t-[#7650E8] border-[#E9E9EE] space-y-2 font-mono text-xs shadow-md"
-                      >
-                        <div className="flex justify-between items-center border-b border-dashed border-stone-200 pb-1 text-[10px]">
-                          <span className="font-bold">{liveKdsOrder.id}</span>
-                          <span className="text-[#7650E8] font-bold">TABLE #{liveKdsOrder.table}</span>
-                        </div>
-                        <div className="space-y-1 text-[10px]">
-                          {liveKdsOrder.items.map((item, idx) => (
-                            <div key={idx} className="flex justify-between text-[#111111]">
-                              <span>{item.name}</span>
-                              <span className="font-bold">x{item.qty}</span>
-                            </div>
-                          ))}
-                        </div>
-                        <div className="pt-2 border-t border-dashed border-stone-200 flex gap-1">
-                          <button
-                            onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "preparing" })}
-                            className={`flex-1 py-1 rounded text-[9px] font-bold ${
-                              liveKdsOrder.status === "preparing" ? "bg-[#7650E8] text-white" : "bg-stone-100 text-[#111111]"
-                            }`}
-                          >
-                            🍳 Cooking
-                          </button>
-                          <button
-                            onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "ready" })}
-                            className={`flex-1 py-1 rounded text-[9px] font-bold ${
-                              liveKdsOrder.status === "ready" ? "bg-emerald-600 text-white" : "bg-stone-100 text-[#111111]"
-                            }`}
-                          >
-                            ✅ Serve
-                          </button>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <p className="text-[#737373] text-[10px] text-center">No active kitchen orders.</p>
-                    )}
+                    <AnimatePresence mode="wait">
+                      {liveKdsOrder ? (
+                        <motion.div
+                          key={liveKdsOrder.id}
+                          initial={{ opacity: 0, y: -16, scale: 0.96 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.94 }}
+                          transition={{ duration: 0.35, ease: easeOutCubic }}
+                          className="bg-white rounded-xl p-3 border-2 border-t-4 border-t-[#7650E8] border-[#E9E9EE] space-y-2 font-mono text-xs shadow-md"
+                        >
+                          <div className="flex justify-between items-center border-b border-dashed border-stone-200 pb-1 text-[10px]">
+                            <span className="font-bold">{liveKdsOrder.id}</span>
+                            <span className="text-[#7650E8] font-bold">TABLE #{liveKdsOrder.table}</span>
+                          </div>
+                          <div className="space-y-1 text-[10px]">
+                            {liveKdsOrder.items.map((item, idx) => (
+                              <div key={idx} className="flex justify-between text-[#111111]">
+                                <span>{item.name}</span>
+                                <span className="font-bold">x{item.qty}</span>
+                              </div>
+                            ))}
+                          </div>
+                          <div className="pt-2 border-t border-dashed border-stone-200 flex gap-1">
+                            <motion.button
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "preparing" })}
+                              className={`flex-1 py-1 rounded text-[9px] font-bold transition-colors cursor-pointer ${
+                                liveKdsOrder.status === "preparing" ? "bg-[#7650E8] text-white" : "bg-stone-100 text-[#111111] hover:bg-stone-200"
+                              }`}
+                            >
+                              🍳 Cooking
+                            </motion.button>
+                            <motion.button
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => setLiveKdsOrder({ ...liveKdsOrder, status: "ready" })}
+                              className={`flex-1 py-1 rounded text-[9px] font-bold transition-colors cursor-pointer ${
+                                liveKdsOrder.status === "ready" ? "bg-emerald-600 text-white" : "bg-stone-100 text-[#111111] hover:bg-stone-200"
+                              }`}
+                            >
+                              ✅ Serve
+                            </motion.button>
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.p
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          className="text-[#737373] text-[10px] text-center"
+                        >
+                          No active kitchen orders.
+                        </motion.p>
+                      )}
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
