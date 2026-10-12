@@ -66,20 +66,35 @@ export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
           transition={{ duration: 0.5, delay: 0.1, ease: EASE_OUT_CUBIC }}
           className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar"
         >
-          {["All", "Starters", "Mains", "Desserts"].map((category) => (
-            <motion.button
-              key={category}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setActiveCategoryFilter(category)}
-              className={`px-5 py-2.5 rounded-full text-xs font-extrabold uppercase transition-all whitespace-nowrap ${
-                activeCategoryFilter === category
-                  ? "bg-[#7650E8] text-white shadow-md"
-                  : "bg-[#F8F8FA] text-[#555555] border border-[#E9E9EE] hover:bg-stone-100"
-              }`}
-            >
-              {category}
-            </motion.button>
-          ))}
+          {["All", "Starters", "Mains", "Desserts"].map((category) => {
+            const isActive = activeCategoryFilter === category;
+            return (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setActiveCategoryFilter(category)}
+                className={`relative px-5 py-2.5 rounded-full text-xs font-extrabold uppercase transition-colors whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-[#7650E8] cursor-pointer ${
+                  isActive ? "text-white" : "text-[#555555] hover:text-[#111111]"
+                }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeCategoryPill"
+                    transition={{
+                      type: "spring",
+                      stiffness: 420,
+                      damping: 30,
+                    }}
+                    className="absolute inset-0 bg-[#7650E8] rounded-full shadow-md -z-0"
+                  />
+                )}
+                {!isActive && (
+                  <div className="absolute inset-0 bg-[#F8F8FA] border border-[#E9E9EE] rounded-full -z-10 hover:bg-stone-100 transition-colors" />
+                )}
+                <span className="relative z-10">{category}</span>
+              </button>
+            );
+          })}
         </motion.div>
 
         {/* Dish Showcase Cards */}
