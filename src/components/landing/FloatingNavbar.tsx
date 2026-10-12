@@ -74,40 +74,53 @@ export const FloatingNavbar: React.FC<FloatingNavbarProps> = ({
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-[#111111] hover:text-[#7650E8] transition-colors"
+            className="md:hidden p-2 text-[#111111] hover:text-[#7650E8] transition-colors focus:outline-none"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={mobileMenuOpen}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}
           </button>
         </motion.div>
       </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Menu Drawer with Backdrop Dismiss */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -20, scale: 0.95 }}
-            transition={{ duration: 0.25, ease: EASE_OUT_CUBIC }}
-            className="fixed top-24 inset-x-4 max-w-md mx-auto bg-white border border-[#E9E9EE] rounded-3xl p-6 shadow-2xl z-50 space-y-4 text-xs uppercase font-extrabold tracking-wider text-[#111111]"
-          >
-            <a href="#hero-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Product</a>
-            <a href="#how-it-works" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
-            <a href="#features-grid" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Features</a>
-            <a href="#menu-catalog-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Visual Catalog</a>
-            <a href="#pricing-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
-            <a href="#roi-calculator" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>ROI Calculator</a>
-            <div className="pt-2 flex flex-col gap-2">
-              <Link to="/login" className="w-full text-center py-2.5 rounded-full bg-[#F8F8FA] border border-[#E9E9EE] text-[#111111] font-bold">
-                Sign In
-              </Link>
-              <Link to="/register" className="w-full">
-                <button className="w-full bg-[#FF625E] text-white font-bold py-3 rounded-full text-xs uppercase tracking-wider">
-                  Start Free Trial
-                </button>
-              </Link>
-            </div>
-          </motion.div>
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/20 backdrop-blur-xs z-40 md:hidden"
+              aria-hidden="true"
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.25, ease: EASE_OUT_CUBIC }}
+              className="fixed top-24 inset-x-4 max-w-md mx-auto bg-white border border-[#E9E9EE] rounded-3xl p-6 shadow-2xl z-50 space-y-4 text-xs uppercase font-extrabold tracking-wider text-[#111111]"
+            >
+              <a href="#hero-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Product</a>
+              <a href="#how-it-works" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
+              <a href="#features-grid" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Features</a>
+              <a href="#menu-catalog-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Visual Catalog</a>
+              <a href="#pricing-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
+              <a href="#roi-calculator" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>ROI Calculator</a>
+              <div className="pt-2 flex flex-col gap-2">
+                <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 rounded-full bg-[#F8F8FA] border border-[#E9E9EE] text-[#111111] font-bold">
+                  Sign In
+                </Link>
+                <Link to="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                  <button className="w-full bg-[#FF625E] text-white font-bold py-3 rounded-full text-xs uppercase tracking-wider">
+                    Start Free Trial
+                  </button>
+                </Link>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
