@@ -924,15 +924,16 @@ const LandingPage: React.FC = () => {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 35 }}
+            initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 35 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, ease: easeOutCubic }}
-            className="max-w-xl mx-auto bg-white border-2 border-[#7650E8] rounded-3xl p-8 sm:p-12 shadow-2xl relative"
+            transition={{ duration: 0.65, ease: easeOutCubic }}
+            whileHover={{ y: shouldReduceMotion ? 0 : -5 }}
+            className="max-w-xl mx-auto bg-white border-2 border-[#7650E8] rounded-3xl p-8 sm:p-12 shadow-2xl relative transition-shadow hover:shadow-2xl hover:shadow-[#7650E8]/10"
           >
             <motion.div
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+              animate={shouldReduceMotion ? {} : { scale: [1, 1.04, 1] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
               className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#7650E8] text-white px-5 py-1 rounded-full text-xs font-black tracking-widest uppercase shadow-md font-mono"
             >
               ⚡ DONE-FOR-YOU OUTLET SETUP
@@ -953,23 +954,46 @@ const LandingPage: React.FC = () => {
               </p>
             </div>
 
-            <div className="space-y-3.5 mb-8">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: {
+                  opacity: 1,
+                  transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+                },
+              }}
+              className="space-y-3.5 mb-8"
+            >
               <p className="text-xs font-black uppercase text-[#7650E8] tracking-wider mb-2 font-mono">INCLUDED IN YOUR PACKAGE:</p>
               {LANDING_PAGE_CONTENT.pricing.featuresIncluded.map((feature, i) => (
-                <div key={i} className="flex items-center text-xs sm:text-sm font-bold text-[#111111]">
+                <motion.div
+                  key={i}
+                  variants={{
+                    hidden: { opacity: 0, x: shouldReduceMotion ? 0 : -14 },
+                    visible: {
+                      opacity: 1,
+                      x: 0,
+                      transition: { duration: 0.45, ease: easeOutCubic },
+                    },
+                  }}
+                  className="flex items-center text-xs sm:text-sm font-bold text-[#111111]"
+                >
                   <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300 flex items-center justify-center mr-3 flex-shrink-0">
                     <Check className="w-3.5 h-3.5" />
                   </div>
                   <span>{feature}</span>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
 
-            <Link to="/register" className="w-full">
+            <Link to="/register" className="w-full block">
               <motion.button
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full bg-[#FF625E] hover:bg-[#e8504c] text-white font-black py-4.5 rounded-full shadow-lg text-base uppercase tracking-wider"
+                whileTap={{ scale: 0.96 }}
+                className="w-full bg-[#FF625E] hover:bg-[#e8504c] text-white font-black py-4.5 rounded-full shadow-lg text-base uppercase tracking-wider cursor-pointer transition-colors"
               >
                 Register & Get Started Now →
               </motion.button>
