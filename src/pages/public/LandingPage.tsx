@@ -22,7 +22,6 @@ import {
   ChefHat,
   Smartphone,
   ChevronDown,
-  ChevronUp,
   BellRing,
   QrCode,
   Utensils,
@@ -1028,34 +1027,49 @@ const LandingPage: React.FC = () => {
               return (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.15 }}
-                  transition={{ duration: 0.4, delay: idx * 0.08, ease: easeOutCubic }}
-                  className="bg-[#F8F8FA] border border-[#E9E9EE] rounded-2xl overflow-hidden shadow-xs transition-colors"
+                  transition={{ duration: 0.45, delay: idx * 0.08, ease: easeOutCubic }}
+                  className="bg-[#F8F8FA] border border-[#E9E9EE] rounded-2xl overflow-hidden shadow-xs hover:border-[#7650E8]/30 transition-colors"
                 >
                   <button
+                    type="button"
+                    id={`faq-button-${idx}`}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${idx}`}
                     onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                    className="w-full p-5 text-left flex items-center justify-between text-sm sm:text-base font-bold text-[#111111] hover:text-[#7650E8] transition-colors"
+                    className="w-full p-5 text-left flex items-center justify-between text-sm sm:text-base font-bold text-[#111111] hover:text-[#7650E8] transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#7650E8]"
                   >
                     <span>{item.question}</span>
-                    {isOpen ? (
-                      <ChevronUp className="w-5 h-5 text-[#7650E8] flex-shrink-0 ml-2" />
-                    ) : (
-                      <ChevronDown className="w-5 h-5 text-[#737373] flex-shrink-0 ml-2" />
-                    )}
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.3, ease: easeOutCubic }}
+                      className="flex-shrink-0 ml-2"
+                    >
+                      <ChevronDown
+                        className={`w-5 h-5 transition-colors ${
+                          isOpen ? "text-[#7650E8]" : "text-[#737373]"
+                        }`}
+                      />
+                    </motion.div>
                   </button>
 
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
+                        id={`faq-answer-${idx}`}
+                        role="region"
+                        aria-labelledby={`faq-button-${idx}`}
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="px-5 pb-5 text-xs sm:text-sm text-[#737373] border-t border-[#E9E9EE] pt-3 leading-relaxed font-medium"
+                        transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+                        className="overflow-hidden"
                       >
-                        {item.answer}
+                        <div className="px-5 pb-5 text-xs sm:text-sm text-[#737373] border-t border-[#E9E9EE] pt-3 leading-relaxed font-medium">
+                          {item.answer}
+                        </div>
                       </motion.div>
                     )}
                   </AnimatePresence>
