@@ -58,21 +58,21 @@ const LandingPage: React.FC = () => {
     offset: ["start start", "end start"],
   });
 
-  // Bounded scroll-linked transforms for Hero floating cards
-  const card1Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -75]);
-  const card2Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 55]);
-  const card3Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -95]);
-  const card4Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -65]);
-  const card5Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 80]);
-  const card6Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -85]);
+  // Bounded scroll-linked transforms for Hero floating cards (15-45px specification range)
+  const card1Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -35]);
+  const card2Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 25]);
+  const card3Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -30]);
+  const card4Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -35]);
+  const card5Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 30]);
+  const card6Y = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : -25]);
 
-  const card1Rotate = useTransform(heroScroll, [0, 1], [-3, shouldReduceMotion ? -3 : -7]);
-  const card2Rotate = useTransform(heroScroll, [0, 1], [2, shouldReduceMotion ? 2 : 6]);
-  const card4Rotate = useTransform(heroScroll, [0, 1], [3, shouldReduceMotion ? 3 : 7]);
-  const card6Rotate = useTransform(heroScroll, [0, 1], [4, shouldReduceMotion ? 4 : 1]);
+  const card1Rotate = useTransform(heroScroll, [0, 1], [-2, shouldReduceMotion ? -2 : -4]);
+  const card2Rotate = useTransform(heroScroll, [0, 1], [1, shouldReduceMotion ? 1 : 3]);
+  const card4Rotate = useTransform(heroScroll, [0, 1], [2, shouldReduceMotion ? 2 : 4]);
+  const card6Rotate = useTransform(heroScroll, [0, 1], [2, shouldReduceMotion ? 2 : 1]);
 
-  const heroContentY = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 40]);
-  const heroContentOpacity = useTransform(heroScroll, [0, 0.8], [1, 0.3]);
+  const heroContentY = useTransform(heroScroll, [0, 1], [0, shouldReduceMotion ? 0 : 20]);
+  const heroContentOpacity = useTransform(heroScroll, [0, 0.9], [1, 0.45]);
 
   // 2. FEATURES SECTION SCROLL PROGRESS
   const { scrollYProgress: featuresScroll } = useScroll({
