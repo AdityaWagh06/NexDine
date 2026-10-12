@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, Star } from "lucide-react";
-import { EASE_OUT_CUBIC } from "../../utils/motionVariants";
+import { EASE_OUT_CUBIC, STANDARD_DURATION, createStaggerContainer } from "../../utils/motionVariants";
 import type { ShowcaseDishItem } from "../../types/landing";
 
 interface VisualMenuCatalogProps {
@@ -16,19 +16,38 @@ export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
   setActiveCategoryFilter,
   dishes,
 }) => {
+  const shouldReduceMotion = useReducedMotion() ?? false;
   const filteredDishes =
     activeCategoryFilter === "All"
       ? dishes
       : dishes.filter((d) => d.category === activeCategoryFilter);
 
+  const containerVariants = createStaggerContainer(0.09, 0.1);
+  const cardEntranceVariants = {
+    hidden: {
+      opacity: 0,
+      y: shouldReduceMotion ? 0 : 28,
+      scale: shouldReduceMotion ? 1 : 0.98,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: STANDARD_DURATION,
+        ease: EASE_OUT_CUBIC,
+      },
+    },
+  };
+
   return (
     <section id="menu-catalog-section" className="py-16 sm:py-20 bg-white border-b border-[#E9E9EE]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.12 }}
-          transition={{ duration: 0.6, ease: EASE_OUT_CUBIC }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.65, ease: EASE_OUT_CUBIC }}
           className="text-center max-w-3xl mx-auto mb-10 space-y-2.5"
         >
           <h2 className="text-3xl sm:text-5xl font-black text-[#111111] tracking-tight">
@@ -40,7 +59,13 @@ export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
         </motion.div>
 
         {/* Category Filter Pills */}
-        <div className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar">
+        <motion.div
+          initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: EASE_OUT_CUBIC }}
+          className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2 no-scrollbar"
+        >
           {["All", "Starters", "Mains", "Desserts"].map((category) => (
             <motion.button
               key={category}
@@ -55,21 +80,29 @@ export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
               {category}
             </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Dish Showcase Cards */}
-        <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          <AnimatePresence>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          layout
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6"
+        >
+          <AnimatePresence mode="popLayout">
             {filteredDishes.map((dish) => (
               <motion.div
                 layout
                 key={dish.id}
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.92 }}
-                transition={{ duration: 0.35, ease: EASE_OUT_CUBIC }}
-                whileHover={{ y: -6 }}
-                className="bg-white rounded-3xl p-4 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                variants={cardEntranceVariants}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.25 } }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.4, ease: EASE_OUT_CUBIC }}
+                className="bg-white rounded-3xl p-4 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
               >
                 <div>
                   <div className="relative h-44 mb-3 rounded-2xl overflow-hidden bg-stone-100 p-2 flex items-center justify-center group">
