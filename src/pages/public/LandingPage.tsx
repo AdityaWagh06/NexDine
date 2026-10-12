@@ -143,6 +143,7 @@ const LandingPage: React.FC = () => {
     offset: ["start end", "end start"],
   });
   const showcaseNodeDrift = useTransform(showcaseScroll, [0, 1], [15, shouldReduceMotion ? 0 : -15]);
+  const showcaseBottomNodeDrift = useTransform(showcaseScroll, [0, 1], [-12, shouldReduceMotion ? 0 : 12]);
 
   const easeOutCubic = EASE_OUT_CUBIC;
 
@@ -1145,61 +1146,87 @@ const LandingPage: React.FC = () => {
 
             {/* Bottom Left Tile — Cyan Accent (Table QR) */}
             <motion.div
-              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -28, y: shouldReduceMotion ? 0 : 20, scale: 0.85 }}
-              whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: 0.25, ease: easeOutCubic }}
-              whileHover={{ scale: 1.12 }}
-              className="absolute bottom-2 left-6 w-14 h-14 rounded-2xl bg-[#5CD8E8] text-slate-900 flex items-center justify-center shadow-md z-10 transition-shadow cursor-default"
+              style={{ y: showcaseBottomNodeDrift }}
+              className="absolute bottom-2 left-6 z-10"
             >
-              <QrCode className="w-6 h-6" />
+              <motion.div
+                initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -28, y: shouldReduceMotion ? 0 : 20, scale: 0.85 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.25, ease: easeOutCubic }}
+                whileHover={{ scale: 1.12 }}
+                className="w-14 h-14 rounded-2xl bg-[#5CD8E8] text-slate-900 flex items-center justify-center shadow-md transition-shadow cursor-default"
+              >
+                <QrCode className="w-6 h-6" />
+              </motion.div>
             </motion.div>
 
             {/* Bottom Right Tile — White Card (Analytics) */}
             <motion.div
-              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 28, y: shouldReduceMotion ? 0 : 20, scale: 0.85 }}
-              whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: 0.3, ease: easeOutCubic }}
-              whileHover={{ scale: 1.12 }}
-              className="absolute bottom-2 right-6 w-14 h-14 rounded-2xl bg-white border border-[#E9E9EE] text-[#111111] flex items-center justify-center shadow-md z-10 transition-shadow cursor-default"
+              style={{ y: showcaseBottomNodeDrift }}
+              className="absolute bottom-2 right-6 z-10"
             >
-              <TrendingUp className="w-6 h-6 text-[#7650E8]" />
+              <motion.div
+                initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 28, y: shouldReduceMotion ? 0 : 20, scale: 0.85 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.3, ease: easeOutCubic }}
+                whileHover={{ scale: 1.12 }}
+                className="w-14 h-14 rounded-2xl bg-white border border-[#E9E9EE] text-[#111111] flex items-center justify-center shadow-md transition-shadow cursor-default"
+              >
+                <TrendingUp className="w-6 h-6 text-[#7650E8]" />
+              </motion.div>
             </motion.div>
 
             {/* SVG Connector Lines with Progressive Motion Drawing */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
-              <motion.line
-                x1="25%" y1="25%" x2="50%" y2="50%"
-                stroke="#7650E8" strokeWidth="2" strokeDasharray="4 4"
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none z-0"
+              viewBox="0 0 500 280"
+              preserveAspectRatio="none"
+            >
+              <motion.path
+                d="M 90 40 Q 180 80 250 140"
+                stroke="#7650E8"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+                fill="none"
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
+                whileInView={{ pathLength: 1, opacity: 0.8 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: "easeInOut" }}
+                transition={{ duration: 1.1, ease: "easeInOut" }}
               />
-              <motion.line
-                x1="75%" y1="25%" x2="50%" y2="50%"
-                stroke="#FF625E" strokeWidth="2" strokeDasharray="4 4"
+              <motion.path
+                d="M 410 40 Q 320 80 250 140"
+                stroke="#FF625E"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+                fill="none"
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
+                whileInView={{ pathLength: 1, opacity: 0.8 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.2, ease: "easeInOut" }}
+                transition={{ duration: 1.1, delay: 0.15, ease: "easeInOut" }}
               />
-              <motion.line
-                x1="25%" y1="75%" x2="50%" y2="50%"
-                stroke="#5CD8E8" strokeWidth="2" strokeDasharray="4 4"
+              <motion.path
+                d="M 90 240 Q 180 200 250 140"
+                stroke="#5CD8E8"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+                fill="none"
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
+                whileInView={{ pathLength: 1, opacity: 0.8 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.4, ease: "easeInOut" }}
+                transition={{ duration: 1.1, delay: 0.3, ease: "easeInOut" }}
               />
-              <motion.line
-                x1="75%" y1="75%" x2="50%" y2="50%"
-                stroke="#7650E8" strokeWidth="2" strokeDasharray="4 4"
+              <motion.path
+                d="M 410 240 Q 320 200 250 140"
+                stroke="#7650E8"
+                strokeWidth="2"
+                strokeDasharray="4 4"
+                fill="none"
                 initial={{ pathLength: 0, opacity: 0 }}
-                whileInView={{ pathLength: 1, opacity: 1 }}
+                whileInView={{ pathLength: 1, opacity: 0.8 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.6, ease: "easeInOut" }}
+                transition={{ duration: 1.1, delay: 0.45, ease: "easeInOut" }}
               />
             </svg>
 
