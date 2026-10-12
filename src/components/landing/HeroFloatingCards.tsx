@@ -37,7 +37,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT_CUBIC }}
-        className="hidden lg:block absolute top-28 left-6 xl:left-12 z-20 pointer-events-auto"
+        className="hidden lg:block absolute top-20 left-4 xl:left-8 z-20 pointer-events-auto"
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
@@ -62,7 +62,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         initial={{ opacity: 0, x: -70 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_CUBIC }}
-        className="hidden lg:block absolute top-72 left-8 xl:left-16 z-20 pointer-events-auto"
+        className="hidden lg:block absolute top-[290px] left-6 xl:left-12 z-20 pointer-events-auto"
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, 7, 0] }}
@@ -87,7 +87,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: EASE_OUT_CUBIC }}
-        className="hidden lg:block absolute bottom-12 left-10 xl:left-20 z-20 pointer-events-auto"
+        className="hidden lg:block absolute bottom-4 left-6 xl:left-12 z-20 pointer-events-auto"
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
@@ -109,7 +109,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         initial={{ opacity: 0, x: 50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT_CUBIC }}
-        className="hidden lg:block absolute top-28 right-6 xl:right-12 z-20 pointer-events-auto"
+        className="hidden lg:block absolute top-20 right-4 xl:right-8 z-20 pointer-events-auto"
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
@@ -137,7 +137,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         initial={{ opacity: 0, x: 70 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_CUBIC }}
-        className="hidden lg:block absolute top-72 right-8 xl:right-16 z-20 pointer-events-auto"
+        className="hidden lg:block absolute top-[290px] right-6 xl:right-12 z-20 pointer-events-auto"
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, 8, 0] }}
@@ -163,7 +163,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.4, ease: EASE_OUT_CUBIC }}
-        className="hidden lg:block absolute bottom-12 right-10 xl:right-20 z-20 pointer-events-auto"
+        className="hidden lg:block absolute bottom-4 right-6 xl:right-12 z-20 pointer-events-auto"
       >
         <motion.div
           animate={shouldReduceMotion ? {} : { y: [0, -7, 0] }}
