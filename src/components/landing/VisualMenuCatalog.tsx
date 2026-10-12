@@ -105,16 +105,19 @@ export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
                 className="bg-white rounded-3xl p-4 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="relative h-44 mb-3 rounded-2xl overflow-hidden bg-stone-100 p-2 flex items-center justify-center group">
-                    <img
-                      src={dish.image_url}
-                      alt={dish.name}
-                      className="h-full w-full object-cover rounded-xl group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <span className="absolute top-3 right-3 bg-[#FF625E] text-white font-extrabold text-xs px-3 py-1 rounded-full shadow-xs">
+                  <div className="relative h-44 mb-3 rounded-2xl overflow-hidden bg-stone-100 p-1.5 flex items-center justify-center group">
+                    <div className="w-full h-full rounded-xl overflow-hidden relative">
+                      <img
+                        src={dish.image_url}
+                        alt={dish.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover transform-gpu transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                      />
+                    </div>
+                    <span className="absolute top-3 right-3 bg-[#FF625E] text-white font-extrabold text-xs px-3 py-1 rounded-full shadow-xs pointer-events-none">
                       ${dish.price.toFixed(2)}
                     </span>
-                    <span className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-[#111111] font-bold text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1 border border-[#E9E9EE]">
+                    <span className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-md text-[#111111] font-bold text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1 border border-[#E9E9EE] pointer-events-none">
                       <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
                       {dish.rating}
                     </span>
