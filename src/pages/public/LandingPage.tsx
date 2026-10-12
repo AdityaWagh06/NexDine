@@ -1092,41 +1092,77 @@ const LandingPage: React.FC = () => {
             
             {/* Center Purple Tile */}
             <motion.div
-              animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              initial={{ scale: 0.5, opacity: 0 }}
+              whileInView={{ scale: 1, opacity: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, type: "spring", stiffness: 320, damping: 22 }}
               className="w-24 h-24 rounded-3xl bg-[#7650E8] text-white flex items-center justify-center font-black text-3xl shadow-2xl shadow-[#7650E8]/40 relative z-20 border-2 border-white"
             >
-              <Utensils className="w-10 h-10 text-white" />
+              <motion.div
+                animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
+                className="flex items-center justify-center"
+              >
+                <Utensils className="w-10 h-10 text-white" />
+              </motion.div>
             </motion.div>
 
-            {/* Surrounding Connected Feature Tiles with Scroll-Linked Drift */}
+            {/* Surrounding Connected Feature Tiles with Directional Entrances & Drift */}
             
             {/* Top Left Tile — Yellow Accent (Menu) */}
             <motion.div
               style={{ y: showcaseNodeDrift }}
-              className="absolute top-2 left-6 w-14 h-14 rounded-2xl bg-[#FFD45C] text-amber-900 flex items-center justify-center shadow-md z-10"
+              className="absolute top-2 left-6 z-10"
             >
-              <Utensils className="w-6 h-6" />
+              <motion.div
+                initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -28, y: shouldReduceMotion ? 0 : -20, scale: 0.85 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.15, ease: easeOutCubic }}
+                whileHover={{ scale: 1.12 }}
+                className="w-14 h-14 rounded-2xl bg-[#FFD45C] text-amber-900 flex items-center justify-center shadow-md transition-shadow cursor-default"
+              >
+                <Utensils className="w-6 h-6" />
+              </motion.div>
             </motion.div>
 
             {/* Top Right Tile — Coral Accent (Live KDS) */}
             <motion.div
               style={{ y: showcaseNodeDrift }}
-              className="absolute top-2 right-6 w-14 h-14 rounded-2xl bg-[#FF625E] text-white flex items-center justify-center shadow-md z-10"
+              className="absolute top-2 right-6 z-10"
             >
-              <ChefHat className="w-6 h-6" />
+              <motion.div
+                initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 28, y: shouldReduceMotion ? 0 : -20, scale: 0.85 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.2, ease: easeOutCubic }}
+                whileHover={{ scale: 1.12 }}
+                className="w-14 h-14 rounded-2xl bg-[#FF625E] text-white flex items-center justify-center shadow-md transition-shadow cursor-default"
+              >
+                <ChefHat className="w-6 h-6" />
+              </motion.div>
             </motion.div>
 
             {/* Bottom Left Tile — Cyan Accent (Table QR) */}
             <motion.div
-              className="absolute bottom-2 left-6 w-14 h-14 rounded-2xl bg-[#5CD8E8] text-slate-900 flex items-center justify-center shadow-md z-10"
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : -28, y: shouldReduceMotion ? 0 : 20, scale: 0.85 }}
+              whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: 0.25, ease: easeOutCubic }}
+              whileHover={{ scale: 1.12 }}
+              className="absolute bottom-2 left-6 w-14 h-14 rounded-2xl bg-[#5CD8E8] text-slate-900 flex items-center justify-center shadow-md z-10 transition-shadow cursor-default"
             >
               <QrCode className="w-6 h-6" />
             </motion.div>
 
             {/* Bottom Right Tile — White Card (Analytics) */}
             <motion.div
-              className="absolute bottom-2 right-6 w-14 h-14 rounded-2xl bg-white border border-[#E9E9EE] text-[#111111] flex items-center justify-center shadow-md z-10"
+              initial={{ opacity: 0, x: shouldReduceMotion ? 0 : 28, y: shouldReduceMotion ? 0 : 20, scale: 0.85 }}
+              whileInView={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.55, delay: 0.3, ease: easeOutCubic }}
+              whileHover={{ scale: 1.12 }}
+              className="absolute bottom-2 right-6 w-14 h-14 rounded-2xl bg-white border border-[#E9E9EE] text-[#111111] flex items-center justify-center shadow-md z-10 transition-shadow cursor-default"
             >
               <TrendingUp className="w-6 h-6 text-[#7650E8]" />
             </motion.div>
