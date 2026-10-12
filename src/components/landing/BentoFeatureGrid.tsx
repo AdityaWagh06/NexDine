@@ -49,11 +49,11 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
           <div className="grid md:grid-cols-3 gap-6">
             {/* Card 1 — Direct Table QR Ordering */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: EASE_OUT_CUBIC }}
-              whileHover={{ y: -6, scale: 1.015 }}
+              viewport={{ once: true, amount: 0.12 }}
+              transition={{ duration: 0.65, delay: 0.1, ease: EASE_OUT_CUBIC }}
+              whileHover={{ y: -5 }}
               className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div>
@@ -89,11 +89,11 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
 
             {/* Card 2 — Real-Time Order Management */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: EASE_OUT_CUBIC }}
-              whileHover={{ y: -6, scale: 1.015 }}
+              viewport={{ once: true, amount: 0.12 }}
+              transition={{ duration: 0.65, delay: 0.22, ease: EASE_OUT_CUBIC }}
+              whileHover={{ y: -5 }}
               className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div>
@@ -124,11 +124,11 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
 
             {/* Card 3 — Live Kitchen Display (KDS) */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_CUBIC }}
-              whileHover={{ y: -6, scale: 1.015 }}
+              viewport={{ once: true, amount: 0.12 }}
+              transition={{ duration: 0.65, delay: 0.34, ease: EASE_OUT_CUBIC }}
+              whileHover={{ y: -5 }}
               className="bg-white rounded-3xl p-8 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div>
@@ -160,11 +160,11 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
           <div className="grid md:grid-cols-2 gap-6">
             {/* Card 4 (Wide) — Owner Dashboard & Sales Analytics */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: EASE_OUT_CUBIC }}
-              whileHover={{ y: -6, scale: 1.01 }}
+              viewport={{ once: true, amount: 0.12 }}
+              transition={{ duration: 0.65, delay: 0.12, ease: EASE_OUT_CUBIC }}
+              whileHover={{ y: -5 }}
               className="bg-white rounded-3xl p-8 sm:p-10 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div>
@@ -196,11 +196,11 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
 
             {/* Card 5 (Wide) — 1-Tap Menu & Table Management */}
             <motion.div
-              initial={{ opacity: 0, y: 35 }}
+              initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, delay: 0.25, ease: EASE_OUT_CUBIC }}
-              whileHover={{ y: -6, scale: 1.01 }}
+              viewport={{ once: true, amount: 0.12 }}
+              transition={{ duration: 0.65, delay: 0.24, ease: EASE_OUT_CUBIC }}
+              whileHover={{ y: -5 }}
               className="bg-white rounded-3xl p-8 sm:p-10 border border-[#E9E9EE] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
             >
               <div>
