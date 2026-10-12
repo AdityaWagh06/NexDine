@@ -31,12 +31,12 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
 }) => {
   return (
     <>
-      {/* Floating Card 1 — Top Left: Chef Plating Photography */}
+      {/* Floating Card 1 — Top Left: Upper card moves in from top-left */}
       <motion.div
         style={{ y: card1Y, rotate: card1Rotate }}
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT_CUBIC }}
+        initial={{ opacity: 0, x: -45, y: -25, scale: 0.94 }}
+        animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+        transition={{ duration: 0.75, delay: 0.6, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute top-20 left-4 xl:left-8 z-20 pointer-events-auto"
       >
         <motion.div
@@ -56,12 +56,12 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 2 — Mid Left: Table QR Scan UI Badge */}
+      {/* Floating Card 2 — Mid Left: Left-side card moves in from the left */}
       <motion.div
         style={{ y: card2Y, rotate: card2Rotate }}
-        initial={{ opacity: 0, x: -70 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_CUBIC }}
+        initial={{ opacity: 0, x: -60, scale: 0.95 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ duration: 0.75, delay: 0.72, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute top-[290px] left-6 xl:left-12 z-20 pointer-events-auto"
       >
         <motion.div
@@ -81,12 +81,12 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 3 — Bottom Left: Customer Scanning QR Photo */}
+      {/* Floating Card 3 — Bottom Left: Lower card moves in from bottom-left */}
       <motion.div
         style={{ y: card3Y }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: EASE_OUT_CUBIC }}
+        initial={{ opacity: 0, x: -40, y: 40, scale: 0.94 }}
+        animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+        transition={{ duration: 0.75, delay: 0.84, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute bottom-4 left-6 xl:left-12 z-20 pointer-events-auto"
       >
         <motion.div
@@ -103,12 +103,12 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 4 — Top Right: High-Res Food Photography */}
+      {/* Floating Card 4 — Top Right: Upper card moves in from top-right */}
       <motion.div
         style={{ y: card4Y, rotate: card4Rotate }}
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT_CUBIC }}
+        initial={{ opacity: 0, x: 45, y: -25, scale: 0.94 }}
+        animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+        transition={{ duration: 0.75, delay: 0.65, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute top-20 right-4 xl:right-8 z-20 pointer-events-auto"
       >
         <motion.div
@@ -131,12 +131,12 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 5 — Mid Right: KDS Order Status Badge */}
+      {/* Floating Card 5 — Mid Right: Right-side card moves in from the right */}
       <motion.div
         style={{ y: card5Y }}
-        initial={{ opacity: 0, x: 70 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.3, ease: EASE_OUT_CUBIC }}
+        initial={{ opacity: 0, x: 60, scale: 0.95 }}
+        animate={{ opacity: 1, x: 0, scale: 1 }}
+        transition={{ duration: 0.75, delay: 0.78, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute top-[290px] right-6 xl:right-12 z-20 pointer-events-auto"
       >
         <motion.div
@@ -157,12 +157,12 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         </motion.div>
       </motion.div>
 
-      {/* Floating Card 6 — Bottom Right: Staff Serving Dining Table Photo */}
+      {/* Floating Card 6 — Bottom Right: Lower card moves in from bottom-right */}
       <motion.div
         style={{ y: card6Y, rotate: card6Rotate }}
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.4, ease: EASE_OUT_CUBIC }}
+        initial={{ opacity: 0, x: 40, y: 40, scale: 0.94 }}
+        animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+        transition={{ duration: 0.75, delay: 0.9, ease: EASE_OUT_CUBIC }}
         className="hidden lg:block absolute bottom-4 right-6 xl:right-12 z-20 pointer-events-auto"
       >
         <motion.div
