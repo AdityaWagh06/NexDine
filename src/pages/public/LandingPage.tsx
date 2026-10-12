@@ -349,64 +349,75 @@ const LandingPage: React.FC = () => {
           style={{ y: heroContentY, opacity: heroContentOpacity }}
           className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
         >
-          {/* Centered Icon Container (Matching CoreShift Hero Icon) */}
+          {/* 1. Centered Icon Container (Matching CoreShift Hero Icon) */}
           <motion.div
-            initial={{ scale: 0, rotate: -20 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ duration: 0.6, ease: "backOut" }}
+            initial={{ scale: 0.6, opacity: 0, y: -15, rotate: -15 }}
+            animate={{ scale: 1, opacity: 1, y: 0, rotate: 0 }}
+            transition={{ duration: 0.55, delay: 0.05, ease: "backOut" }}
             className="w-14 h-14 rounded-2xl bg-[#7650E8]/10 text-[#7650E8] flex items-center justify-center font-bold text-2xl mx-auto mb-6 shadow-sm border border-[#7650E8]/20"
           >
             <Utensils className="w-7 h-7 text-[#7650E8]" />
           </motion.div>
 
-          {/* Centered Large Bold Typography (48px - 64px) */}
+          {/* 2. Centered Large Bold Typography (48px - 64px) with subtle upward movement */}
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1, ease: easeOutCubic }}
+            transition={{ duration: 0.7, delay: 0.18, ease: easeOutCubic }}
             className="text-4xl sm:text-6xl lg:text-6xl font-black text-[#111111] tracking-tight max-w-4xl mx-auto leading-[1.08] mb-6"
           >
             The Complete <span className="text-[#7650E8]">Digital Dining OS</span> Built For Modern Outlets.
           </motion.h1>
 
-          {/* Supporting Text Paragraph */}
+          {/* 3. Supporting Text Paragraph shortly afterward */}
           <motion.p
-            initial={{ opacity: 0, y: 25 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2, ease: easeOutCubic }}
+            transition={{ duration: 0.65, delay: 0.32, ease: easeOutCubic }}
             className="text-base sm:text-lg text-[#737373] font-medium max-w-2xl mx-auto leading-relaxed mb-8"
           >
             Empower guests to scan table QR codes, explore visual gourmet menus, and self-order directly. Orders stream to your Kitchen Display System in <strong className="text-[#111111] font-bold">0.2 seconds</strong> — with zero waiter errors and 100% direct revenue.
           </motion.p>
 
-          {/* Centered CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3, ease: easeOutCubic }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-          >
-            <Link to="/register" className="w-full sm:w-auto">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto bg-[#7650E8] hover:bg-[#643ed8] text-white font-extrabold text-sm px-8 py-4 rounded-full shadow-lg shadow-[#7650E8]/25 transition-all flex items-center justify-center space-x-2"
-              >
-                <span>Start 14-Day Free Trial</span>
-                <ArrowRight className="w-4 h-4" />
-              </motion.button>
-            </Link>
-
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={handleBellSoundDemo}
-              className="w-full sm:w-auto bg-white hover:bg-[#F8F8FA] border border-[#E9E9EE] text-[#111111] font-bold text-sm px-6 py-4 rounded-full transition-all flex items-center justify-center space-x-2 shadow-xs group"
+          {/* 4 & 5. Sequential Reveal for Primary and Secondary CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+            {/* 4. Primary CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.44, ease: easeOutCubic }}
+              className="w-full sm:w-auto"
             >
-              <BellRing className="w-4 h-4 text-[#7650E8] group-hover:rotate-12 transition-transform" />
-              <span>Ring Kitchen Bell 🔔 ({bellTriggeredCount})</span>
-            </motion.button>
-          </motion.div>
+              <Link to="/register" className="w-full sm:w-auto block">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto bg-[#7650E8] hover:bg-[#643ed8] text-white font-extrabold text-sm px-8 py-4 rounded-full shadow-lg shadow-[#7650E8]/25 transition-all flex items-center justify-center space-x-2"
+                >
+                  <span>Start 14-Day Free Trial</span>
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
+              </Link>
+            </motion.div>
+
+            {/* 5. Secondary CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.56, ease: easeOutCubic }}
+              className="w-full sm:w-auto"
+            >
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleBellSoundDemo}
+                className="w-full sm:w-auto bg-white hover:bg-[#F8F8FA] border border-[#E9E9EE] text-[#111111] font-bold text-sm px-6 py-4 rounded-full transition-all flex items-center justify-center space-x-2 shadow-xs group"
+              >
+                <BellRing className="w-4 h-4 text-[#7650E8] group-hover:rotate-12 transition-transform" />
+                <span>Ring Kitchen Bell 🔔 ({bellTriggeredCount})</span>
+              </motion.button>
+            </motion.div>
+          </div>
         </motion.div>
 
         {/* 
