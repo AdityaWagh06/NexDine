@@ -599,6 +599,7 @@ const LandingPage: React.FC = () => {
                           type="text"
                           id="demo-outlet-name"
                           name="demoOutletName"
+                          autoComplete="organization"
                           aria-label="Outlet Name"
                           value={demoRestaurantName}
                           onChange={(e) => setDemoRestaurantName(e.target.value)}
@@ -607,7 +608,7 @@ const LandingPage: React.FC = () => {
                       </div>
 
                       <div>
-                        <label className="block text-[#555555] font-bold mb-1">Selected Table</label>
+                        <span className="block text-[#555555] font-bold mb-1">Selected Table</span>
                         <div className="grid grid-cols-4 gap-1">
                           {[2, 4, 8, 12].map((num) => (
                             <button
@@ -628,7 +629,7 @@ const LandingPage: React.FC = () => {
 
                     <div className="bg-white p-3 rounded-xl border border-[#E9E9EE] text-center shadow-xs space-y-2 flex flex-col items-center">
                       <QRCodeSVG
-                        value={`http://localhost:3000/menu/demo?table=${selectedTableNum}`}
+                        value={`https://nextdine.in/menu/pizza-palace?table=${selectedTableNum}`}
                         size={85}
                         bgColor="#ffffff"
                         fgColor="#111111"

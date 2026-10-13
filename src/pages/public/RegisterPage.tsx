@@ -285,6 +285,7 @@ const RegisterPage: React.FC = () => {
                 <Input
                   label="Restaurant / Brand Name"
                   name="restaurant_name"
+                  autoComplete="organization"
                   value={formData.restaurant_name}
                   onChange={handleChange}
                   error={errors.restaurant_name}
@@ -309,6 +310,7 @@ const RegisterPage: React.FC = () => {
                   <Input
                     label="City"
                     name="city"
+                    autoComplete="address-level2"
                     value={formData.city}
                     onChange={handleChange}
                     error={errors.city}
@@ -319,6 +321,7 @@ const RegisterPage: React.FC = () => {
                   <Input
                     label="Address (Optional)"
                     name="address"
+                    autoComplete="street-address"
                     value={formData.address}
                     onChange={handleChange}
                     placeholder="Street or area address"
@@ -336,6 +339,7 @@ const RegisterPage: React.FC = () => {
                 <Input
                   label="Owner / Manager Full Name"
                   name="owner_name"
+                  autoComplete="name"
                   value={formData.owner_name}
                   onChange={handleChange}
                   error={errors.owner_name}
@@ -348,6 +352,7 @@ const RegisterPage: React.FC = () => {
                     label="Mobile Phone Number"
                     name="phone"
                     type="tel"
+                    autoComplete="tel"
                     value={formData.phone}
                     onChange={handleChange}
                     error={errors.phone}
@@ -359,6 +364,7 @@ const RegisterPage: React.FC = () => {
                     label="Business Email"
                     name="email"
                     type="email"
+                    autoComplete="email"
                     value={formData.email}
                     onChange={handleChange}
                     error={errors.email}

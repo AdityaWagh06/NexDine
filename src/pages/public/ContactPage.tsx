@@ -180,6 +180,7 @@ const ContactPage: React.FC = () => {
                           type="text"
                           id="contact-name"
                           name="name"
+                          autoComplete="name"
                           required
                           value={form.name}
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -195,6 +196,7 @@ const ContactPage: React.FC = () => {
                           type="text"
                           id="contact-restaurant"
                           name="restaurant"
+                          autoComplete="organization"
                           required
                           value={form.restaurant}
                           onChange={(e) => setForm({ ...form, restaurant: e.target.value })}
@@ -213,6 +215,7 @@ const ContactPage: React.FC = () => {
                           type="tel"
                           id="contact-phone"
                           name="phone"
+                          autoComplete="tel"
                           required
                           value={form.phone}
                           onChange={(e) => setForm({ ...form, phone: e.target.value })}
@@ -228,9 +231,10 @@ const ContactPage: React.FC = () => {
                           type="email"
                           id="contact-email"
                           name="email"
+                          autoComplete="email"
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
-                          placeholder="vikram@restaurant.com"
+                          placeholder="vikram@yourrestaurant.in"
                           className="w-full bg-[#FAF8F5] border border-[#E9E9EE] rounded-xl px-3.5 py-2.5 text-xs text-[#111111] focus:outline-none focus:border-[#7650E8]"
                         />
                       </div>
@@ -244,6 +248,7 @@ const ContactPage: React.FC = () => {
                         type="text"
                         id="contact-city"
                         name="city"
+                        autoComplete="address-level2"
                         value={form.city}
                         onChange={(e) => setForm({ ...form, city: e.target.value })}
                         placeholder="Mumbai, Pune, Bengaluru, Delhi NCR..."

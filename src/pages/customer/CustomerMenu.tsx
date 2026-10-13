@@ -61,15 +61,7 @@ const CustomerMenu: React.FC = () => {
     if (!slug) return;
     setLoading(true);
 
-    const { data, error } = await supabase
-      .from("restaurants")
-      .select("*")
-      .eq("slug", slug)
-      .eq("is_active", true)
-      .single();
-
-    if (error || !data) {
-      console.warn("Restaurant not found on DB, falling back to demo state.");
+    if (slug === "pizza-palace" || slug === "demo") {
       setRestaurant({
         id: "demo-restaurant",
         name: "THE SPICYCAB",
@@ -80,8 +72,36 @@ const CustomerMenu: React.FC = () => {
       return;
     }
 
-    setRestaurant(data);
-    setLoading(false);
+    try {
+      const { data, error } = await supabase
+        .from("restaurants")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_active", true)
+        .single();
+
+      if (error || !data) {
+        setRestaurant({
+          id: "demo-restaurant",
+          name: "THE SPICYCAB",
+          restaurant_type: "Modern Gourmet Kitchen",
+        });
+        setMenuItems(SAMPLE_MENU_ITEMS as any);
+        setLoading(false);
+        return;
+      }
+
+      setRestaurant(data);
+    } catch {
+      setRestaurant({
+        id: "demo-restaurant",
+        name: "THE SPICYCAB",
+        restaurant_type: "Modern Gourmet Kitchen",
+      });
+      setMenuItems(SAMPLE_MENU_ITEMS as any);
+    } finally {
+      setLoading(false);
+    }
   };
 
   // Load restaurant and menu
@@ -295,6 +315,9 @@ const CustomerMenu: React.FC = () => {
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
             <input
               type="text"
+              id="menu-search-input"
+              name="menuSearch"
+              aria-label="Search dishes, burgers, pancakes, and cuisine"
               placeholder="Search Indian, Chinese, Burgers, Pancakes, Fries..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}

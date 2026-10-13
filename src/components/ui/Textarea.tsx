@@ -8,16 +8,19 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ label, error, helperText, className = "", ...props }, ref) => {
+    const textareaId = props.id || (props.name ? `textarea-${props.name}` : undefined);
+
     return (
       <div className="w-full">
         {label && (
-          <label className="label" htmlFor={props.id || props.name}>
+          <label className="label" htmlFor={textareaId}>
             {label}
             {props.required && <span className="text-rose-500 ml-1">*</span>}
           </label>
         )}
         <textarea
           ref={ref}
+          id={textareaId}
           className={`input min-h-[100px] resize-y ${
             error ? "border-rose-400 focus:ring-rose-500/20 focus:border-rose-500" : ""
           } ${className}`}

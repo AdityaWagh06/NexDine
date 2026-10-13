@@ -9,10 +9,12 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, helperText, icon, className = "", ...props }, ref) => {
+    const inputId = props.id || (props.name ? `input-${props.name}` : undefined);
+
     return (
       <div className="w-full">
         {label && (
-          <label className="label" htmlFor={props.id || props.name}>
+          <label className="label" htmlFor={inputId}>
             {label}
             {props.required && <span className="text-red-500 ml-0.5">*</span>}
           </label>
@@ -25,6 +27,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             ref={ref}
+            id={inputId}
             className={`input ${icon ? "pl-9" : ""} ${
               error ? "border-red-300 focus:ring-red-500/20 focus:border-red-500" : ""
             } ${className}`}
