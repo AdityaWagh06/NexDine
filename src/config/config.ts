@@ -14,6 +14,8 @@ export const SUPABASE_ANON_KEY =
     ? rawKey
     : "sb_publishable_9nzHWPGcK8wQtXSAjWc05w_xc7gwpm-";
 
+export { SITE_CONFIG, getCanonicalUrl } from "./site";
+
 // Application Configuration
 export const APP_CONFIG = {
   appName: "NextDine",
