@@ -4,6 +4,7 @@ import { ArrowLeft, Mail, Lock, AlertCircle, Sparkles } from "lucide-react";
 import { Button, Input, Alert, Card } from "../../components/ui";
 import { supabase } from "../../config/supabase";
 import { isValidEmail, hashPassword } from "../../utils/helpers";
+import { SEO } from "../../components/common/SEO";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -226,6 +227,11 @@ const LoginPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <SEO
+        title="Sign In to Restaurant Portal"
+        description="Sign in to your NextDine restaurant dashboard to manage table QR codes, live kitchen orders, menus, and daily sales."
+        canonicalPath="/login"
+      />
       {/* Food Photography Atmospheric Background */}
       <div className="absolute inset-0 z-0 opacity-10">
         <img

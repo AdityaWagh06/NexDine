@@ -12,6 +12,7 @@ import {
 import { APP_CONFIG } from "../../config/config";
 import { supabase } from "../../config/supabase";
 import { isValidEmail, isValidPhone } from "../../utils/helpers";
+import { SEO } from "../../components/common/SEO";
 
 interface FormData {
   restaurant_name: string;
@@ -165,6 +166,12 @@ const RegisterPage: React.FC = () => {
   if (success) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center py-12 px-4">
+        <SEO
+          title="Registration Submitted"
+          description="Your NextDine restaurant registration application has been received."
+          canonicalPath="/register"
+          noindex
+        />
         <Card className="max-w-lg w-full text-center shadow-xl border-slate-200/80">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200 mb-6">
             <CheckCircle2 className="w-10 h-10" />
@@ -225,6 +232,11 @@ const RegisterPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-100 via-amber-50/20 to-stone-100 py-12 px-4 relative overflow-hidden">
+      <SEO
+        title="Register Your Restaurant Outlet"
+        description="Register your restaurant with NextDine to launch smart visual QR table ordering and Kitchen Display System in minutes."
+        canonicalPath="/register"
+      />
       {/* Background Glow */}
       <div className="absolute top-0 right-1/4 w-[500px] h-[300px] bg-amber-400/10 blur-[100px] rounded-full pointer-events-none" />
 
