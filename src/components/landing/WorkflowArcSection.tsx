@@ -4,28 +4,34 @@ import { Layers } from "lucide-react";
 import { EASE_OUT_CUBIC, STANDARD_DURATION } from "../../utils/motionVariants";
 import type { ConnectedWorkflowItem } from "../../types/landing";
 
+import { CONNECTED_WORKFLOWS } from "../../config/landingData";
+
 interface WorkflowArcSectionProps {
-  workflowRef: React.RefObject<HTMLElement | null>;
-  arcParallaxY: MotionValue<number>;
-  connectedWorkflows: ConnectedWorkflowItem[];
-  activeWorkflowIndex: number;
-  setActiveWorkflowIndex: (index: number) => void;
+  workflowRef?: React.RefObject<HTMLElement | null>;
+  arcParallaxY?: MotionValue<number>;
+  connectedWorkflows?: ConnectedWorkflowItem[];
+  activeWorkflowIndex?: number;
+  setActiveWorkflowIndex?: (index: number) => void;
 }
 
 export const WorkflowArcSection: React.FC<WorkflowArcSectionProps> = ({
   workflowRef,
   arcParallaxY,
-  connectedWorkflows,
-  activeWorkflowIndex,
-  setActiveWorkflowIndex,
+  connectedWorkflows = CONNECTED_WORKFLOWS,
+  activeWorkflowIndex: externalIndex,
+  setActiveWorkflowIndex: externalSetIndex,
 }) => {
+  const [internalIndex, setInternalIndex] = React.useState(0);
+  const activeWorkflowIndex = externalIndex ?? internalIndex;
+  const setActiveWorkflowIndex = externalSetIndex ?? setInternalIndex;
+
   const shouldReduceMotion = useReducedMotion() ?? false;
 
   return (
     <section ref={workflowRef} className="py-16 sm:py-20 bg-[#F8F8FA] border-b border-[#E9E9EE] relative overflow-hidden">
       {/* Subtle scroll-linked ambient drift */}
       <motion.div
-        style={{ y: arcParallaxY }}
+        style={{ y: arcParallaxY || 0 }}
         className="absolute -bottom-20 left-10 w-96 h-96 bg-[#5CD8E8]/5 rounded-full blur-3xl pointer-events-none -z-0"
       />
 

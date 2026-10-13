@@ -5,17 +5,23 @@ import { ArrowRight, Star } from "lucide-react";
 import { EASE_OUT_CUBIC, STANDARD_DURATION, createStaggerContainer } from "../../utils/motionVariants";
 import type { ShowcaseDishItem } from "../../types/landing";
 
+import { SHOWCASE_DISHES } from "../../config/landingData";
+
 interface VisualMenuCatalogProps {
-  activeCategoryFilter: string;
-  setActiveCategoryFilter: (category: string) => void;
-  dishes: ShowcaseDishItem[];
+  activeCategoryFilter?: string;
+  setActiveCategoryFilter?: (category: string) => void;
+  dishes?: ShowcaseDishItem[];
 }
 
 export const VisualMenuCatalog: React.FC<VisualMenuCatalogProps> = ({
-  activeCategoryFilter,
-  setActiveCategoryFilter,
-  dishes,
+  activeCategoryFilter: externalCategory,
+  setActiveCategoryFilter: externalSetCategory,
+  dishes = SHOWCASE_DISHES,
 }) => {
+  const [internalCategory, setInternalCategory] = React.useState("All");
+  const activeCategoryFilter = externalCategory ?? internalCategory;
+  const setActiveCategoryFilter = externalSetCategory ?? setInternalCategory;
+
   const shouldReduceMotion = useReducedMotion() ?? false;
   const filteredDishes =
     activeCategoryFilter === "All"

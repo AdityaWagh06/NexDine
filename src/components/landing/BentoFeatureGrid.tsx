@@ -4,15 +4,15 @@ import { Smartphone, Zap, ChefHat, TrendingUp, QrCode } from "lucide-react";
 import { EASE_OUT_CUBIC } from "../../utils/motionVariants";
 
 interface BentoFeatureGridProps {
-  featuresRef: React.RefObject<HTMLElement | null>;
-  featuresParallaxY: MotionValue<number>;
-  shouldReduceMotion: boolean | null;
+  featuresRef?: React.RefObject<HTMLElement | null>;
+  featuresParallaxY?: MotionValue<number>;
+  shouldReduceMotion?: boolean | null;
 }
 
 export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
   featuresRef,
   featuresParallaxY,
-  shouldReduceMotion,
+  shouldReduceMotion = false,
 }) => {
   return (
     <section
@@ -22,7 +22,7 @@ export const BentoFeatureGrid: React.FC<BentoFeatureGridProps> = ({
     >
       {/* Subtle scroll-linked decorative ambient drift */}
       <motion.div
-        style={{ y: featuresParallaxY }}
+        style={{ y: featuresParallaxY || 0 }}
         className="absolute -top-24 right-10 w-96 h-96 bg-[#7650E8]/5 rounded-full blur-3xl pointer-events-none -z-0"
       />
 

@@ -6,6 +6,13 @@ const LandingPage = lazy(() => import("./pages/public/LandingPage"));
 const RegisterPage = lazy(() => import("./pages/public/RegisterPage"));
 const LoginPage = lazy(() => import("./pages/public/LoginPage"));
 
+// Dedicated marketing pages with proper URL slugs
+const FeaturesPage = lazy(() => import("./pages/public/FeaturesPage"));
+const PricingPage = lazy(() => import("./pages/public/PricingPage"));
+const HowItWorksPage = lazy(() => import("./pages/public/HowItWorksPage"));
+const FaqPage = lazy(() => import("./pages/public/FaqPage"));
+const ContactPage = lazy(() => import("./pages/public/ContactPage"));
+
 // Restaurant dashboard
 const RestaurantDashboard = lazy(() => import("./pages/restaurant/Dashboard"));
 
@@ -40,10 +47,22 @@ function App() {
     <BrowserRouter>
       <Suspense fallback={<PageLoadingFallback />}>
         <Routes>
-          {/* Public Routes */}
+          {/* Public Core Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
+
+          {/* Proper Marketing Slugs */}
+          <Route path="/features" element={<FeaturesPage />} />
+          <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/how-it-works" element={<HowItWorksPage />} />
+          <Route path="/faq" element={<FaqPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+
+          {/* Customer Ordering Route & Demo Alias */}
+          <Route path="/demo" element={<Navigate to="/menu/pizza-palace" replace />} />
+          <Route path="/customer/menu" element={<Navigate to="/menu/pizza-palace" replace />} />
+          <Route path="/menu/:slug" element={<CustomerMenu />} />
 
           {/* Restaurant Dashboard Routes */}
           <Route path="/restaurant/*" element={<RestaurantDashboard />} />
@@ -51,9 +70,6 @@ function App() {
           {/* Admin Panel Routes */}
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/*" element={<AdminDashboard />} />
-
-          {/* Customer Ordering Route */}
-          <Route path="/menu/:slug" element={<CustomerMenu />} />
 
           {/* 404 */}
           <Route path="/404" element={<NotFoundPage />} />
