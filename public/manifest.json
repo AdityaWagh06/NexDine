@@ -1,0 +1,22 @@
+{
+  "name": "NextDine — Digital Dining OS",
+  "short_name": "NextDine",
+  "description": "Smart QR table ordering and Kitchen Display System for modern restaurants.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#7650E8",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
