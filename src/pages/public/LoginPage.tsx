@@ -44,8 +44,9 @@ const LoginPage: React.FC = () => {
       // Master Demo Restaurant Owner Bypass
       if (
         (cleanEmail === "demorestaurant@gmail.com" && cleanPassword === "ATVSW679") ||
-        (cleanEmail === "owner@example.com" && cleanPassword === "password123") ||
-        (cleanEmail === "demo@nextdine.com" && cleanPassword === "demopass")
+        (cleanEmail === "demo.owner@nextdine.in" && cleanPassword === "password123") ||
+        (cleanEmail === "demo@nextdine.in" && cleanPassword === "demopass") ||
+        (cleanEmail === "owner@example.com" && cleanPassword === "password123")
       ) {
         localStorage.setItem(
           "user",
@@ -341,7 +342,7 @@ const LoginPage: React.FC = () => {
               type="email"
               value={formData.email}
               onChange={handleChange}
-              placeholder="owner@restaurant.com"
+              placeholder="owner@nextdine.in"
               icon={<Mail className="w-5 h-5 text-slate-400" />}
               required
               autoComplete="email"

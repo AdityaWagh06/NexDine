@@ -221,7 +221,7 @@ const RegisterPage: React.FC = () => {
       restaurant_name: "The Grand Amber Bistro",
       owner_name: "Aditya Wagh",
       phone: "9876543210",
-      email: "aditya.bistro@nexdine.io",
+      email: "aditya.bistro@nextdine.in",
       city: "Mumbai",
       address: "102 Marine Drive, Nariman Point",
       restaurant_type: "Fine Dining",
@@ -362,7 +362,7 @@ const RegisterPage: React.FC = () => {
                     value={formData.email}
                     onChange={handleChange}
                     error={errors.email}
-                    placeholder="owner@restaurant.com"
+                    placeholder="owner@nextdine.in"
                     required
                   />
                 </div>

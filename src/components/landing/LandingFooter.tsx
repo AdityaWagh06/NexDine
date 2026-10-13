@@ -47,10 +47,10 @@ export const LandingFooter: React.FC = () => {
           {/* Product Column */}
           <motion.div variants={columnVariants} className="space-y-3 font-semibold text-[#555555]">
             <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Product</p>
-            <p><a href="#hero-section" className="hover:text-[#7650E8] transition-colors">QR Table Ordering</a></p>
-            <p><a href="#menu-catalog-section" className="hover:text-[#7650E8] transition-colors">Digital Visual Menu</a></p>
-            <p><a href="#features-grid" className="hover:text-[#7650E8] transition-colors">Kitchen Display (KDS)</a></p>
-            <p><a href="#pricing-section" className="hover:text-[#7650E8] transition-colors">Pricing & Trial</a></p>
+            <p><Link to="/how-it-works" className="hover:text-[#7650E8] transition-colors">QR Table Ordering</Link></p>
+            <p><Link to="/features" className="hover:text-[#7650E8] transition-colors">Digital Visual Menu</Link></p>
+            <p><Link to="/features" className="hover:text-[#7650E8] transition-colors">Kitchen Display (KDS)</Link></p>
+            <p><Link to="/pricing" className="hover:text-[#7650E8] transition-colors">Pricing & Trial</Link></p>
           </motion.div>
 
           {/* Platform Column */}
@@ -58,16 +58,17 @@ export const LandingFooter: React.FC = () => {
             <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Platform</p>
             <p><Link to="/login" className="hover:text-[#7650E8] transition-colors">Owner Portal</Link></p>
             <p><Link to="/admin/login" className="hover:text-[#7650E8] transition-colors">Admin Dashboard</Link></p>
-            <p><Link to="/customer/menu" className="hover:text-[#7650E8] transition-colors">Customer Demo Menu</Link></p>
-            <p><a href="#roi-calculator" className="hover:text-[#7650E8] transition-colors">ROI Calculator</a></p>
+            <p><Link to="/menu/pizza-palace" className="hover:text-[#7650E8] transition-colors">Customer Demo Menu</Link></p>
+            <p><Link to="/pricing#roi-calculator" className="hover:text-[#7650E8] transition-colors">ROI Calculator</Link></p>
           </motion.div>
 
           {/* Business Column */}
           <motion.div variants={columnVariants} className="space-y-3 font-semibold text-[#555555]">
             <p className="font-black text-[#111111] uppercase tracking-wider text-[11px] font-mono">Business</p>
             <p><Link to="/register" className="hover:text-[#7650E8] transition-colors">Register Outlet</Link></p>
-            <p><a href="#how-it-works" className="hover:text-[#7650E8] transition-colors">Live Operational Demo</a></p>
-            <p><a href="#faq" className="hover:text-[#7650E8] transition-colors">FAQ & Support</a></p>
+            <p><Link to="/how-it-works" className="hover:text-[#7650E8] transition-colors">Live Operational Demo</Link></p>
+            <p><Link to="/faq" className="hover:text-[#7650E8] transition-colors">FAQ & Support</Link></p>
+            <p><Link to="/contact" className="hover:text-[#7650E8] transition-colors">Contact Sales</Link></p>
           </motion.div>
         </motion.div>
 

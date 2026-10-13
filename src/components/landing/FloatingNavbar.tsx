@@ -46,13 +46,12 @@ export const FloatingNavbar: React.FC<FloatingNavbarProps> = ({
           </Link>
 
           {/* Center Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8 text-xs font-bold text-[#555555]">
-            <a href="#hero-section" className="hover:text-[#7650E8] transition-colors">Product</a>
-            <a href="#how-it-works" className="hover:text-[#7650E8] transition-colors">How It Works</a>
-            <a href="#features-grid" className="hover:text-[#7650E8] transition-colors">Features</a>
-            <a href="#menu-catalog-section" className="hover:text-[#7650E8] transition-colors">Visual Catalog</a>
-            <a href="#pricing-section" className="hover:text-[#7650E8] transition-colors">Pricing</a>
-            <a href="#roi-calculator" className="hover:text-[#7650E8] transition-colors">ROI Calculator</a>
+          <nav className="hidden md:flex items-center space-x-7 text-xs font-bold text-[#555555]">
+            <Link to="/features" className="hover:text-[#7650E8] transition-colors">Features</Link>
+            <Link to="/how-it-works" className="hover:text-[#7650E8] transition-colors">How It Works</Link>
+            <Link to="/pricing" className="hover:text-[#7650E8] transition-colors">Pricing</Link>
+            <Link to="/faq" className="hover:text-[#7650E8] transition-colors">FAQ</Link>
+            <Link to="/contact" className="hover:text-[#7650E8] transition-colors">Contact</Link>
           </nav>
 
           {/* Right CTAs */}
@@ -103,12 +102,11 @@ export const FloatingNavbar: React.FC<FloatingNavbarProps> = ({
               transition={{ duration: 0.25, ease: EASE_OUT_CUBIC }}
               className="fixed top-24 inset-x-4 max-w-md mx-auto bg-white border border-[#E9E9EE] rounded-3xl p-6 shadow-2xl z-50 space-y-4 text-xs uppercase font-extrabold tracking-wider text-[#111111]"
             >
-              <a href="#hero-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Product</a>
-              <a href="#how-it-works" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>How It Works</a>
-              <a href="#features-grid" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Features</a>
-              <a href="#menu-catalog-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Visual Catalog</a>
-              <a href="#pricing-section" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Pricing</a>
-              <a href="#roi-calculator" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>ROI Calculator</a>
+              <Link to="/features" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Features</Link>
+              <Link to="/how-it-works" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>How It Works</Link>
+              <Link to="/pricing" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Pricing</Link>
+              <Link to="/faq" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>FAQ & Help</Link>
+              <Link to="/contact" className="block hover:text-[#7650E8]" onClick={() => setMobileMenuOpen(false)}>Contact Sales</Link>
               <div className="pt-2 flex flex-col gap-2">
                 <Link to="/login" onClick={() => setMobileMenuOpen(false)} className="w-full text-center py-2.5 rounded-full bg-[#F8F8FA] border border-[#E9E9EE] text-[#111111] font-bold">
                   Sign In
