@@ -6,6 +6,7 @@ import { FloatingNavbar } from "../../components/landing/FloatingNavbar";
 import { LandingFooter } from "../../components/landing/LandingFooter";
 import { SEO } from "../../components/common/SEO";
 import { Breadcrumbs } from "../../components/common/Breadcrumbs";
+import { getFaqPageSchema } from "../../utils/structuredData";
 import { EASE_OUT_CUBIC } from "../../utils/motionVariants";
 
 const faqs = [
@@ -64,6 +65,7 @@ const FaqPage: React.FC = () => {
         title="Frequently Asked Questions & Restaurant Help"
         description="Got questions about NextDine? Learn about hardware compatibility, thermal receipt printing, table QR codes, zero commissions, and our 14-day free trial."
         canonicalPath="/faq"
+        schema={getFaqPageSchema(faqs)}
       />
 
       <FloatingNavbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />

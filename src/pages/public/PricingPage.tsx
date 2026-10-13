@@ -12,6 +12,7 @@ import { FloatingNavbar } from "../../components/landing/FloatingNavbar";
 import { LandingFooter } from "../../components/landing/LandingFooter";
 import { SEO } from "../../components/common/SEO";
 import { Breadcrumbs } from "../../components/common/Breadcrumbs";
+import { getSoftwareApplicationSchema } from "../../utils/structuredData";
 import { EASE_OUT_CUBIC } from "../../utils/motionVariants";
 
 const AnimatedNumberCounter: React.FC<{ value: number; prefix?: string; suffix?: string }> = ({
@@ -76,6 +77,7 @@ const PricingPage: React.FC = () => {
         title="Pricing & Unlimited Outlets Plan (₹999/mo)"
         description="Simple, flat ₹999/month pricing with zero commissions. Table QR ordering, unlimited monthly orders, real-time Kitchen Display System, and priority support."
         canonicalPath="/pricing"
+        schema={getSoftwareApplicationSchema()}
       />
 
       <FloatingNavbar mobileMenuOpen={mobileMenuOpen} setMobileMenuOpen={setMobileMenuOpen} />

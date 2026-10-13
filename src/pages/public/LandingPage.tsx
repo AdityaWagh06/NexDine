@@ -40,6 +40,11 @@ import { WorkflowArcSection } from "../../components/landing/WorkflowArcSection"
 import { TestimonialStack } from "../../components/landing/TestimonialStack";
 import { LandingFooter } from "../../components/landing/LandingFooter";
 import { SEO } from "../../components/common/SEO";
+import {
+  getOrganizationSchema,
+  getSoftwareApplicationSchema,
+  getLocalBusinessSchema,
+} from "../../utils/structuredData";
 
 const AnimatedNumberCounter: React.FC<{ value: number; prefix?: string; suffix?: string }> = ({
   value,
@@ -375,6 +380,11 @@ const LandingPage: React.FC = () => {
         title="The Complete Digital Dining OS Built For Modern Outlets"
         description="NextDine is India's premier restaurant dining OS featuring instant table QR code ordering, live 0.2s Kitchen Display System (KDS), gourmet visual menus, and ₹999/month flat pricing."
         canonicalPath="/"
+        schema={[
+          getOrganizationSchema(),
+          getSoftwareApplicationSchema(),
+          getLocalBusinessSchema(),
+        ]}
       />
       
       {/* FLOATING NAVIGATION HEADER COMPONENT (CORESHIFT REFERENCE STYLE) */}
