@@ -309,7 +309,7 @@ const CustomerMenu: React.FC = () => {
         <div className="relative rounded-3xl overflow-hidden shadow-xl border border-stone-200/80 bg-stone-900 text-white min-h-[220px] sm:min-h-[260px] flex flex-col justify-end p-6 sm:p-8">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=80"
-            alt="Chef Special Gourmet Experience"
+            alt="Chef special gourmet dining experience with handcrafted artisanal dishes"
             className="absolute inset-0 w-full h-full object-cover opacity-65 scale-105 filter brightness-90 contrast-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />

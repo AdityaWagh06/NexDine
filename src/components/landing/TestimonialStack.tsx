@@ -102,7 +102,7 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
           >
             <img
               src={testimonials[prevIndex].avatar}
-              alt={testimonials[prevIndex].author}
+              alt={`${testimonials[prevIndex].author}, ${testimonials[prevIndex].role}`}
               className="w-10 h-10 rounded-full object-cover grayscale mb-2 border border-stone-300"
             />
             <p className="text-xs font-bold text-[#111111]">{testimonials[prevIndex].author}</p>
@@ -117,7 +117,7 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
           >
             <img
               src={testimonials[nextIndex].avatar}
-              alt={testimonials[nextIndex].author}
+              alt={`${testimonials[nextIndex].author}, ${testimonials[nextIndex].role}`}
               className="w-10 h-10 rounded-full object-cover grayscale mb-2 border border-stone-300"
             />
             <p className="text-xs font-bold text-[#111111]">{testimonials[nextIndex].author}</p>
@@ -142,7 +142,7 @@ export const TestimonialStack: React.FC<TestimonialStackProps> = ({
               <div className="flex flex-col items-center space-y-2">
                 <img
                   src={testimonials[activeTestimonialIndex].avatar}
-                  alt={testimonials[activeTestimonialIndex].author}
+                  alt={`${testimonials[activeTestimonialIndex].author}, ${testimonials[activeTestimonialIndex].role}`}
                   className="w-14 h-14 rounded-full object-cover border-2 border-[#7650E8] shadow-sm"
                 />
                 <div>

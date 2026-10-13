@@ -56,7 +56,7 @@ export const DishCard: React.FC<DishCardProps> = ({
           <div className="relative w-full aspect-square mb-3 flex items-center justify-center bg-stone-50 rounded-2xl p-2 group-hover:bg-amber-50/40 transition-colors">
             <img
               src={imageUrl}
-              alt={dish.name}
+              alt={`${dish.name} - ${dish.category || 'Specialty Dish'}`}
               className="w-4/5 h-4/5 object-cover rounded-full shadow-sm group-hover:scale-105 transition-transform duration-300"
               loading="lazy"
             />
@@ -120,7 +120,7 @@ export const DishCard: React.FC<DishCardProps> = ({
         <div className="w-20 h-20 mb-2 rounded-full overflow-hidden bg-stone-50 flex items-center justify-center p-1">
           <img
             src={imageUrl}
-            alt={dish.name}
+            alt={`${dish.name} - ${dish.category || 'Specialty Dish'}`}
             className="w-full h-full object-cover rounded-full group-hover:scale-110 transition-transform duration-300"
             loading="lazy"
           />
@@ -152,7 +152,7 @@ export const DishCard: React.FC<DishCardProps> = ({
         <div className="w-full h-36 mb-4 flex items-center justify-center overflow-hidden rounded-2xl bg-stone-50/80 group-hover:bg-amber-50/30 transition-colors p-2">
           <img
             src={imageUrl}
-            alt={dish.name}
+            alt={`${dish.name} - ${dish.category || 'Specialty Dish'}`}
             className="h-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
           />

@@ -594,9 +594,12 @@ const LandingPage: React.FC = () => {
 
                     <div className="space-y-2 text-[10px]">
                       <div>
-                        <label className="block text-[#555555] font-bold mb-1">Outlet Name</label>
+                        <label htmlFor="demo-outlet-name" className="block text-[#555555] font-bold mb-1">Outlet Name</label>
                         <input
                           type="text"
+                          id="demo-outlet-name"
+                          name="demoOutletName"
+                          aria-label="Outlet Name"
                           value={demoRestaurantName}
                           onChange={(e) => setDemoRestaurantName(e.target.value)}
                           className="w-full bg-white border border-[#E9E9EE] rounded-lg px-2 py-1 text-[#111111] font-bold text-xs"
@@ -833,11 +836,14 @@ const LandingPage: React.FC = () => {
             <div className="lg:col-span-7 space-y-6">
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs sm:text-sm font-bold">
-                  <span className="text-[#555555]">Dining Tables in Outlet:</span>
+                  <label htmlFor="roi-calc-tables" className="text-[#555555]">Dining Tables in Outlet:</label>
                   <span className="text-[#7650E8] font-mono font-black text-base">{calcTables} Tables</span>
                 </div>
                 <input
                   type="range"
+                  id="roi-calc-tables"
+                  name="calcTables"
+                  aria-label="Dining Tables in Outlet"
                   min="5"
                   max="50"
                   step="1"
@@ -849,11 +855,14 @@ const LandingPage: React.FC = () => {
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs sm:text-sm font-bold">
-                  <span className="text-[#555555]">Daily Order Count:</span>
+                  <label htmlFor="roi-calc-orders" className="text-[#555555]">Daily Order Count:</label>
                   <span className="text-[#7650E8] font-mono font-black text-base">{calcDailyOrders} Orders / Day</span>
                 </div>
                 <input
                   type="range"
+                  id="roi-calc-orders"
+                  name="calcDailyOrders"
+                  aria-label="Daily Order Count"
                   min="20"
                   max="300"
                   step="5"
@@ -865,11 +874,14 @@ const LandingPage: React.FC = () => {
 
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-xs sm:text-sm font-bold">
-                  <span className="text-[#555555]">Average Order Value (AOV):</span>
+                  <label htmlFor="roi-calc-aov" className="text-[#555555]">Average Order Value (AOV):</label>
                   <span className="text-[#7650E8] font-mono font-black text-base">₹{calcAvgOrderValue}</span>
                 </div>
                 <input
                   type="range"
+                  id="roi-calc-aov"
+                  name="calcAvgOrderValue"
+                  aria-label="Average Order Value"
                   min="150"
                   max="1500"
                   step="25"

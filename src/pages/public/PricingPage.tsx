@@ -223,6 +223,7 @@ const PricingPage: React.FC = () => {
                     type="range"
                     id="pricing-calc-tables"
                     name="calcTables"
+                    aria-label="Active Dining Tables"
                     min="5"
                     max="60"
                     value={calcTables}
@@ -240,6 +241,7 @@ const PricingPage: React.FC = () => {
                     type="range"
                     id="pricing-calc-orders"
                     name="calcDailyOrders"
+                    aria-label="Daily Guest Orders"
                     min="20"
                     max="400"
                     step="5"
@@ -258,6 +260,7 @@ const PricingPage: React.FC = () => {
                     type="range"
                     id="pricing-calc-aov"
                     name="calcAvgOrderValue"
+                    aria-label="Average Order Value"
                     min="150"
                     max="2000"
                     step="10"

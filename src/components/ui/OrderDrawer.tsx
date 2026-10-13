@@ -103,7 +103,7 @@ export const OrderDrawer: React.FC<OrderDrawerProps> = ({
                   <div className="flex items-center gap-3">
                     <img
                       src={imgUrl}
-                      alt={item.name}
+                      alt={`${item.name} in cart`}
                       className="w-14 h-14 object-cover rounded-xl bg-stone-50"
                     />
                     <div>

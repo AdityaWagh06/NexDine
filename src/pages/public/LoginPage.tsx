@@ -237,7 +237,7 @@ const LoginPage: React.FC = () => {
       <div className="absolute inset-0 z-0 opacity-10">
         <img
           src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=80"
-          alt="Gourmet Food Setup"
+          alt="Artisanal dining table setup with gourmet dishes and ambient lighting"
           className="w-full h-full object-cover"
         />
       </div>

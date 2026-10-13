@@ -46,7 +46,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         >
           <img
             src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=400&q=80"
-            alt="Chef Plating Gourmet Dish"
+            alt="Professional executive chef plating gourmet pasta dishes in modern restaurant kitchen"
             className="w-full h-36 object-cover rounded-xl mb-1.5"
           />
           <div className="px-1 text-left">
@@ -92,7 +92,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         <div className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer -rotate-6">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=400&q=80"
-            alt="Customer Ordering at Restaurant Table"
+            alt="Customer scanning table QR code on smartphone at dining table"
             className="w-full h-32 object-cover rounded-xl mb-1.5"
           />
           <p className="text-[10px] font-black text-[#111111] text-center">Scan & Self Order</p>
@@ -114,7 +114,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         >
           <img
             src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=400&q=80"
-            alt="Truffle Honey Glazed Dish"
+            alt="Truffle honey glazed chicken wings starter with chef garnish"
             className="w-full h-36 object-cover rounded-xl mb-1.5"
           />
           <div className="px-1 text-left flex justify-between items-center">
@@ -122,7 +122,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
               <p className="text-[11px] font-black text-[#111111]">Truffle Honey Glazed</p>
               <p className="text-[9px] text-[#7650E8] font-bold">4.9 ★ Rating</p>
             </div>
-            <span className="text-xs font-black text-[#FF625E]">$18.99</span>
+            <span className="text-xs font-black text-[#FF625E]">₹360</span>
           </div>
         </motion.div>
       </motion.div>
@@ -164,7 +164,7 @@ export const HeroFloatingCards: React.FC<HeroFloatingCardsProps> = ({
         <div className="w-40 rounded-2xl border border-[#E9E9EE] bg-white p-2 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer">
           <img
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=400&q=80"
-            alt="Restaurant Dining Ambiance"
+            alt="Warm vibrant restaurant dining room atmosphere with guests seated at modern tables"
             className="w-full h-32 object-cover rounded-xl mb-1.5"
           />
           <p className="text-[10px] font-black text-[#111111] text-center">Faster Table Turns</p>

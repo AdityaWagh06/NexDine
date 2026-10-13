@@ -197,7 +197,7 @@ const Menu: React.FC = () => {
                       {item.image_url ? (
                         <img
                           src={item.image_url}
-                          alt={item.name}
+                          alt={`${item.name} - ${item.category} dish preview`}
                           className="w-11 h-11 rounded-lg object-cover border border-slate-200 flex-shrink-0"
                         />
                       ) : (
@@ -521,7 +521,7 @@ const MenuItemModal: React.FC<MenuItemModalProps> = ({
             <div className="mt-2 p-2 bg-slate-50 rounded-xl border border-slate-200/80 flex items-center space-x-3">
               <img
                 src={formData.image_url}
-                alt="Preview"
+                alt={`Preview thumbnail for ${formData.name || "new dish"}`}
                 className="w-12 h-12 object-cover rounded-lg border border-slate-200"
               />
               <span className="text-xs text-slate-500 font-medium">Image preview valid</span>
