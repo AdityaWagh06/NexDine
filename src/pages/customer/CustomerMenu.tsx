@@ -23,6 +23,8 @@ import {
 } from "../../services/restaurantService";
 import type { MenuItem } from "../../config/supabase";
 import { isValidPhone } from "../../utils/helpers";
+import { SEO } from "../../components/common/SEO";
+import { getLocalBusinessSchema } from "../../utils/structuredData";
 import { supabase } from "../../config/supabase";
 import { SAMPLE_MENU_ITEMS } from "../../utils/mockData";
 import type { SampleDish } from "../../utils/mockData";
@@ -202,6 +204,15 @@ const CustomerMenu: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF8F5] text-stone-900 pb-28 font-sans">
+      <SEO
+        title={`${restaurant.name || "Live Restaurant Menu"} — Table QR Ordering`}
+        description={`Explore the live gourmet digital menu for ${restaurant.name || "restaurant"} on NextDine. Order directly from your table straight to the kitchen.`}
+        canonicalPath={`/menu/${slug}`}
+        schema={getLocalBusinessSchema({
+          name: restaurant.name,
+          menuUrl: `https://nextdine.in/menu/${slug}`,
+        })}
+      />
       {/* Header (Ref: Screenshot 1 "THE SPICYCAB") */}
       <header className="bg-white/90 backdrop-blur-md border-b border-stone-200/80 sticky top-0 z-40 shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5">

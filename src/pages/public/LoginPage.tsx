@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowLeft, Mail, Lock, AlertCircle, Sparkles } from "lucide-react";
+import { Mail, Lock, AlertCircle, Sparkles } from "lucide-react";
 import { Button, Input, Alert, Card } from "../../components/ui";
 import { supabase } from "../../config/supabase";
 import { isValidEmail, hashPassword } from "../../utils/helpers";
 import { SEO } from "../../components/common/SEO";
+import { Breadcrumbs } from "../../components/common/Breadcrumbs";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -242,14 +243,10 @@ const LoginPage: React.FC = () => {
       </div>
 
       <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-        {/* Back to Home */}
-        <Link
-          to="/"
-          className="inline-flex items-center text-xs font-bold text-stone-500 hover:text-red-600 mb-6 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4 mr-1.5" />
-          Back to NextDine Home
-        </Link>
+        {/* Breadcrumb Navigation */}
+        <div className="mb-6">
+          <Breadcrumbs items={[{ label: "Sign In" }]} />
+        </div>
 
         {/* Brand Badge & Header */}
         <div className="text-center mb-8">

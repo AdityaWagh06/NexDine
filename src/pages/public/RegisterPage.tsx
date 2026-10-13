@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import {
   Button,
   Input,
@@ -13,6 +13,7 @@ import { APP_CONFIG } from "../../config/config";
 import { supabase } from "../../config/supabase";
 import { isValidEmail, isValidPhone } from "../../utils/helpers";
 import { SEO } from "../../components/common/SEO";
+import { Breadcrumbs } from "../../components/common/Breadcrumbs";
 
 interface FormData {
   restaurant_name: string;
@@ -244,13 +245,7 @@ const RegisterPage: React.FC = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <Link
-              to="/"
-              className="inline-flex items-center text-xs font-bold text-stone-500 hover:text-amber-700 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 mr-1.5" />
-              Back to NextDine Home
-            </Link>
+            <Breadcrumbs items={[{ label: "Register Outlet" }]} />
             
             <button
               type="button"

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, Home } from "lucide-react";
+import { SITE_CONFIG, getCanonicalUrl } from "../../config/site";
 
 export interface BreadcrumbItem {
   label: string;
@@ -13,6 +14,42 @@ interface BreadcrumbsProps {
 }
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = "" }) => {
+  // Inject or update Schema.org BreadcrumbList structured data
+  useEffect(() => {
+    const breadcrumbSchema = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: SITE_CONFIG.canonicalBase,
+        },
+        ...items.map((item, idx) => ({
+          "@type": "ListItem",
+          position: idx + 2,
+          name: item.label,
+          ...(item.path ? { item: getCanonicalUrl(item.path) } : {}),
+        })),
+      ],
+    };
+
+    let script = document.getElementById("breadcrumb-structured-data") as HTMLScriptElement | null;
+    if (!script) {
+      script = document.createElement("script");
+      script.id = "breadcrumb-structured-data";
+      script.type = "application/ld+json";
+      document.head.appendChild(script);
+    }
+    script.textContent = JSON.stringify(breadcrumbSchema);
+
+    return () => {
+      const el = document.getElementById("breadcrumb-structured-data");
+      if (el) el.remove();
+    };
+  }, [items]);
+
   return (
     <nav aria-label="Breadcrumb" className={`flex items-center text-xs font-medium text-[#737373] ${className}`}>
       <ol className="flex items-center space-x-1.5 flex-wrap">
