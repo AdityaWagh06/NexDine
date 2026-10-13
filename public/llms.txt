@@ -1,0 +1,53 @@
+# NextDine — The Complete Digital Dining OS Built For Modern Outlets
+
+> NextDine is an Indian SaaS platform providing contactless table QR code ordering, real-time Kitchen Display Systems (KDS), high-resolution digital visual menus, and restaurant billing telemetry for cafes, fine-dining restaurants, bars, and cloud kitchens.
+
+## Overview
+
+- **Website**: https://nextdine.in
+- **Legal Entity**: NextDine Technologies Pvt. Ltd.
+- **Headquarters**: Level 4, Bandra Kurla Complex (BKC), Mumbai, Maharashtra 400051, India
+- **Support**: support@nextdine.in | +91 98765 43210
+- **Primary Value Proposition**: Eliminates waiter transcription mistakes, accelerates table turnaround, and removes 3rd-party food aggregator commission cuts (18%–26%) through direct table-to-kitchen ordering.
+
+## Core Features
+
+1. **Table QR Code Ordering**:
+   - Guests point native smartphone camera at durable table standees.
+   - 100% web-native: Zero app installation (iOS App Store or Google Play) required.
+   - Retains table session context and supports simultaneous group ordering.
+
+2. **Real-Time Kitchen Display System (KDS)**:
+   - Orders stream to kitchen screens within 0.2 seconds via WebSockets.
+   - Built-in Web Audio chime notifications and color-coded overdue warnings.
+   - Compatible with any tablet (iPad, Android), touch monitor, or commercial smart TV.
+
+3. **Gourmet Visual Menu & 1-Tap 86'd Sync**:
+   - High-resolution dish photography with category filters and dish modifiers.
+   - Out-of-stock items can be disabled instantly with one tap from the manager's phone.
+
+4. **Hardware & Thermal Printing**:
+   - Direct support for ESC/POS standard USB, Wi-Fi, and Bluetooth receipt printers (58mm and 80mm formats).
+
+5. **Owner Telemetry & Revenue Analytics**:
+   - Live gross sales, GST calculation, item velocity breakdown, and staff preparation speed tracking.
+
+## Pricing & Subscription Model
+
+- **Subscription Fee**: ₹999 / month (Flat rate, billed monthly).
+- **Commission Rate**: 0% (Restaurants keep 100% of guest order revenue).
+- **Onboarding Fee**: ₹2,999 (One-time, covers custom QR acrylic standees & menu digitalization).
+- **Volume Limits**: Unlimited tables, unlimited outlets, and unlimited orders per month.
+- **Free Trial**: 14-day fully featured free trial with zero credit card required.
+
+## Key Public Routes
+
+- **Homepage**: https://nextdine.in/
+- **Features**: https://nextdine.in/features
+- **Pricing**: https://nextdine.in/pricing
+- **How It Works**: https://nextdine.in/how-it-works
+- **FAQ**: https://nextdine.in/faq
+- **Contact**: https://nextdine.in/contact
+- **Restaurant Registration**: https://nextdine.in/register
+- **Owner Login**: https://nextdine.in/login
+- **Interactive Menu Demo**: https://nextdine.in/menu/pizza-palace
