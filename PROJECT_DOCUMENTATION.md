@@ -81,7 +81,7 @@ restaurant-ordering-saas-main/
 
 ### Step 1: Set Up Supabase Project & Copy API Keys
 1. Create a free account at [Supabase.com](https://supabase.com).
-2. Create a new project named **NextDine**.
+2. Create a new project named **NexDine**.
 3. Go to **Project Settings** → **API**.
 4. Open the `.env` file in your project root (`c:\Users\Asus\OneDrive\Desktop\restaurant-ordering-saas-main\.env`).
 5. Replace the placeholder credentials with your real keys:
