@@ -4,7 +4,7 @@ NexDine is a production-ready restaurant ordering SaaS application featuring ins
 
 ## 🎯 Key Features
 
-- **NextDine Multi-Tenant SaaS**: Independent restaurant dashboards and unique QR links.
+- **NexDine Multi-Tenant SaaS**: Independent restaurant dashboards and unique QR links.
 - **Smart QR Ordering**: Customers scan table QR code to view live digital menus and order directly from mobile browsers.
 - **Live Kitchen Order Engine**: Audio chimes, real-time status updates (Pending, Accepted, Completed), customer notes, and itemization.
 - **Menu Management Catalog**: Categorized dishes, availability toggles, size options, extra add-ons, and photos.
