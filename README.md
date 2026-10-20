@@ -70,4 +70,4 @@ Visit: `http://localhost:5173`
 - **Text**: Dark Slate (`#0F172A`)
 
 ---
-© NextDine SaaS. All rights reserved.
+© NexDine SaaS. All rights reserved.
