@@ -1,4 +1,4 @@
-# NextDine - Smart QR Ordering Platform for Modern Restaurants
+# NexDine - Smart QR Ordering Platform for Modern Restaurants
 
 NextDine is a production-ready restaurant ordering SaaS application featuring instant contact-free QR code ordering, real-time kitchen order streams, multi-tenant restaurant management, and platform super admin tools.
 
