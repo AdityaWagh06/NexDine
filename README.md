@@ -14,7 +14,7 @@ NexDine is a production-ready restaurant ordering SaaS application featuring ins
 ## 🛠 Tech Stack
 
 - **Frontend**: React 19 + TypeScript + Vite
-- **Styling**: Tailwind CSS v3 (custom NextDine SaaS design system)
+- **Styling**: Tailwind CSS v3 (custom NexDine SaaS design system)
 - **Backend & Realtime**: Supabase (PostgreSQL + Realtime Subscriptions + RPC Functions)
 - **Routing**: React Router v7
 - **Icons**: Lucide React
