@@ -1,6 +1,6 @@
 # 🍽️ NexDine — Master Project Architecture & Operations Guide
 
-Welcome to **NextDine** — a commercial-grade, QR-based restaurant ordering and Kitchen Display System (KDS) SaaS built for modern restaurant operations.
+Welcome to **NexDine** — a commercial-grade, QR-based restaurant ordering and Kitchen Display System (KDS) SaaS built for modern restaurant operations.
 
 ---
 
