@@ -61,7 +61,7 @@ Visit: `http://localhost:5173`
 
 ## 🎨 Color Palette & Brand Specs
 
-- **Brand Name**: NextDine
+- **Brand Name**: NexDine
 - **Tagline**: "Smart QR Ordering for Modern Restaurants"
 - **Primary**: Deep Indigo (`#4F46E5`)
 - **Secondary**: Slate Gray (`#475569`)
